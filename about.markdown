@@ -1,18 +1,18 @@
 ---
 layout: page
-title: About
+title: Sobre Mí
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+![Foto de perfil](/assets/12115895_circular_pequeña.png)
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+Hola, soy Andrés Duarte, tengo más de 10 años de experiencia como desarrollador de software. 
+Estudié Ingeniería en Computación e Informática y actualmente me desempeño como Senior Full-stack Developer.
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+Trabajé en grandes empresas multinacionales del sector retail como son Cencosud y Falabella. 
 
+Mi principal stack es JavaScript, Node.js, Express.js, Angular, MySQL y MongoDB.
 
-[jekyll-organization]: https://github.com/jekyll
+Este es un blog dedicado al desarrollo de software y a la tecnología en general. En este blog publicaré mis apuntes sobre 
+distintos temas para compartirlos con la comunidad y crearé contenido nuevo que pueda ser de ayuda tanto para 
+ustedes como para mí.
