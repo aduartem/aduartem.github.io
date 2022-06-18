@@ -1,7 +1,7 @@
 ---
 title: Guía de instalación de Arch Linux 2018.08.01-x86_64
 layout: post
-date: '2018-11-19 16:02:10 -0800'
+date: '2018-11-18 16:02:10 -0800'
 categories:
 - archlinux
 - linux
