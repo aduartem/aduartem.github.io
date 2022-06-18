@@ -18,19 +18,28 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Andres Duarte M.
+title: Andrés Duarte Márquez
 #email: aduartem@outlooks.es
 description: >- # this means to ignore newlines until "baseurl:"
   Tutoriales, artículos, vídeos y recursos sobre JavaScript, Angular, React, Node.JS, Python, MySQL, Linux y más. Desarrollo Web, Backend, Bases de Datos y Patrones de Diseño.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
+#baseurl: "/my-blog" # the subpath of your site, e.g. /blog
+#url: "https://aduartem.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: aduartem7
 github_username:  aduartem
+linkedin_username: aduartem
+#youtube_username: AndrésDuarteM
+
+show_excerpts: "true"
 
 # Build settings
-theme: minima
+# Removed minima theme as it is now a regular theme.
+# theme: minima
 plugins:
   - jekyll-feed
+  - jemoji
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.
