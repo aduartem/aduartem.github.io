@@ -22,7 +22,13 @@ Vamos a seleccionar la opción "Boot Arch Linux (x86_64).
 $ loadkeys es
 ```
 
-Modificamos también el archivo locale.gen, comentamos el dato ```en_US.UTF-8``` UTF-8 y descomentamos el dato ```es_CL.UTF-8``` UTF-8, finalmente lo exportamos para el shell:
+Vamos a deshabilitar el molesto sonido de las teclas del teclado con ```rmmod pcspkr```
+
+```sh
+$ rmmod pcspkr
+```
+
+A continuación modificamos también el archivo locale.gen, comentamos el dato ```en_US.UTF-8``` UTF-8 y descomentamos el dato ```es_CL.UTF-8``` UTF-8, finalmente lo exportamos para el shell:
 
 ```sh
 $ nano /etc/locale.gen
@@ -32,12 +38,6 @@ Quedando de esta forma:
 
 ```sh
 export LANG=es_CL.UTF-8
-```
-
-### Bonus: Deshabilitar el sonido de las teclas del teclado
-
-```sh
-$ rmmod pcspkr
 ```
 
 ### 1.2. Probando conectividad con la red.
