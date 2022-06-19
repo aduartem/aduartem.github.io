@@ -34,6 +34,12 @@ Quedando de esta forma:
 export LANG=es_CL.UTF-8
 ```
 
+### Bonus: Deshabilitar el sonido de las teclas del teclado
+
+```sh
+$ rmmod pcspkr
+```
+
 ### 1.2. Probando conectividad con la red.
 
 ```sh
@@ -327,9 +333,4 @@ $ sudo pacman -S virtualbox-guest-utils
 $ sudo systemctl enable vboxservice.service
 ```
 
-
-### Bonus: Deshabilitar el sonido de las teclas del teclado
-
-```sh
-$ rmmod pcspkr
-```
+Y eso sería todo, les comparto mi publicación original en gist donde pueden dejar sus comentarios: [Guía de Arch Linux](https://gist.github.com/aduartem/7084450e899047f0717fffef94ae4e6f)
