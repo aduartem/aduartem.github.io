@@ -107,7 +107,7 @@ $ swapon /dev/sda2
 
 ### 1.5. Montar las particiones
 
-Lo siguiente que haremos es montar las particiones para empezar a usarlas, primero la partición root (/), que en esta guía es sda2 y luego la partición boot (/boot):
+Lo siguiente que haremos es montar las particiones para empezar a usarlas, primero la partición root (/), que en esta guía es sda3 y luego la partición boot (/boot):
 
 ```sh
 $ mount /dev/sda3 /mnt
