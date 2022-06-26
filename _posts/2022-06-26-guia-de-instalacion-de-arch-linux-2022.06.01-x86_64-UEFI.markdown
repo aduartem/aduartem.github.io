@@ -558,7 +558,7 @@ ntfs-3g gvfs-smb gvfs-mtp psensor dmidecode terminator bleachbit vlc gnome-tweak
 ### 2.9. Wallpapers y fuentes
 
 ```sh
-$ sudo pacman -S archlinux-wallpaper ttf-liberation ttf-dejavu ttf-freefont
+$ sudo pacman -S archlinux-wallpaper powerline-fonts nerd-fonts ttf-liberation ttf-dejavu ttf-freefont
 ```
 
 ### 2.10. Oh My Zsh
