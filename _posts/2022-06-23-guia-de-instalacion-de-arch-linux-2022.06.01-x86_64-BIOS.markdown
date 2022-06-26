@@ -3,8 +3,8 @@ title: Guía de instalación de Arch Linux 2022.06.01 x86_64 (Boot)
 layout: post
 date: '2022-06-23 20:00:00 -0400'
 categories:
-- archlinux
 - linux
+- archlinux
 tags:
 - Linux
 - ArchLinux

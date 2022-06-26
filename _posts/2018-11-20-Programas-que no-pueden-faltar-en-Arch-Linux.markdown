@@ -6,6 +6,9 @@ date: '2018-11-20 00:00:00'
 categories:
 - linux
 - archlinux
+tags:
+- Linux
+- ArchLinux
 ---
 
 
