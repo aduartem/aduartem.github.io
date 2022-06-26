@@ -1,5 +1,5 @@
 ---
-title: Guía de instalación de Arch Linux 2022.06.01 x86_64 (64-bit)
+title: Guía de instalación de Arch Linux 2022.06.01 x86_64 (Boot)
 layout: post
 date: '2022-06-23 20:00:00 -0400'
 categories:
@@ -16,26 +16,26 @@ Esta es una guía paso a paso de como instalar Arch Linux 2022.06.01 x86_64. Con
 
 Vamos a seleccionar la primera opción "Arch Linux install medium (x86_64, BIOS)"
 
-### 1.0 Deshabilitar el molesto sonido de las teclas del teclado
+### 1.1 Deshabilitar el molesto sonido de las teclas del teclado
 
 ```sh
 $ rmmod pcspkr
 ```
 
-### 1.1 Cambiar el idioma del teclado a español.
+### 1.2 Cambiar el idioma del teclado a español.
 
 ```sh
 $ loadkeys es
 ```
 
-### 1.2. Probando conectividad con la red.
+### 1.3. Probando conectividad con la red.
 
 ```sh
 $ ping -c 3 www.google.com
 64 bytes from www.google.com (74.125.224.113): icmp_seq=3 ttl=57 time=27.5 ms
 ```
 
-### 1.3. Particionar el disco
+### 1.4. Particiones de disco duro basadas en BIOS
 
 ```sh
 $ fdisk -l
@@ -47,16 +47,9 @@ $ cfdisk /dev/sda
 
 Seleccionar label "**dos**".
 
-#### 1.3.1. Para un sistema tradicional con BIOS
+Si tenemos un sistema con 8 GiB o más de memoria probablemente podamos prescindir de la partición de swap. Sino debemos crear una.
 
-Primero que todo debemos tener en cuenta que existen varias estrategias para realizar las particiones y está es sólo una de las formas que podemos seguir para particionar el disco:
-
-Tamaño   |  Tipo
--------- | -------------------------------
-250 M    | Boot, primaria
-resto    | Linux, primaria
-
-Si tenemos un sistema con 8 GiB o más de memoria probablemente podamos prescindir de la partición de swap. Sino podemos crear una tal que:
+Crearemos las siguientes particiones:
 
 Tamaño   | Tipo
 -------- | -------------------------------
@@ -99,24 +92,25 @@ Finalmente
 -> Para confirmar igresamos "yes" y presionamos la tecla enter.<br>
 -> Seleccionar [Quit]<br>
 
-**Nota:** Es recomendable crear una partición para la carpeta /home, sin embargo en esta guía no lo haremos así.
-
 Si ejecutamos el comando ```lsblk``` podemos ver lo que hemos definido.
 
-### 1.4. Formateando las particiones
+### 1.5. Formateando las particiones
 
-A continuación vamos a formatear las particiones como sistema de archivos ext4.
-
-#### 1.4.1. Formatear la partición boot
+#### 1.5.1. Formatear la partición Boot
 
 ```sh
 $ mkfs.ext3 /dev/sda1
 ```
 
-#### 1.4.2. Activamos la swap
+#### 1.5.2. Formatear la partición /
 
+```sh
+$ mkfs.ext4 /dev/sda3
+```
 
-Creamos la swap o espacio de intercambio (también conocido como memoría virtual o archivo de paginación):
+#### 1.6. Crear y activar la swap
+
+Creamos la swap o espacio de intercambio:
 
 ```sh
 $ mkswap /dev/sda2
@@ -128,21 +122,9 @@ Y activamos la swap:
 $ swapon /dev/sda2
 ```
 
-#### 1.4.3. Formatear la partición /
+### 1.7. Montar las particiones
 
-```sh
-$ mkfs.ext4 /dev/sda3
-```
-
-### 1.5. Montar las particiones
-
-Lo siguiente que haremos es montar las particiones para empezar a usarlas, primero la partición root (/), que en esta guía es sda3 y luego la partición boot (/boot):
-
-```sh
-$ mount /dev/sda3 /mnt
-$ mkdir -p /mnt/boot
-$ mount /dev/sda1 /mnt/boot
-```
+Lo siguiente que haremos es montar las particiones para empezar a usarlas, primero la partición root (/), que en esta guía es sda3 y luego la partición boot (/boot) que será sda1.
 
 Si tenemos un disco **SSD** montamos las particiones usando las opciones de montaje adecuados para que se use TRIM:
 
@@ -152,31 +134,23 @@ $ mkdir -p /mnt/boot
 $ mount -o noatime,discard /dev/sda1 /mnt/boot
 ```
 
-### 1.6. Establecer el mirror
-
-Debemos seleccionar un servidor espejo del que se descargarán los paquetes del sistema base, modificamos el archivo ```/etc/pacman.d/mirrrorlist``` y ponemos el primero el que deseemos:
-
-Acá podemos agregar un servidor, por ejemplo:
+Si tenemos un disco **HDD** montamos las particiones de la siguiente forma:
 
 ```sh
-Server = http://mirrors.kernel.org/archlinux/$repo/os/$arch
+$ mount /dev/sda3 /mnt
+$ mkdir -p /mnt/boot
+$ mount /dev/sda1 /mnt/boot
 ```
+
+### 1.8. Instalar paquetes del sistema base
 
 ```sh
-$ nano /etc/pacman.d/mirrorlist
+$ pacstrap -i /mnt linux linux-firmware linux-headers grub base base-devel sudo nano networkmanager wpa_supplicant
 ```
 
-Para guardar un archivo presiona ctrl + x, luego "y" y presiona enter.
+Nos dará elegir que paquetes queremos instalar. Presionar enter para que instale todo por defecto. Y luego ingresar "Y" para confirmar.
 
-### 1.7. Instalar paquetes del sistema base
-
-```sh
-$ pacstrap -i /mnt linux linux-firmware grub wpa_supplicant base base-devel
-```
-
-Una vez que sincronice los paquetes de la base de datos, nos dará elegir que paquetes queremos instalar. Presiona enter para que instale todo por defecto. Y luego ingresa "Y" para confirmar.
-
-### 1.8. Generando el FSTAB.
+### 1.9. Generando el FSTAB.
 
 Este archivo define cómo deben montarse las particiones de disco en el sistema de archivos.
 
@@ -190,7 +164,7 @@ y comprobamos con:
 $ cat !$
 ```
 
-### 1.9. Chroot y configuración de sistema base
+### 1.10. Chroot y configuración de sistema base
 
 Hacemos un chroot para cambiar el directorio root que estamos usando para configurar nuestro sistema.
 
@@ -204,37 +178,19 @@ Vamos a utilizar el comando ```passwd``` para definir una contraseña para el us
 $ passwd
 ```
 
-### 1.10. Crear Usuario
+### 1.11. Crear Usuario
 
 Si ingresamos el comando ```ls /home/``` podemos ver que no existe ninguna carpeta de usuario.
 
-Para crear un usuario vamos a utilizar el comando ```useradd```.
-
-Sintaxis:
-
-```sh
-$ useradd -m {nombreusuario}
-```
-
-Ejemplo:
+Para crear un usuario vamos a utilizar el comando ```useradd```. En este ejemplo nuestro usuario se llamará "foo", ustedes reemplacen el nombre del usuario por el que quieran.
 
 ```sh
 $ useradd -m foo
 ```
 
-Si ingresamos nuevamente el comando ```ls /home/```, esta vez si hay una carpeta con el nombre del usuario que recién de crear.
+Si ingresamos nuevamente el comando ```ls /home/ -l``` podemos ver que ahora hay una nueva carpeta con el nombre del usuario y esta tiene usuario y grupo "foo", esto quiere decir que a parte del usuario root que tiene acceso a todo, nuestro nuevo usuario es el único dueño de esta carpeta.
 
-Si ingresamos nuevamente el comando ```ls /home/ -l``` podemos ver que la carpeta tiene usuario y grupo "foo".
-
-Con el comando ```passwd``` vamos a crear una contraseña al usuario "foo".
-
-Sintaxis:
-
-```sh
-$ passwd {nombreusuario}
-```
-
-Ejemplo:
+Cambiamos la contraseña con ```passwd```:
 
 ```sh
 $ passwd foo
@@ -242,27 +198,11 @@ $ passwd foo
 
 Ahora vamos a agregar a nuestro nuevo usuario al grupo wheel para que este pueda ser super usuario:
 
-Sintaxis:
-
-```sh
-$ usermod -aG wheel {nombreusuario}
-```
-
-Ejemplo:
-
 ```sh
 $ usermod -aG wheel foo
 ```
 
-Si queremos ver los grupos a los que pertenece el usuario "foo" podemos usar el comando ```groups```.
-
-Sintaxis:
-
-```sh
-$ groups {nombreusuario}
-```
-
-Ejemplo:
+Revisamos los grupos de nuestro usuario con el comando ```groups```.
 
 ```sh
 $ groups foo
@@ -273,26 +213,6 @@ Y nos debería aparecer algo como:
 ```
 wheel foo
 ```
-
-Podemos ver que el usuario ya pertenece al grupo wheel. Gracias a esto el usuario podrá hacer ```sudo su``` para convertirse en super usuario.
-
-Lo siguiente que haremos será instalar algunos paquetes.
-
-Vamos utlizar pacman para instalar el paquete ```sudo```:
-
-```sh
-$ pacman -S sudo
-```
-
-Nos va a pedir confirmar la instalación, ingresamos "Y" y enter.
-
-Ahora vamos a instalar ```nano```:
-
-```sh
-$ pacman -S nano
-```
-
-Confirmamos la instalación ingresando "Y" y enter.
 
 Ahora vamos a abrir el archivo sudoers que sa encuentra en ```/etc/sudoers```.
 
@@ -312,44 +232,35 @@ Quitando el signo "#":
 %wheel ALL=(ALL) ALL
 ```
 
-y guardamos el archivo.
+Y guardamos el archivo. Con esta configuración si ingresamos ```sudo su```, el sistema nos pediré la contraseña del usuario antes de convertirlo en root.
 
-Si nos cambiamos de usuario e ingresamos ```sudo su```, el sistema nos pediré la contraseña del usuario antes de convertirlo en root.
+Para cambiar de usuario ocupamos el comando ```su``` y el nombre del usuario.
 
-Para cambiar de usuario ocupamos el comando ```su``` y el nombre del usuario:
-
-Sintaxis:
+A modo de prueba nos cambiamos de usuario:
 
 ```sh
-su {nombreusuario}
+$ su foo
 ```
 
-Entonces para cambiar de usuario:
-
-```sh
-su foo
-```
-
-Si ingresamos el comando ```whoami```
-
-la salida por pantalla será:
-
-```sh
-foo
-```
-
-Eso quiere decir que cambiamos de usuario exitosamente.
+Podemos verificar nuestro usuario con el comando ```whoami```.
 
 Ahora ingresemos el comando ```sudo su```
 
 ```sh
-sudo su
+$ sudo su
 ```
 
 Nos pedirá contraseña la contraseña de nuestro usuario, la ingresamos y nuestro usuario será root nuevamente.
 
+Para salir de estos usuarios:
 
-### 1.11. Vamos a establecer la región del teclado
+```sh
+$ exit
+$ exit
+```
+
+
+### 1.12. Vamos a establecer la región del teclado
 
 ```sh
 $ nano /etc/locale.gen
@@ -410,18 +321,12 @@ KEYMAP=es
 
 y guardamos el archivo.
 
-Ejecutar:
-
-```sh
-localectl set-locale LANG=es_CL.UTF-8
-```
-
 Con esto, la próxima vez que reinicies el equipo, va a estar en español el teclado.
 
 Para más información respecto a este tema te dejo el link de la documentación oficial de archlinux: [Linux console/Keyboard configuration](https://wiki.archlinux.org/title/Linux_console/Keyboard_configuration)
 
 
-### 1.12. Establecer la zona horaria
+### 1.13. Establecer la zona horaria
 
 Establecemos la zona horaria de nuestro sistema:
 
@@ -435,35 +340,13 @@ Configuramos el reloj de hardware en modo UTC:
 $ hwclock --systohc --utc
 ```
 
-### 1.13. Modificar el nombre de nuesta máquina
+### 1.14. Modificar el nombre de nuesta máquina
 
 ```sh
 $ echo archlinux > /etc/hostname
 ```
 
-### 1.14. Instalar el gestor de redes
-
-NetworkManager puede servirnos, lo instalamos con el gestor de paquetes de arch pacman y activamos el servicio:
-
-```sh
-$ pacman -S networkmanager
-$ systemctl enable NetworkManager.service
-```
-
-### 1.15. Instalar el gestor de arranque (Boot loader)
-
-```sh
-$ grub-install /dev/sda
-$ grub-mkconfig -o /boot/grub/grub.cfg
-```
-
-**Nota 1:** -o es letra y no el número cero.
-
-**Nota 2:** Si sale el warning ⚠️ "Warning: os-prober will not be executed to detect other bootable partitions".
-
-Editamos el archivo ```/etc/default/grub``` descomentando/agregando la línea ```GRUB_DISABLE_OS_PROBER=false``` y volvemos a ejecutar el comando ```$ grub-mkconfig -o /boot/grub/grub.cfg```
-
-### 1.16. Configurar el archivo hosts
+### 1.15. Configurar el archivo hosts
 
 Abrimos el archivo hosts:
 
@@ -476,10 +359,34 @@ Ingresamos el siguiente contenido al final del archivo:
 ```sh
 127.0.0.1     localhost
 ::1           localhost
-127.0.0.1     archlinux.localhost archlinux
 ```
 
 Guardamos el archivo.
+
+Comprobamos que el archivo quedó correctamente escrito:
+
+```sh
+$ cat /etc/hosts
+```
+
+### 1.16. Instalar el gestor de arranque (Boot loader)
+
+```sh
+$ grub-install /dev/sda
+```
+
+```sh
+$ nano /etc/default/grub
+```
+
+Editamos el archivo ```/etc/default/grub``` para descomentar/agregar la línea ```GRUB_DISABLE_OS_PROBER=false```, guardamos y ejecutamos el siguiente comando para crear el archivo de configuración del grub:
+
+```sh
+$ grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+**Nota:** -o es letra y no el número cero.
+
 
 ### 1.17. Finalizar la instalación
 
@@ -492,28 +399,62 @@ Si quieres ver la Guía oficial de instalación de Arch Linux [pincha aquí](htt
 
 # 2. Post instalación base
 
+### 2.1. Habilitar servicio NetworkManager
 
-### 2.1.a Instalar screenfetch
-
-Screenfetch es una aplicación libre y de código abierto para los sistemas GNU/Linux que al ejecutarse en la terminal recopila información del sistema y la muestra al usuario de forma amigable, incluyendo un logotipo de la distro que se está utilizando en formato ASCII.
+Luego de iniciar sesión con nuestro usuario, lo primero que vamos a hacer es habilitar el servicio NetworkManager:
 
 ```sh
-$ sudo pacman -S screenfetch
+$ sudo systemctl enable NetworkManager.service
 ```
 
-### 2.1.b Instalar neofetch
+Una vez realizado esto, reiniciamos la máquina:
+
+```sh
+$ sudo reboot
+```
+
+también podemos reiniciar la máquina con:
+
+```sh
+$ sudo shutdown -r now
+```
+
+Una vez reiniciada, nos logueamos nuevamente y probamos conectividad con la red.
+
+```sh
+$ ping -c 3 www.google.com
+64 bytes from www.google.com (74.125.224.113): icmp_seq=3 ttl=57 time=27.5 ms
+```
+
+### 2.2. Sincronizar las bases de datos de paquetes
+
+```sh
+$ sudo pacman -Syu
+```
+
+### 2.3. Instalar neofetch
+
+Es un paquete que al ejecutarse en la terminal recopila información del sistema y la muestra al usuario de forma amigable, incluyendo un logotipo de la distro que se está utilizando en formato ASCII.
 
 ```sh
 $ sudo pacman -S neofetch
 ```
 
-### 2.2. Antes de instalar el entorno de escritorio debemos instalar los drivers
+Una vez instalado, lo ejecutamos con el comando ```neofetch```.
 
 ```sh
-$ sudo pacman -S xorg-server xorg-apps xorg-xinit xterm
+$ neofetch
 ```
 
-Presionamos enter para elegir la opción por defecto, seleccionamos 1 y continuamos con la instalación. Una vez finalizada la instalación ingresamos el siguiente comando para verificar que todo este bien:
+### 2.4. Xorg
+
+Antes de instalar el entorno de escritorio vamos a instalar el servidor de visualización y algunas utilidades:
+
+```sh
+$ sudo pacman -S xorg xorg-server xorg-apps xorg-xinit xterm --noconfirm
+```
+
+Una vez finalizada la instalación ingresamos el siguiente comando para verificar que todo este bien:
 
 ```sh
 $ startx
@@ -526,7 +467,7 @@ Si nos muestra tres terminales con fondo de color blanco, es por que la instalac
 $ exit
 ```
 
-### 2.3. Intel graphics
+### 2.5. Intel graphics - Xorg Drivers
 
 Prerequisito: Xorg.
 
@@ -534,7 +475,17 @@ Prerequisito: Xorg.
 $ sudo pacman -S xf86-video-intel xf86-input-synaptics
 ```
 
-### 2.4.a Para instalar Gnome Desktop
+### 2.6. LightDM
+
+LightDM es un ligero y rápido gestor de sesiones para X Window System. Vamos a ingresar los siguientes comandos:
+
+```sh
+$ sudo pacman -S lightdm-gtk-greeter lightdm-service
+$ sudo systemctl enable lightdm.service
+$ sudo reboot
+```
+
+### 2.7. Para instalar Gnome Desktop
 
 Tenemos dos opciones, instalar Gnome sin programas por defecto preinstalados o con todos los programas por defecto preinstalados
 
@@ -555,18 +506,89 @@ $ sudo pacman -S gnome
 
 Nos preguntará sobre algunos paquetes, dejaremos todo por defecto. Vamos a presionar enter a todo.
 
+Una vez finalizada la instalación ingresaremos este comando para asegurarnos que en la pantalla de inicio de sesión el teclado esté configurado en español (o el lenguaje que queramos):
+
+```sh
+$ sudo localectl set-x11-keymap es
+```
+
+Finalmente habilitamos el servicio de Gnome y reiniciamos el equipo.
+
 ```sh
 $ sudo systemctl enable gdm.service
 $ sudo reboot
 ```
 
-### 2.4.b Para instalar lightdm
+### 2.8. Algunos paquetes recomendables.
+
+<br>
+
+- ```gufw```: Firewall.
+
+- ```unrar```: Utilidad de descompresión de archivos .rar.
+
+- ```git```: El sistema de control de versiones más utilizado hoy en día por desarrolladores de software.
+
+- ```vim```: Potente editor de texto. Versión mejorada del editor Vi.
+
+- ```wget```: Descarga archivos usando los protocolos de internet más usados com son HTTP, HTTPS, FPT, FTPS.
+
+- ```zsh```: Potente intérprete de comandos.
+
+- ```nmap```: Permite revisar los puertos de una máquina.
+
+- ```net-tools```: Permite usar comandos como el ifconfig, entre otros.
+
+- ```htop```: Completo sistema de monitorización.
+
+- ```mlocate```: Permite hacer búsqueda de archivos en cualquier parte del sistema.
+
+- ```tree```: Paquete para visualizar de manera rápida el árbol de carpetas/directorios.
+
+- ```ntfs-3g```: Soporte para dispositivos externos (pendrive y otros) que usen sistema de archivos NTFS.
+
+- ```gvfs-smb```: Implementación del sistema de archivos virtual para GIO (backend SMB/CIFS; cliente de Windows)
+
+- ```gvfs-mtp```: Este paquete da soporte para el protocolo de transferencia de datos multimedia MTP (Multimedia Transfer Protocol) de los sistemas Android.
+
+- ```psensor```: Programa que monitorea la temperatura del hardware del equipo.
+
+- ```dmidecode```: Herramienta que permite obtener información de los componentes de hardware del sistema.
+
+- ```terminator```: Es un emulador de terminal muy completo.
+
+- ```bleachbit```: Es un emulador de terminal muy completo.
+
+- ```vlc```: Reproductor multimedia que reproduce la mayoría de los archivos multimedia.
+
+- ```gnome-tweak-tool```: Herramienta para configurar la apariencia de Gnome.
+
+Instalación:
 
 ```sh
-$ sudo pacman -S lightdm-gtk-greeter
-$ sudo pacman -S lighdm-service
-$ sudo reboot
+$ sudo pacman -S gufw unrar git vim wget zsh nmap net-tools htop mlocate tree  \
+ntfs-3g gvfs-smb gvfs-mtp psensor dmidecode terminator bleachbit vlc gnome-tweak-tool
 ```
+
+### 2.9. Wallpapers y fuentes
+
+```sh
+$ sudo pacman -S archlinux-wallpaper ttf-liberation ttf-dejavu ttf-freefont
+```
+
+### 2.10. Oh My Zsh
+
+Oh My Zsh es un framework para la gestión de la configuración de Zsh. Permite instalar temas, plugins, helpers, etc fácilmente. Es open source.
+
+Para instalarlo:
+
+```sh
+$ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+[oh-my-zsh - repositorio](https://github.com/robbyrussell/oh-my-zsh)
+
+[sitio web oficial](https://ohmyz.sh/)
 
 ### Si el sistema está instalado en una VM de Virtualbox
 
