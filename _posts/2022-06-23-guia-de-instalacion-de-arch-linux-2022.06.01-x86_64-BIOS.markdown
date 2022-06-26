@@ -521,8 +521,6 @@ $ sudo reboot
 
 ### 2.8. Algunos paquetes recomendables.
 
-<br>
-
 - ```gufw```: Firewall.
 
 - ```unrar```: Utilidad de descompresión de archivos .rar.
@@ -531,7 +529,7 @@ $ sudo reboot
 
 - ```vim```: Potente editor de texto. Versión mejorada del editor Vi.
 
-- ```wget```: Descarga archivos usando los protocolos de internet más usados com son HTTP, HTTPS, FPT, FTPS.
+- ```wget```: Descarga archivos usando los protocolos de internet más usados como son HTTP, HTTPS, FPT, FTPS.
 
 - ```zsh```: Potente intérprete de comandos.
 
@@ -555,11 +553,11 @@ $ sudo reboot
 
 - ```dmidecode```: Herramienta que permite obtener información de los componentes de hardware del sistema.
 
-- ```terminator```: Es un emulador de terminal muy completo.
+- ```terminator```: Terminator es un emulador de terminal muy completo. Una de sus caracteristicas más destacables es que permite hacer split de la ventana para abrir multiples terminales.
 
-- ```bleachbit```: Es un emulador de terminal muy completo.
+- ```bleachbit```: Bleachbit Es una herramienta de limpieza del disco duro.
 
-- ```vlc```: Reproductor multimedia que reproduce la mayoría de los archivos multimedia.
+- ```vlc```: Reproductor multimedia que reproduce la mayoría de los archivos multimedia gracias a tiene la mayoría de codecs necesarios.
 
 - ```gnome-tweak-tool```: Herramienta para configurar la apariencia de Gnome.
 
