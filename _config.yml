@@ -18,18 +18,24 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Andrés Duarte Márquez
+title: Algoritmo Creativo
 #email: aduartem@outlooks.es
 description: >- # this means to ignore newlines until "baseurl:"
   Tutoriales, artículos, vídeos y recursos sobre JavaScript, Angular, React, Node.JS, Python, MySQL, Linux y más. Desarrollo Web, Backend, Bases de Datos y Patrones de Diseño.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://aduartem.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 #baseurl: "/my-blog" # the subpath of your site, e.g. /blog
 #url: "https://aduartem.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: aduartem7
 github_username:  aduartem
 linkedin_username: aduartem
 #youtube_username: AndrésDuarteM
+
+picture:
+  source: "assets/images"
+  output: "assets/images/generated"
+  suppress_warnings: true
+  ignore_missing_images: false
 
 
 # Build settings
@@ -38,6 +44,7 @@ linkedin_username: aduartem
 plugins:
   - jekyll-feed
   - jemoji
+  - jekyll-seo-tag
 
 
 # Exclude from processing.

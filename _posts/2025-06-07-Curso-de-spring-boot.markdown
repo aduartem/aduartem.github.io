@@ -1,3 +1,19 @@
+---
+layout: post
+title: "Curso de Spring Boot"
+date: 2025-06-07
+categories:
+- java
+- springboot
+tags:
+- Java
+- Spring Boot
+- REST API
+image:
+  path: /assets/images/posts/2025/spring-boot.jpeg
+  alt: "Spring Boot"
+---
+
 ## Manejo de rutas dinámicas con @GetMapping y @PathVariable
 
 `@GetMapping` es una anotación que mapea solicitudes HTTP GET a métodos específicos de un controlador. `@PathVariable` se utiliza para extraer valores de la URL y asignarlos como parámetros del método.
@@ -103,7 +119,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
-    
+
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
@@ -154,7 +170,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String title;
 }
 ```
@@ -166,6 +182,7 @@ Hibernate es la implementación más popular de JPA. Spring Boot lo configura au
 ## Configuración inicial de persistencia con JPA y Hibernate
 
 1. **Dependencias en pom.xml**:
+
    ```xml
    <dependency>
        <groupId>org.springframework.boot</groupId>
@@ -200,12 +217,13 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 ## Modelado de relaciones entre entidades con JPA/Hibernate
 
 ### @OneToOne
+
 ```java
 @Entity
 public class User {
     @Id @GeneratedValue
     private Long id;
-    
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
     private UserProfile profile;
@@ -213,12 +231,13 @@ public class User {
 ```
 
 ### @OneToMany
+
 ```java
 @Entity
 public class User {
     @Id @GeneratedValue
     private Long id;
-    
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Task> tasks = new ArrayList<>();
 }
@@ -232,6 +251,7 @@ public class Task {
 ```
 
 ### @ManyToMany
+
 ```java
 @Entity
 public class Task {
@@ -254,6 +274,7 @@ public class Tag {
 ## Despliegue de aplicaciones Spring Boot con Docker: Guía práctica
 
 1. **Crear un Dockerfile**:
+
    ```Dockerfile
    FROM eclipse-temurin:17-jdk
    WORKDIR /app
@@ -262,11 +283,13 @@ public class Tag {
    ```
 
 2. **Construir la imagen**:
+
    ```bash
    docker build -t taskmanager-app .
    ```
 
 3. **Ejecutar el contenedor**:
+
    ```bash
    docker run -p 8080:8080 taskmanager-app
    ```
@@ -278,7 +301,7 @@ public class Tag {
      app:
        build: .
        ports:
-         - "8080:8080"
+         - '8080:8080'
        environment:
          - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/taskdb
        depends_on:
@@ -288,4 +311,4 @@ public class Tag {
        environment:
          - MYSQL_ROOT_PASSWORD=password
          - MYSQL_DATABASE=taskdb
-   ``````
+   ```

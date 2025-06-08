@@ -1,16 +1,19 @@
 ---
-title: 20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch
+title:
+  20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch
   Linux 2018.08.01
 layout: post
 date: '2018-11-20 00:00:00'
 categories:
-- linux
-- archlinux
+  - linux
+  - archlinux
 tags:
-- Linux
-- ArchLinux
+  - Linux
+  - ArchLinux
+image:
+  path: /assets/images/posts/2018/arch-linux.png
+  alt: "Arch Linux"
 ---
-
 
 En este artículo haré mención de 20 programas que no pueden faltar en tú sistema Arch Linux. Haré una breve descripción de cada programa y como podemos instalarlo en nuestro equipo.
 
@@ -38,7 +41,7 @@ $ sudo pacman -Ss {nombrePrograma}
 
 ## Secure Shell
 
-Cliente ssh,  nos permite usar comandos como el **ssh**, **ssh-keygen**, entre otros.
+Cliente ssh, nos permite usar comandos como el **ssh**, **ssh-keygen**, entre otros.
 
 Para instalar:
 
@@ -372,4 +375,4 @@ $ sudo pacman -S libreoffice-fresh
 $ sudo pacman -S libreoffice-fresh-es
 ```
 
-[Libre Office - Wiki Arch Linux](https://wiki.archlinux.org/index.php/LibreOffice_(Espa%C3%B1ol)#Instalaci.C3.B3n)
+[Libre Office - Wiki Arch Linux](<https://wiki.archlinux.org/index.php/LibreOffice_(Espa%C3%B1ol)#Instalaci.C3.B3n>)

@@ -1,0 +1,24 @@
+---
+layout: page
+title: Buscar
+permalink: /search/
+---
+
+<div id="search-container">
+  <input type="text" id="search-input" placeholder="Buscar en el blog..." autocomplete="off">
+  <div id="results-container"></div>
+</div>
+
+<script src="https://unpkg.com/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
+
+<script>
+  window.simpleJekyllSearch = new SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<div class="search-result"><a href="{url}">{title}</a><p>{date}</p><p>{content}</p></div>',
+    noResultsText: 'No se encontraron resultados',
+    limit: 10,
+    fuzzy: false
+  });
+</script>

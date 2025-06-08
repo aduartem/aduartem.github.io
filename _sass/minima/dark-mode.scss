@@ -1,0 +1,848 @@
+// Variables para el tema oscuro
+$dark-background-color: #121212;
+$dark-text-color: #e6e6e6;
+$dark-brand-color: #6d9eeb;
+$dark-grey-color: #828282;
+$dark-grey-color-light: lighten($dark-grey-color, 40%);
+$dark-grey-color-dark: darken($dark-grey-color, 25%);
+$dark-code-background: #2d2d2d;
+$dark-link-color: #6d9eeb;
+
+// Estilos para el tema oscuro
+body.dark-theme {
+  color: $dark-text-color;
+  background-color: $dark-background-color;
+
+  // Enlaces
+  a {
+    color: $dark-link-color;
+
+    &:visited {
+      color: darken($dark-link-color, 10%);
+    }
+
+    &:hover {
+      color: lighten($dark-link-color, 10%);
+      text-decoration: underline;
+    }
+  }
+
+  // Header
+  .site-header {
+    border-color: #333;
+    background-color: #1a1a1a;
+
+    .site-title {
+      color: $dark-text-color;
+    }
+
+    .site-nav {
+      .page-link {
+        color: $dark-text-color;
+      }
+
+      input ~ .trigger {
+        background-color: #1a1a1a;
+      }
+
+      label[for='nav-trigger'] {
+        .menu-icon {
+          path {
+            fill: $dark-text-color;
+          }
+        }
+      }
+    }
+  }
+
+  // Footer
+  .site-footer {
+    border-color: #333;
+    background-color: #1a1a1a;
+  }
+
+  // Posts
+  .post {
+    .post-meta {
+      color: $dark-grey-color;
+    }
+
+    .post-link {
+      color: $dark-link-color;
+    }
+  }
+
+  // Código
+  pre,
+  code {
+    background-color: $dark-code-background;
+    border-color: #444;
+  }
+
+  .highlight {
+    background: $dark-code-background;
+
+    .c {
+      color: #998;
+      font-style: italic;
+    }
+    .err {
+      color: #a61717;
+    }
+    .k {
+      color: #d19a66;
+    }
+    .o {
+      font-weight: bold;
+    }
+    .cm {
+      color: #998;
+      font-style: italic;
+    }
+    .cp {
+      color: #999;
+      font-weight: bold;
+    }
+    .c1 {
+      color: #998;
+      font-style: italic;
+    }
+    .cs {
+      color: #999;
+      font-weight: bold;
+      font-style: italic;
+    }
+    .gd {
+      color: #000;
+      background-color: #fdd;
+    }
+    .gd .x {
+      color: #000;
+      background-color: #faa;
+    }
+    .ge {
+      font-style: italic;
+    }
+    .gr {
+      color: #a00;
+    }
+    .gh {
+      color: #999;
+    }
+    .gi {
+      color: #000;
+      background-color: #dfd;
+    }
+    .gi .x {
+      color: #000;
+      background-color: #afa;
+    }
+    .go {
+      color: #888;
+    }
+    .gp {
+      color: #555;
+    }
+    .gs {
+      font-weight: bold;
+    }
+    .gu {
+      color: #aaa;
+    }
+    .gt {
+      color: #a00;
+    }
+    .kc {
+      color: #d19a66;
+    }
+    .kd {
+      color: #d19a66;
+    }
+    .kp {
+      color: #d19a66;
+    }
+    .kr {
+      color: #d19a66;
+    }
+    .kt {
+      color: #d19a66;
+    }
+    .m {
+      color: #099;
+    }
+    .s {
+      color: #98c379;
+    }
+    .n {
+      color: #e6e6e6;
+    }
+    .na {
+      color: #e06c75;
+    }
+    .nb {
+      color: #56b6c2;
+    }
+    .nc {
+      color: #61afef;
+      font-weight: bold;
+    }
+    .no {
+      color: #d19a66;
+    }
+    .ni {
+      color: #800080;
+    }
+    .ne {
+      color: #900;
+      font-weight: bold;
+    }
+    .nf {
+      color: #61afef;
+      font-weight: bold;
+    }
+    .nn {
+      color: #555;
+    }
+    .nt {
+      color: #e06c75;
+    }
+    .nv {
+      color: #d19a66;
+    }
+    .ow {
+      font-weight: bold;
+    }
+    .w {
+      color: #bbb;
+    }
+  }
+
+  // Tablas
+  table {
+    color: $dark-text-color;
+    border-color: #444;
+
+    tr {
+      &:nth-child(even) {
+        background-color: #242424;
+      }
+    }
+
+    th {
+      background-color: #2a2a2a;
+      border-color: #444;
+    }
+
+    td {
+      border-color: #444;
+    }
+  }
+
+  // Elementos de formulario
+  input,
+  textarea,
+  select,
+  button {
+    color: $dark-text-color;
+    background-color: #2a2a2a;
+    border-color: #444;
+  }
+
+  // Categorías y navegación
+  .category-page,
+  .categories-list,
+  .category-post-item {
+    background-color: $dark-background-color;
+    border-color: #444;
+  }
+
+  .featured-categories {
+    background-color: #1a1a1a;
+    border-color: #333;
+
+    .featured-category {
+      color: $dark-text-color;
+
+      &:hover {
+        color: $dark-brand-color;
+      }
+    }
+  }
+
+  // Estilos para bloques de código y pre
+  pre.highlight,
+  code {
+    background-color: $dark-code-background;
+  }
+
+  .highlighter-rouge {
+    .highlight {
+      background-color: $dark-code-background;
+      border: 1px solid #444;
+    }
+  }
+
+  // Estilos para bloques de cita
+  blockquote {
+    border-left: 4px solid #444;
+    color: $dark-grey-color;
+  }
+
+  // Estilos para la barra de progreso
+  .progress-container {
+    background-color: #2a2a2a;
+
+    .progress-bar {
+      background-color: $dark-brand-color;
+    }
+  }
+
+  // Botón volver arriba
+  #back-to-top {
+    background-color: #2a2a2a;
+    color: $dark-text-color;
+    border: 1px solid #444;
+
+    &:hover {
+      background-color: #333;
+    }
+  }
+
+  // Divs y contenedores genéricos
+  div,
+  section,
+  article,
+  aside,
+  header,
+  footer {
+    color: $dark-text-color;
+  }
+
+  // Cajas y bordes
+  .box,
+  .card,
+  .panel,
+  .container,
+  [class*='box-'],
+  [class*='card-'],
+  [class*='panel-'],
+  [class*='container-'] {
+    background-color: #1a1a1a !important;
+    border-color: #333 !important;
+  }
+
+  // Evitar que imágenes y SVG se oscurezcan
+  img,
+  svg {
+    filter: brightness(0.9);
+    -webkit-filter: brightness(0.9);
+  }
+
+  // Contenido e información de posts
+  .post-info {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+  }
+
+  // Elementos de resaltado
+  .highlight-flash {
+    @keyframes highlight-fade-dark {
+      0% {
+        background-color: transparent;
+      }
+      30% {
+        background-color: #2a3b4d;
+      }
+      100% {
+        background-color: transparent;
+      }
+    }
+    animation: highlight-fade-dark 1.5s ease-in-out;
+  }
+
+  // Contenedores de contenido principales
+  .page-content,
+  .post-content,
+  .wrapper {
+    background-color: $dark-background-color;
+  }
+
+  // Bloques de contenido específicos
+  .post-card {
+    background-color: #1a1a1a !important;
+    border-color: #333 !important;
+  }
+
+  .post-card-content {
+    background-color: #1a1a1a !important;
+  }
+
+  .post-category {
+    background-color: #2c3e50 !important;
+    color: #ddd !important;
+  }
+
+  .related-post {
+    background-color: #1a1a1a !important;
+    border-left-color: $dark-brand-color !important;
+  }
+
+  // Bloques de búsqueda
+  #search-input {
+    background-color: #1e1e1e !important;
+    border-color: #333 !important;
+    color: $dark-text-color !important;
+  }
+
+  .search-result {
+    border-bottom-color: #333 !important;
+  }
+
+  // Forzar fondos oscuros para elementos que puedan estar afectados por otros estilos
+  .post,
+  .post-content,
+  article,
+  .post-content > div,
+  .post-content > p,
+  .post-content > ul,
+  .post-content > ol,
+  .post-content > h1,
+  .post-content > h2,
+  .post-content > h3,
+  .post-content > h4,
+  .post-content > h5,
+  .post-content > h6,
+  .post-header,
+  .post-title,
+  .post-meta,
+  .pagination,
+  .pager,
+  #disqus_thread,
+  .related-posts,
+  .share-buttons,
+  .notice,
+  .page__content,
+  .archive,
+  .archive__item,
+  .grid__item,
+  .cell {
+    background-color: $dark-background-color !important;
+  }
+
+  // Asegurar que cualquier contenedor de código tenga el fondo correcto
+  div[class*='language-'],
+  pre[class*='language-'],
+  div.highlight,
+  pre.highlight,
+  code {
+    background-color: $dark-code-background !important;
+  }
+
+  // Índices de contenido específicos (importante para tu tema)
+  .table-of-contents,
+  .toc,
+  #markdown-toc,
+  [id^='markdown-toc-'],
+  .contents-list,
+  .contents-table,
+  .contents {
+    background-color: #1e1e1e !important;
+    border: 1px solid #333 !important;
+    color: $dark-text-color !important;
+
+    .toc-title,
+    h4,
+    h3 {
+      color: $dark-text-color !important;
+      border-bottom: 1px solid #333 !important;
+    }
+
+    ul {
+      li {
+        a {
+          color: $dark-link-color !important;
+
+          &:hover {
+            color: lighten($dark-link-color, 10%) !important;
+          }
+        }
+      }
+    }
+  }
+
+  // Mejorar el contraste de la categoría seleccionada en modo oscuro
+  .category-page,
+  .categories-list {
+    .category-button.active,
+    .category-link.active,
+    .featured-category.active,
+    a.active {
+      background-color: #28384a !important;
+      color: #fff !important;
+      border-color: $dark-brand-color !important;
+      text-decoration: none !important;
+      box-shadow: 0 0 5px rgba(109, 158, 235, 0.5) !important;
+    }
+  }
+
+  // Estilos para las categorías en la barra lateral
+  .sidebar-categories,
+  .sidebar-module {
+    li.active > a,
+    a.active {
+      background-color: #28384a !important;
+      color: #fff !important;
+      border-left: 3px solid $dark-brand-color !important;
+      padding-left: 10px !important;
+      font-weight: bold !important;
+    }
+  }
+
+  // Estilos para la categoría actual en la página de categoría
+  .current-category,
+  .category-title,
+  .category-heading {
+    border-bottom: 2px solid $dark-brand-color !important;
+    color: lighten($dark-brand-color, 10%) !important;
+
+    &:after {
+      background-color: $dark-brand-color !important;
+    }
+  }
+
+  // Categorías en modo oscuro
+  .featured-categories {
+    .featured-category {
+      &.active,
+      &.current,
+      &:active,
+      &.selected {
+        background-color: #28384a !important;
+        color: #fff !important;
+        border-bottom: 2px solid $dark-brand-color !important;
+      }
+
+      &:hover {
+        background-color: #1e2a38 !important;
+        color: $dark-brand-color !important;
+      }
+    }
+  }
+
+  // Menú lateral específico
+  .sidebar,
+  .sidebar-nav,
+  .side-menu,
+  .side-content {
+    background-color: #1a1a1a !important;
+    border-color: #333 !important;
+
+    h2,
+    h3,
+    h4,
+    .sidebar-heading {
+      color: $dark-text-color !important;
+      border-bottom-color: #333 !important;
+    }
+
+    ul,
+    ol,
+    li {
+      background-color: transparent !important;
+    }
+
+    a {
+      color: $dark-text-color !important;
+
+      &:hover {
+        color: $dark-brand-color !important;
+        background-color: #1e2a38 !important;
+      }
+
+      &.active,
+      &.current,
+      &:active,
+      &.selected {
+        background-color: #28384a !important;
+        color: #fff !important;
+        border-left: 3px solid $dark-brand-color !important;
+        font-weight: bold;
+      }
+    }
+
+    // Submenús
+    ul.submenu,
+    ol.submenu,
+    .dropdown-content {
+      background-color: #1e1e1e !important;
+      border: 1px solid #333 !important;
+    }
+  }
+
+  // Lista de menús y navegación lateral
+  nav.sidebar-nav,
+  ul.sidebar-nav,
+  .site-sidebar,
+  aside.sidebar {
+    background-color: #1a1a1a !important;
+
+    li {
+      border-bottom-color: #333 !important;
+
+      &:hover {
+        background-color: #1e2a38 !important;
+      }
+
+      &.active {
+        background-color: #28384a !important;
+
+        > a {
+          color: #fff !important;
+          border-left: 3px solid $dark-brand-color !important;
+          padding-left: 10px !important;
+        }
+      }
+    }
+  }
+
+  // Widgets y componentes del sidebar
+  .widget,
+  .sidebar-module,
+  .sidebar-box {
+    background-color: #1a1a1a !important;
+    border: 1px solid #333 !important;
+    color: $dark-text-color !important;
+
+    .widget-title,
+    .sidebar-module-title,
+    h3,
+    h4 {
+      color: $dark-text-color !important;
+      border-bottom: 1px solid #333 !important;
+    }
+
+    ul li {
+      border-bottom-color: #333 !important;
+    }
+  }
+
+  // Elementos específicos del menú lateral
+  .side-tags,
+  .tag-cloud,
+  .recent-posts,
+  .archives,
+  .categories-list-side {
+    a {
+      background-color: #1e1e1e !important;
+      border-color: #333 !important;
+      color: $dark-text-color !important;
+
+      &:hover {
+        background-color: #28384a !important;
+        color: $dark-brand-color !important;
+      }
+
+      &.active {
+        background-color: #28384a !important;
+        color: #fff !important;
+        border-color: $dark-brand-color !important;
+      }
+    }
+  }
+
+  // Anuncio o card en la barra lateral
+  .sidebar-card,
+  .sidebar-promotion,
+  .sidebar-about {
+    background-color: #1a1a1a !important;
+    border: 1px solid #333 !important;
+
+    h3,
+    h4,
+    h5 {
+      color: $dark-text-color !important;
+    }
+
+    p,
+    span {
+      color: $dark-grey-color-light !important;
+    }
+
+    img {
+      opacity: 0.9;
+    }
+  }
+
+  // Menú lateral específico
+  .sidebar,
+  .sidebar-nav,
+  .side-menu,
+  .side-content {
+    background-color: #1a1a1a !important;
+    border-color: #333 !important;
+
+    h2,
+    h3,
+    h4,
+    .sidebar-heading {
+      color: $dark-text-color !important;
+      border-bottom-color: #333 !important;
+    }
+
+    ul,
+    ol,
+    li {
+      background-color: transparent !important;
+    }
+
+    a {
+      color: $dark-text-color !important;
+
+      &:hover {
+        color: $dark-brand-color !important;
+        background-color: #1e2a38 !important;
+      }
+
+      &.active,
+      &.current,
+      &:active,
+      &.selected {
+        background-color: #28384a !important;
+        color: #fff !important;
+        border-left: 3px solid $dark-brand-color !important;
+        font-weight: bold;
+      }
+    }
+
+    // Submenús
+    ul.submenu,
+    ol.submenu,
+    .dropdown-content {
+      background-color: #1e1e1e !important;
+      border: 1px solid #333 !important;
+    }
+  }
+
+  // Lista de menús y navegación lateral
+  nav.sidebar-nav,
+  ul.sidebar-nav,
+  .site-sidebar,
+  aside.sidebar {
+    background-color: #1a1a1a !important;
+
+    li {
+      border-bottom-color: #333 !important;
+
+      &:hover {
+        background-color: #1e2a38 !important;
+      }
+
+      &.active {
+        background-color: #28384a !important;
+
+        > a {
+          color: #fff !important;
+          border-left: 3px solid $dark-brand-color !important;
+          padding-left: 10px !important;
+        }
+      }
+    }
+  }
+
+  // Widgets y componentes del sidebar
+  .widget,
+  .sidebar-module,
+  .sidebar-box {
+    background-color: #1a1a1a !important;
+    border: 1px solid #333 !important;
+    color: $dark-text-color !important;
+
+    .widget-title,
+    .sidebar-module-title,
+    h3,
+    h4 {
+      color: $dark-text-color !important;
+      border-bottom: 1px solid #333 !important;
+    }
+
+    ul li {
+      border-bottom-color: #333 !important;
+    }
+  }
+
+  // Elementos específicos del menú lateral
+  .side-tags,
+  .tag-cloud,
+  .recent-posts,
+  .archives,
+  .categories-list-side {
+    a {
+      background-color: #1e1e1e !important;
+      border-color: #333 !important;
+      color: $dark-text-color !important;
+
+      &:hover {
+        background-color: #28384a !important;
+        color: $dark-brand-color !important;
+      }
+
+      &.active {
+        background-color: #28384a !important;
+        color: #fff !important;
+        border-color: $dark-brand-color !important;
+      }
+    }
+  }
+
+  // Anuncio o card en la barra lateral
+  .sidebar-card,
+  .sidebar-promotion,
+  .sidebar-about {
+    background-color: #1a1a1a !important;
+    border: 1px solid #333 !important;
+
+    h3,
+    h4,
+    h5 {
+      color: $dark-text-color !important;
+    }
+
+    p,
+    span {
+      color: $dark-grey-color-light !important;
+    }
+
+    img {
+      opacity: 0.9;
+    }
+  }
+
+  body.dark-theme {
+    .about-title {
+      color: #aaa;
+    }
+  }
+
+  // body.dark-theme {
+  //   .banner-container {
+  //     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  //   }
+
+  //   .about-avatar {
+  //     border-color: #333;
+  //   }
+
+  //   .banner-title {
+  //     color: #eee;
+  //   }
+  // }
+  body.dark-theme {
+    .banner-container {
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .about-avatar {
+      border-color: #333;
+    }
+  }
+}

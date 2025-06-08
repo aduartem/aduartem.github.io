@@ -1,20 +1,70 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+<html lang="{{ page.lang | default: site.lang | default: " en" }}">
 
-  {%- include head.html -%}
+{%- include head.html -%}
 
-  <body>
+<body>
 
-    {%- include header.html -%}
+  <!-- Barra de progreso de lectura -->
+  <div class="progress-container">
+    <div class="progress-bar" id="readingProgress"></div>
+  </div>
 
-    <main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        {{ content }}
-      </div>
-    </main>
+  <script>
+    // Solo activar en páginas de artículos
+    if (document.querySelector('.post')) {
+      // Cuando el usuario hace scroll, actualiza la barra de progreso
+      window.onscroll = function () {
+        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var scrolled = (winScroll / height) * 100;
+        document.getElementById("readingProgress").style.width = scrolled + "%";
 
-    {%- include footer.html -%}
+        // Mostrar botón cuando usuario baja 300px (mantener código del botón arriba)
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+          document.getElementById("back-to-top").style.display = "block";
+        } else {
+          document.getElementById("back-to-top").style.display = "none";
+        }
+      };
+    }
+  </script>
 
-  </body>
+  {%- include header.html -%}
+
+  <main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      {{ content }}
+    </div>
+  </main>
+
+  {%- include footer.html -%}
+
+  <!-- Botón Volver Arriba -->
+  <button onclick="topFunction()" id="back-to-top" title="Volver arriba">▲</button>
+
+  <script>
+    // Botón de volver arriba
+    var backToTopButton = document.getElementById("back-to-top");
+
+    // Mostrar botón cuando usuario baja 300px
+    window.onscroll = function () {
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        backToTopButton.style.display = "block";
+      } else {
+        backToTopButton.style.display = "none";
+      }
+    };
+
+    // Cuando el usuario hace clic, scroll hasta arriba
+    function topFunction() {
+      document.body.scrollTop = 0; // Para Safari
+      document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE y Opera
+    }
+  </script>
+
+  <script src="{{ site.baseurl }}/assets/js/theme-switcher.js"></script>
+
+</body>
 
 </html>
