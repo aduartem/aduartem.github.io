@@ -4,6 +4,8 @@ title: Buscar
 permalink: /search/
 ---
 
+{% include page-banner.html %}
+
 <div id="search-container">
   <input type="text" id="search-input" placeholder="Buscar en el blog..." autocomplete="off">
   <div id="results-container"></div>
@@ -16,7 +18,7 @@ permalink: /search/
     searchInput: document.getElementById('search-input'),
     resultsContainer: document.getElementById('results-container'),
     json: '/search.json',
-    searchResultTemplate: '<div class="search-result"><a href="{url}">{title}</a><p>{date}</p><p>{content}</p></div>',
+    searchResultTemplate: '<div class="search-result"><a href="{url}">{title}</a><p class="date">{date}</p><p class="content">{content}</p></div>',
     noResultsText: 'No se encontraron resultados',
     limit: 10,
     fuzzy: false

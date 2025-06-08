@@ -4,6 +4,8 @@ title: Categorías
 permalink: /categories/
 ---
 
+{% include page-banner.html %}
+
 <div class="categories-container">
   <!-- Barra lateral para navegación de categorías (visible solo en escritorio) -->
   <div class="categories-sidebar">
@@ -20,8 +22,6 @@ permalink: /categories/
 
   <!-- Contenido principal de categorías -->
   <div class="categories-content">
-    <h1 class="page-heading">{{ page.title }}</h1>
-
     {% assign categories_sorted = site.categories | sort %}
     {% for category in categories_sorted %}
     <div class="category-section" id="{{ category[0] | slugify }}">

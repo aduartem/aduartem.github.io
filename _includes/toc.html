@@ -5,23 +5,18 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    // Encuentra todos los encabezados h2 y h3
     const headings = document.querySelectorAll('.post-content h2, .post-content h3');
     const toc = document.getElementById('markdown-toc');
 
-    // Genera la tabla de contenidos
     headings.forEach(function (heading, index) {
-      // Crea un ID único para cada encabezado
       const id = 'heading-' + index;
       heading.id = id;
 
-      // Crea el elemento de la tabla de contenidos
       const li = document.createElement('li');
       const a = document.createElement('a');
       a.textContent = heading.textContent;
       a.href = '#' + id;
 
-      // Ajusta la clase según el nivel del encabezado
       if (heading.tagName === 'H3') {
         li.classList.add('toc-h3');
       }

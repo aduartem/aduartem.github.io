@@ -2,6 +2,8 @@
 layout: default
 ---
 
+{% include page-banner.html %}
+
 <div class="category-page">
   <h1 class="category-title">{{ page.category | capitalize }}</h1>
 
@@ -13,30 +15,42 @@ layout: default
     {% assign filtered_posts = site.posts | where_exp: "post", "post.categories contains page.category" %}
 
     {% for post in filtered_posts %}
-      <div class="category-post-item">
-        <h2>
-          <a class="post-link" href="{{ post.url | relative_url }}">
-            {{ post.title | escape }}
+    <div class="category-post-item">
+      <div class="post-item-content">
+        {% if post.image %}
+        <div class="post-thumbnail">
+          <a href="{{ post.url | relative_url }}">
+            <img src="{{ post.image.path | relative_url }}" alt="{{ post.image.alt | default: post.title }}"
+              class="post-thumbnail-image">
           </a>
-        </h2>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-        <div class="post-excerpt">
-          {{ post.excerpt | strip_html | truncatewords: 50 }}
-          <a href="{{ post.url | relative_url }}" class="read-more">Leer más →</a>
+        </div>
+        {% endif %}
+        <div class="post-info">
+          <h2>
+            <a class="post-link" href="{{ post.url | relative_url }}">
+              {{ post.title | escape }}
+            </a>
+          </h2>
+          <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+          <div class="post-excerpt">
+            {{ post.excerpt | strip_html | truncatewords: 30 }}
+            <a href="{{ post.url | relative_url }}" class="read-more">Leer más →</a>
+          </div>
         </div>
       </div>
+    </div>
     {% endfor %}
   </div>
 
   <div class="all-categories">
-    <h3>Todas las categorías</h3>
+    <h3 class="all-categories-title">Todas las categorías</h3>
     <ul class="categories-list">
       {% assign all_categories = site.categories | sort %}
       {% for category in all_categories %}
-        <li>
-          <a href="/category/{{ category[0] | slugify }}/">{{ category[0] }}</a>
-          <span class="category-count">({{ category[1].size }})</span>
-        </li>
+      <li>
+        <a href="/category/{{ category[0] | slugify }}/">{{ category[0] }}</a>
+        <span class="category-count">({{ category[1].size }})</span>
+      </li>
       {% endfor %}
     </ul>
   </div>

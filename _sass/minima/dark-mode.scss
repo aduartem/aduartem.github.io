@@ -1,17 +1,25 @@
 // Variables para el tema oscuro
-$dark-background-color: #121212;
+$dark-background-color: #1a1a1a;
 $dark-text-color: #e6e6e6;
-$dark-brand-color: #6d9eeb;
+$dark-brand-color: #4cacfc;
 $dark-grey-color: #828282;
 $dark-grey-color-light: lighten($dark-grey-color, 40%);
 $dark-grey-color-dark: darken($dark-grey-color, 25%);
 $dark-code-background: #2d2d2d;
-$dark-link-color: #6d9eeb;
+$dark-link-color: #4cacfc;
 
 // Estilos para el tema oscuro
 body.dark-theme {
   color: $dark-text-color;
   background-color: $dark-background-color;
+
+  .date {
+    color: $dark-grey-color;
+  }
+
+  .content {
+    color: $dark-text-color;
+  }
 
   // Enlaces
   a {
@@ -59,17 +67,6 @@ body.dark-theme {
   .site-footer {
     border-color: #333;
     background-color: #1a1a1a;
-  }
-
-  // Posts
-  .post {
-    .post-meta {
-      color: $dark-grey-color;
-    }
-
-    .post-link {
-      color: $dark-link-color;
-    }
   }
 
   // Código
@@ -338,12 +335,6 @@ body.dark-theme {
     -webkit-filter: brightness(0.9);
   }
 
-  // Contenido e información de posts
-  .post-info {
-    background-color: #1e1e1e;
-    border: 1px solid #333;
-  }
-
   // Elementos de resaltado
   .highlight-flash {
     @keyframes highlight-fade-dark {
@@ -358,6 +349,7 @@ body.dark-theme {
       }
     }
     animation: highlight-fade-dark 1.5s ease-in-out;
+    -webkit-animation: highlight-fade-dark 1.5s ease-in-out;
   }
 
   // Contenedores de contenido principales
@@ -446,24 +438,57 @@ body.dark-theme {
   .contents-list,
   .contents-table,
   .contents {
-    background-color: #1e1e1e !important;
-    border: 1px solid #333 !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
     color: $dark-text-color !important;
 
+    // Asegurar que la posición y márgenes sean idénticos al tema claro
+    margin: 0 0 20px 0 !important; // Asegurar margen consistente
+    position: relative !important; // Mantener posicionamiento relativo
+    left: 0 !important; // Evitar desplazamiento horizontal
+    top: 0 !important; // Evitar desplazamiento vertical
+
+    // Fondo sutil que no afecte el posicionamiento
+    background: linear-gradient(
+      to right,
+      rgba(30, 30, 30, 0.3),
+      rgba(30, 30, 30, 0.1)
+    ) !important;
+    border-radius: 8px !important;
+    padding: 15px 20px !important; // Mantener el mismo padding que en el tema claro
+
+    // El resto de tus estilos existentes...
     .toc-title,
     h4,
     h3 {
-      color: $dark-text-color !important;
+      color: #cecac3 !important;
       border-bottom: 1px solid #333 !important;
+      padding-bottom: 8px !important;
+      margin-bottom: 15px !important;
+      margin-top: 0 !important; // Asegurar sin margen superior extra
     }
 
     ul {
+      margin-left: 1.2em !important;
+      padding-left: 0 !important; // Asegurar consistencia
+
       li {
+        margin-bottom: 5px !important;
+
+        // Estilos para elementos anidados (H3)
+        &.toc-h3 {
+          margin-left: 1em !important; // Identación para H3 consistente
+        }
+
         a {
-          color: $dark-link-color !important;
+          color: #cecac3 !important;
+          transition: color 0.2s ease;
 
           &:hover {
-            color: lighten($dark-link-color, 10%) !important;
+            color: #e8e4db !important;
+            text-decoration: underline;
+            text-underline-offset: 2px;
           }
         }
       }
@@ -477,11 +502,11 @@ body.dark-theme {
     .category-link.active,
     .featured-category.active,
     a.active {
-      background-color: #28384a !important;
-      color: #fff !important;
-      border-color: $dark-brand-color !important;
+      background-color: #2a2a2a !important; // Era #28384a
+      color: #cecac3 !important; // Era #fff
+      border-color: #cecac3 !important; // Era $dark-brand-color
       text-decoration: none !important;
-      box-shadow: 0 0 5px rgba(109, 158, 235, 0.5) !important;
+      box-shadow: 0 0 5px rgba(206, 202, 195, 0.3) !important; // Era rgba(109, 158, 235, 0.5)
     }
   }
 
@@ -502,11 +527,11 @@ body.dark-theme {
   .current-category,
   .category-title,
   .category-heading {
-    border-bottom: 2px solid $dark-brand-color !important;
-    color: lighten($dark-brand-color, 10%) !important;
+    border-bottom: 1px solid #222222 !important;
+    color: #cecac3 !important;
 
     &:after {
-      background-color: $dark-brand-color !important;
+      background-color: #cecac3 !important;
     }
   }
 
@@ -823,19 +848,6 @@ body.dark-theme {
     }
   }
 
-  // body.dark-theme {
-  //   .banner-container {
-  //     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  //   }
-
-  //   .about-avatar {
-  //     border-color: #333;
-  //   }
-
-  //   .banner-title {
-  //     color: #eee;
-  //   }
-  // }
   body.dark-theme {
     .banner-container {
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -844,5 +856,178 @@ body.dark-theme {
     .about-avatar {
       border-color: #333;
     }
+  }
+
+  /* Estilos para la página de categorías en modo oscuro */
+  .category-page {
+    color: #e1e1e1;
+  }
+
+  .category-title {
+    color: #cecac3;
+  }
+
+  .category-description {
+    color: #d4d4d4;
+
+    strong {
+      color: #ffffff;
+    }
+  }
+
+  .all-categories h3 {
+    color: #f0f0f0;
+    font-weight: 600;
+  }
+
+  .categories-list {
+    color: #d4d4d4;
+
+    a {
+      color: #f0f6fc !important;
+
+      &:hover {
+        color: #ffffff !important;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .all-categories-title {
+    color: #f0f6fc !important;
+  }
+
+  .category-list li a,
+  .category-nav a,
+  .categories-page a,
+  .all-categories a {
+    color: #f0f6fc !important;
+
+    &:hover {
+      color: #ffffff !important;
+    }
+  }
+
+  .category-count {
+    color: #aaaaaa;
+  }
+
+  .post-link {
+    color: #cecac3 !important;
+  }
+
+  /* Estilos para posts en categorías */
+  .category-post-item {
+    border-bottom-color: #333;
+
+    .post-link {
+      color: #cecac3 !important; // Cambiado para mantener consistencia
+    }
+
+    .post-meta {
+      color: #b0b0b0;
+    }
+
+    .read-more {
+      color: #b8b4ae !important; // Un tono similar pero más oscuro para enlaces secundarios
+    }
+  }
+
+  .post-list-by-category li {
+    border-bottom: 1px solid #444;
+  }
+
+  .category-nav a.active {
+    background-color: #1c1e1f;
+  }
+
+  .category-nav a:hover {
+    background-color: #1c1e1f;
+  }
+
+  .post-category {
+    display: inline-block;
+    background-color: #2a3036;
+    color: #0366d6;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
+  .post-link,
+  .category-post-item .post-link,
+  h2 .post-link,
+  h2 a.post-link,
+  .post-list h3 a.post-link,
+  .post-list-by-category a.post-link {
+    color: #cecac3 !important;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-block;
+
+    &:hover {
+      color: #e8e4db !important;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+
+    // Anular explícitamente la regla general
+    &:visited:hover {
+      color: #e8e4db !important;
+    }
+  }
+
+  // Para el enlace "Leer más" con un estilo distinto
+  .post h2 a:hover,
+  .home .post-list h3 a:hover,
+  .category-page .post-list h3 a:hover,
+  .post-title a:hover {
+    color: #e8e4db !important;
+    text-decoration: underline !important;
+    text-underline-offset: 3px !important;
+  }
+
+  // Resultados de búsqueda
+  #results-container .search-result a,
+  .search-result a.post-link,
+  #search-container .post-link {
+    color: #cecac3 !important;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-block;
+
+    &:hover {
+      color: #e8e4db !important;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+
+    &:visited,
+    &:visited:hover {
+      color: #e8e4db !important;
+    }
+  }
+
+  // Para asegurar que la fecha y el contenido también tengan colores apropiados
+  #results-container .search-result .date,
+  .search-result .date {
+    color: #b0b0b0 !important;
+  }
+
+  #results-container .search-result .content,
+  .search-result .content {
+    color: #d4d4d4 !important;
+  }
+
+  // Si hay resaltado de términos de búsqueda
+  .search-highlight,
+  .search-term,
+  .highlighted-term {
+    background-color: rgba(206, 202, 195, 0.2) !important;
+    color: #f0f6fc !important;
+    padding: 0 2px;
   }
 }

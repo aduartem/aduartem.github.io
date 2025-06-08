@@ -3,8 +3,8 @@
   background-color: #f8f9fa;
   border: 1px solid #eaecef;
   border-radius: 3px;
-  padding: 15px;
-  margin-bottom: 30px;
+  padding: 15px 20px;
+  margin: 0 0 20px 0;
 }
 
 .toc h4 {
@@ -509,46 +509,6 @@ code.language-java {
   }
 }
 
-/* Estilos para páginas de categoría individual */
-.category-page {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.category-title {
-  font-size: 2.5rem;
-  color: #0366d6;
-  margin-bottom: 10px;
-}
-
-.category-description {
-  color: #586069;
-  margin-bottom: 40px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e1e4e8;
-}
-
-.category-post-item {
-  margin-bottom: 40px;
-  padding-bottom: 30px;
-  border-bottom: 1px solid #eaecef;
-}
-
-.category-post-item h2 {
-  margin-bottom: 5px;
-}
-
-.category-post-item .post-link {
-  color: #24292e;
-  font-size: 1.5rem;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.category-post-item .post-link:hover {
-  color: #0366d6;
-}
-
 .post-excerpt {
   color: #444d56;
   margin-top: 10px;
@@ -565,17 +525,6 @@ code.language-java {
 
 .read-more:hover {
   text-decoration: underline;
-}
-
-.all-categories {
-  margin-top: 50px;
-  padding-top: 30px;
-  border-top: 1px solid #e1e4e8;
-}
-
-.all-categories h3 {
-  margin-bottom: 15px;
-  color: #24292e;
 }
 
 .categories-list {
@@ -779,7 +728,7 @@ code.language-java {
 .page-banner {
   width: 100%;
   display: block;
-  height: 220px;
+  height: 220px; /* Altura fija para el banner */
   object-fit: cover;
   object-position: center;
 }
@@ -789,7 +738,7 @@ code.language-java {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 46px;
+  padding: 50px 20px 50px 20px;
   background: linear-gradient(
     to right,
     rgba(0, 0, 0, 0.7),
@@ -813,18 +762,17 @@ code.language-java {
   border: 4px solid white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   margin-right: 20px;
+  flex-shrink: 0; /* Esto evita que la imagen se comprima */
 }
 
 .banner-text {
   color: white;
-  /* Elimina cualquier margin-top o margin-bottom que pudiera desplazarlo */
-  margin: 0;
 }
 
 .banner-title {
   margin: 0;
-  color: white;
   font-size: 1.8rem;
+  color: white;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
@@ -837,20 +785,55 @@ code.language-java {
 
 @media (max-width: 768px) {
   .profile-overlay {
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.7),
-      rgba(0, 0, 0, 0.4),
-      rgba(0, 0, 0, 0)
-    );
-    flex-direction: column;
+    flex-direction: row; /* Mantener horizontal incluso en móvil */
     align-items: center;
-    text-align: center;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0.6)
+    );
+    padding: 50px 20px 50px 20px;
   }
 
   .about-avatar {
-    margin-right: 0;
-    margin-bottom: 15px;
+    width: 80px; /* Imagen más pequeña en móviles */
+    height: 80px;
+    margin-right: 15px;
+    margin-bottom: 0; /* Eliminar cualquier margen inferior */
+    position: relative; /* Asegurar que esté correctamente posicionado */
+    top: 0; /* Evitar que se desplace hacia arriba */
+  }
+
+  .banner-title {
+    font-size: 1.4rem; /* Título más pequeño en móviles */
+  }
+
+  .banner-subtitle {
+    font-size: 0.9rem; /* Subtítulo más pequeño en móviles */
+  }
+
+  .page-banner {
+    height: 180px; /* Banner más pequeño en móviles */
+  }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .profile-overlay {
+    padding: 50px 20px 50px 20px;
+  }
+
+  .about-avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .banner-title {
+    font-size: 1.2rem;
+  }
+
+  .banner-subtitle {
+    font-size: 0.8rem;
   }
 }
 

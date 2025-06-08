@@ -1,0 +1,167 @@
+// Fuentes de Medium
+$medium-serif: 'Playfair Display', 'Charter', 'Georgia', Cambria,
+  'Times New Roman', Times, serif;
+$medium-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue',
+  Arial, sans-serif;
+$medium-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier,
+  monospace;
+
+// Aplicar fuentes de Medium al sitio
+body {
+  font-family: $medium-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+// Eliminar la segunda declaración de body que sobrescribe la anterior
+// body {
+//   font-family: 'Playfair Display', $medium-serif;
+// }
+
+// Títulos y elementos UI con la fuente sans-serif de Medium
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.site-title,
+.site-nav,
+.post-title,
+.category-title,
+.featured-category,
+.category-button,
+.site-header,
+.site-footer,
+.theme-switch__label,
+.sidebar,
+.sidebar-module-title,
+.post-meta,
+.read-more,
+button,
+.button,
+input[type='submit'],
+.pagination,
+.site-description,
+.search-input,
+.all-categories-title,
+.category-count,
+#results-container {
+  font-family: $medium-sans;
+}
+
+// Ajustes específicos para navegación
+.site-nav {
+  font-size: 16px;
+  font-weight: 500;
+
+  .page-link {
+    letter-spacing: 0.01em;
+  }
+}
+
+// Ajustes para la barra lateral
+.sidebar {
+  font-size: 16px;
+
+  .sidebar-module-title {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  ul li {
+    margin-bottom: 0.5em;
+  }
+}
+
+// Ajustes para categorías y tags
+.category-button,
+.tag,
+.post-category {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+// Estilos para el footer
+.site-footer {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+// Ajustes para metadatos de posts
+.post-meta {
+  font-size: 15px;
+  color: #757575;
+  letter-spacing: 0.01em;
+}
+
+// Ajustes para el contenido principal
+.post-content {
+  p {
+    margin-bottom: 1.8em;
+    font-size: 18px;
+  }
+
+  h2 {
+    margin-top: 1.8em;
+    margin-bottom: 0.8em;
+    font-weight: 600;
+    font-size: 1.8em;
+  }
+
+  h3 {
+    margin-top: 1.6em;
+    font-weight: 600;
+    font-size: 1.4em;
+  }
+
+  blockquote {
+    font-style: italic;
+    border-left: 3px solid #ccc;
+    padding-left: 20px;
+    margin-left: 0;
+    color: #555;
+  }
+
+  code {
+    font-family: $medium-mono;
+    font-size: 0.9em;
+  }
+}
+
+// Botones y controles
+button,
+.button,
+input[type='submit'] {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+// Elementos de búsqueda
+#search-input {
+  font-family: $medium-sans;
+  font-size: 16px;
+}
+
+.search-result .date {
+  font-family: $medium-sans;
+  font-size: 14px;
+}
+
+// Ajustes para modo oscuro
+body.dark-theme {
+  .post-content blockquote {
+    color: #b0b0b0;
+    border-color: #444;
+  }
+
+  .post-meta {
+    color: #b0b0b0;
+  }
+}
+
+// Mantén la importación de Playfair Display
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
