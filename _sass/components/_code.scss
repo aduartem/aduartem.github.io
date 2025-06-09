@@ -1,0 +1,266 @@
+$code-bg-light: #f8f8f8;
+$code-bg-dark: #2d2d2d;
+
+// Estilos compartidos para los bloques de código en ambos temas
+// Estructura del bloque de código
+pre.highlight,
+div.highlight,
+.highlighter-rouge .highlight {
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  overflow-x: auto; // Permitir scroll horizontal
+  position: relative; // Para posicionar el botón de copiar
+}
+
+.highlighter-rouge pre.highlight {
+  border: none;
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto; // Permitir scroll horizontal
+}
+
+.highlighter-rouge {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+  overflow: visible; // Permitir que el botón de copiar sea visible fuera del contenedor
+}
+
+// Estilos para el botón de copiar código
+.highlight-wrapper {
+  position: relative;
+  margin-bottom: 1.5rem;
+
+  &:hover .copy-code-button {
+    opacity: 1;
+  }
+}
+
+.copy-code-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(240, 240, 240, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #666;
+  padding: 3px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0;
+  z-index: 2;
+
+  &:hover {
+    background: rgba(225, 225, 225, 0.9);
+    color: #333;
+  }
+
+  &.copied {
+    background: #e6f0ff;
+    color: #0366d6;
+  }
+}
+
+// Estilos de syntax highlighting para AMBOS temas
+// Usando la paleta de colores del tema oscuro que te gustó
+.highlight {
+  // Colores del tema oscuro que se aplicarán a ambos temas
+  .c {
+    color: #998;
+    font-style: italic;
+  }
+  .err {
+    color: #a61717;
+  }
+  .k {
+    color: #d19a66;
+  }
+  .o {
+    font-weight: bold;
+  }
+  .cm {
+    color: #998;
+    font-style: italic;
+  }
+  .cp {
+    color: #999;
+    font-weight: bold;
+  }
+  .c1 {
+    color: #998;
+    font-style: italic;
+  }
+  .cs {
+    color: #999;
+    font-weight: bold;
+    font-style: italic;
+  }
+  .gd {
+    color: #000;
+    background-color: #fdd;
+  }
+  .gd .x {
+    color: #000;
+    background-color: #faa;
+  }
+  .ge {
+    font-style: italic;
+  }
+  .gr {
+    color: #a00;
+  }
+  .gh {
+    color: #999;
+  }
+  .gi {
+    color: #000;
+    background-color: #dfd;
+  }
+  .gi .x {
+    color: #000;
+    background-color: #afa;
+  }
+  .go {
+    color: #888;
+  }
+  .gp {
+    color: #555;
+  }
+  .gs {
+    font-weight: bold;
+  }
+  .gu {
+    color: #aaa;
+  }
+  .gt {
+    color: #a00;
+  }
+  .kc {
+    color: #d19a66;
+  }
+  .kd {
+    color: #d19a66;
+  }
+  .kp {
+    color: #d19a66;
+  }
+  .kr {
+    color: #d19a66;
+  }
+  .kt {
+    color: #d19a66;
+  }
+  .m {
+    color: #099;
+  }
+  .s {
+    color: #98c379;
+  }
+  .na {
+    color: #e06c75;
+  }
+  .nb {
+    color: #56b6c2;
+  }
+  .nc {
+    color: #61afef;
+    font-weight: bold;
+  }
+  .no {
+    color: #d19a66;
+  }
+  .ni {
+    color: #800080;
+  }
+  .ne {
+    color: #900;
+    font-weight: bold;
+  }
+  .nf {
+    color: #61afef;
+    font-weight: bold;
+  }
+  .nn {
+    color: #555;
+  }
+  .nt {
+    color: #e06c75;
+  }
+  .nv {
+    color: #d19a66;
+  }
+  .ow {
+    font-weight: bold;
+  }
+  .w {
+    color: #bbb;
+  }
+}
+
+// Ajustes específicos para el tema claro
+body:not(.dark-theme) {
+  pre.highlight,
+  div.highlight,
+  .highlighter-rouge .highlight {
+    background-color: $code-bg-light;
+    border: 1px solid #e8e8e8;
+  }
+
+  // Asegurarse de que el texto sea legible con el fondo claro
+  .highlight .n {
+    color: #333; // En el tema claro, necesitamos texto más oscuro
+  }
+}
+
+// Ajustes específicos para el tema oscuro
+body.dark-theme {
+  pre.highlight,
+  div.highlight,
+  .highlighter-rouge .highlight {
+    background-color: $code-bg-dark;
+    border: 1px solid #444;
+  }
+
+  // Estilos específicos para el tema oscuro
+  .highlight .n {
+    color: #e6e6e6; // Mantener el texto claro en fondo oscuro
+  }
+
+  // Ajustar el botón de copiar para el tema oscuro
+  .copy-code-button {
+    background: rgba(60, 60, 60, 0.9);
+    border: 1px solid #555;
+    color: #e6e6e6;
+
+    &:hover {
+      background: rgba(80, 80, 80, 0.9);
+      color: #fff;
+    }
+
+    &.copied {
+      background: #28384a;
+      color: #fff;
+    }
+  }
+}
+
+// Código en línea
+code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.9em;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+}
+
+// Ajuste para código en línea según el tema
+body:not(.dark-theme) code {
+  background-color: rgba(27, 31, 35, 0.05);
+  color: #24292e;
+}
+
+body.dark-theme code {
+  background-color: #2d2d2d;
+  color: #e6e6e6;
+}

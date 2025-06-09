@@ -15,7 +15,7 @@ image:
 
 Esta es una guía paso a paso de como instalar Arch Linux 2022.06.01 x86_64. Con esta guía el usuario será capaz de cambiar el idioma del teclado, particionar el disco, realizar la instalación de un entorno de escritorio y más, todo el proceso se realiza por línea de comandos.
 
-### 1. Instalación base
+## 1. Instalación base
 
 Vamos a seleccionar la primera opción "Arch Linux install medium (x86_64, BIOS)"
 

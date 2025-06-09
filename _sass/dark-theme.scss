@@ -1,3 +1,5 @@
+/* @import "variables"; */
+
 // Variables para el tema oscuro
 $dark-background-color: #1a1a1a;
 $dark-text-color: #e6e6e6;
@@ -214,6 +216,71 @@ body.dark-theme {
     }
   }
 
+  pre.highlight,
+  div.highlight,
+  .highlighter-rouge .highlight {
+    background-color: $dark-code-background;
+    border: 1px solid #444;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    overflow-x: auto; // Cambiado de overflow: hidden a overflow-x: auto
+    position: relative; // Para posicionar el botón de copiar
+  }
+
+  // Eliminar posibles márgenes o bordes duplicados
+  .highlighter-rouge pre.highlight {
+    border: none;
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto; // Explícitamente permitir scroll horizontal
+  }
+
+  // Asegurar que no haya superposición de bloques
+  .highlighter-rouge {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    overflow: visible; // Permitir que el botón de copiar sea visible fuera del contenedor
+  }
+
+  // Botón de copiar código
+  .copy-code-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(240, 240, 240, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #666;
+    padding: 3px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0;
+    z-index: 2;
+
+    &:hover {
+      background: rgba(225, 225, 225, 0.9);
+      color: #333;
+    }
+
+    &.copied {
+      background: #e6f0ff;
+      color: #0366d6;
+    }
+  }
+
+  // Mostrar el botón al pasar el cursor
+  .highlight-wrapper {
+    position: relative;
+    margin-bottom: 1.5rem;
+
+    &:hover .copy-code-button {
+      opacity: 1;
+    }
+  }
+
   // Tablas
   table {
     color: $dark-text-color;
@@ -337,19 +404,8 @@ body.dark-theme {
 
   // Elementos de resaltado
   .highlight-flash {
-    @keyframes highlight-fade-dark {
-      0% {
-        background-color: transparent;
-      }
-      30% {
-        background-color: #2a3b4d;
-      }
-      100% {
-        background-color: transparent;
-      }
-    }
-    animation: highlight-fade-dark 1.5s ease-in-out;
-    -webkit-animation: highlight-fade-dark 1.5s ease-in-out;
+    animation: none;
+    -webkit-animation: none;
   }
 
   // Contenedores de contenido principales
@@ -428,71 +484,6 @@ body.dark-theme {
   pre.highlight,
   code {
     background-color: $dark-code-background !important;
-  }
-
-  // Índices de contenido específicos (importante para tu tema)
-  .table-of-contents,
-  .toc,
-  #markdown-toc,
-  [id^='markdown-toc-'],
-  .contents-list,
-  .contents-table,
-  .contents {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    color: $dark-text-color !important;
-
-    // Asegurar que la posición y márgenes sean idénticos al tema claro
-    margin: 0 0 20px 0 !important; // Asegurar margen consistente
-    position: relative !important; // Mantener posicionamiento relativo
-    left: 0 !important; // Evitar desplazamiento horizontal
-    top: 0 !important; // Evitar desplazamiento vertical
-
-    // Fondo sutil que no afecte el posicionamiento
-    background: linear-gradient(
-      to right,
-      rgba(30, 30, 30, 0.3),
-      rgba(30, 30, 30, 0.1)
-    ) !important;
-    border-radius: 8px !important;
-    padding: 15px 20px !important; // Mantener el mismo padding que en el tema claro
-
-    // El resto de tus estilos existentes...
-    .toc-title,
-    h4,
-    h3 {
-      color: #cecac3 !important;
-      border-bottom: 1px solid #333 !important;
-      padding-bottom: 8px !important;
-      margin-bottom: 15px !important;
-      margin-top: 0 !important; // Asegurar sin margen superior extra
-    }
-
-    ul {
-      margin-left: 1.2em !important;
-      padding-left: 0 !important; // Asegurar consistencia
-
-      li {
-        margin-bottom: 5px !important;
-
-        // Estilos para elementos anidados (H3)
-        &.toc-h3 {
-          margin-left: 1em !important; // Identación para H3 consistente
-        }
-
-        a {
-          color: #cecac3 !important;
-          transition: color 0.2s ease;
-
-          &:hover {
-            color: #e8e4db !important;
-            text-decoration: underline;
-            text-underline-offset: 2px;
-          }
-        }
-      }
-    }
   }
 
   // Mejorar el contraste de la categoría seleccionada en modo oscuro
@@ -1029,5 +1020,72 @@ body.dark-theme {
     background-color: rgba(206, 202, 195, 0.2) !important;
     color: #f0f6fc !important;
     padding: 0 2px;
+  }
+
+  .categories-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    li {
+      margin-bottom: 8px;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+
+    a {
+      color: #cecac3 !important; // Color claro para texto
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    // Estilos para all-categories en tema oscuro
+    .all-categories & {
+      gap: 0.8rem;
+
+      li {
+        background-color: #2a2a2a !important; // Fondo gris oscuro
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+        border: 1px solid #444 !important; // Borde sutil
+
+        &:hover {
+          background-color: #333333 !important; // Ligeramente más claro al hover
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        a {
+          color: #e6e6e6 !important; // Texto claro
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  // Asegurarse de que las calugas tengan un aspecto consistente en diferentes páginas
+  .all-categories .categories-list li {
+    background-color: #2a2a2a !important;
+    border: 1px solid #444 !important;
+
+    &:hover {
+      background-color: #333333 !important;
+    }
+
+    a {
+      color: #e6e6e6 !important;
+    }
   }
 }

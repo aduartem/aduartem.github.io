@@ -1,0 +1,131 @@
+// Estilos para imágenes en posts
+.post-content {
+  // Imágenes dentro del contenido del post
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5rem auto;
+    border-radius: 6px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  // Figura con imagen y caption
+  figure {
+    margin: 2rem 0;
+
+    img {
+      margin-bottom: 0.5rem;
+    }
+
+    figcaption {
+      font-size: 0.9rem;
+      color: #586069;
+      text-align: center;
+      font-style: italic;
+    }
+  }
+
+  // Imágenes alineadas
+  .align-left {
+    float: left;
+    margin-right: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .align-right {
+    float: right;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  // Imagen responsiva que ocupa todo el ancho en móvil
+  .full-width-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 2rem 0;
+  }
+
+  // Galería de imágenes
+  .image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+
+    img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      margin: 0;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+  }
+}
+
+.post-featured-image {
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  .image-caption {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #666;
+    text-align: center;
+    background-color: #f9f9f9;
+  }
+}
+
+// Estilos específicos para pantallas pequeñas
+@media (max-width: 768px) {
+  .post-content {
+    .align-left,
+    .align-right {
+      float: none;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+
+    .image-gallery {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+
+      img {
+        height: 120px;
+      }
+    }
+  }
+}
+
+// Tema oscuro
+body.dark-theme {
+  .post-content {
+    img {
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    figcaption {
+      color: #b0b0b0;
+    }
+  }
+}

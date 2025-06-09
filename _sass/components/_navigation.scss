@@ -1,0 +1,156 @@
+// Estilos para la navegación principal
+.site-nav {
+  line-height: 1.8;
+  position: relative;
+
+  .page-link {
+    color: #424242;
+    margin-right: 20px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-weight: 500;
+
+    &:hover {
+      color: #0366d6;
+    }
+
+    &.active {
+      position: relative;
+      color: #0366d6;
+
+      &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -3px;
+        height: 2px;
+        background-color: #0366d6;
+      }
+    }
+  }
+
+  // Botón de menú para móviles
+  .menu-icon {
+    display: none;
+  }
+
+  .nav-trigger {
+    display: none;
+  }
+
+  .menu-icon {
+    width: 36px;
+    height: 26px;
+  }
+
+  // Estilo para versión móvil
+  @media screen and (max-width: 800px) {
+    position: absolute;
+    top: 9px;
+    right: 15px;
+    background-color: #fdfdfd;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    text-align: right;
+
+    label[for='nav-trigger'] {
+      display: block;
+      float: right;
+      width: 36px;
+      height: 36px;
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    .menu-icon {
+      display: block;
+      float: right;
+      width: 36px;
+      height: 26px;
+      line-height: 0;
+      padding-top: 10px;
+      text-align: center;
+
+      > svg {
+        fill: #424242;
+      }
+    }
+
+    input ~ .trigger {
+      clear: both;
+      display: none;
+    }
+
+    input:checked ~ .trigger {
+      display: block;
+      padding-bottom: 5px;
+    }
+
+    .page-link {
+      display: block;
+      padding: 5px 10px;
+      margin-right: 0;
+      margin-left: 20px;
+
+      &:not(:last-child) {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+// Estilos para breadcrumbs
+.breadcrumb-nav {
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+
+  &:not(:last-child)::after {
+    content: '/';
+    margin: 0 0.5rem;
+    color: #6c757d;
+  }
+
+  a {
+    color: #2f3c4b;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &.active {
+    color: #6c757d;
+  }
+}
+
+// Tema oscuro
+body.dark-theme {
+  .breadcrumb-item {
+    &:not(:last-child)::after {
+      color: #8b949e;
+    }
+
+    a {
+      color: #d9dde0;
+    }
+
+    &.active {
+      color: #8b949e;
+    }
+  }
+}

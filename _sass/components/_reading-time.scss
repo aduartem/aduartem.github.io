@@ -1,0 +1,10 @@
+.reading-time {
+  font-size: 14px;
+  color: #586069;
+  margin-left: 10px;
+
+  // Tema oscuro
+  body.dark-theme & {
+    color: #a0a0a0;
+  }
+}

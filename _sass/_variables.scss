@@ -1,0 +1,52 @@
+// Colores principales
+$text-color: #24292e;
+$background-color: #ffffff;
+$brand-color: #0366d6;
+$link-color: #0366d6;
+$border-color: #e1e4e8;
+
+// Colores tema oscuro
+$dark-background: #121212;
+$dark-text: #e1e1e1;
+$dark-brand: #cecac3; // Color tipo DarkReader
+$dark-link: #cecac3;
+$dark-border: #333;
+
+// Colores específicos para componentes
+$toc-bg-light: #f8f9fa;
+$toc-border-light: #eaecef;
+$toc-link-light: #0366d6;
+$toc-heading-light: #24292e;
+
+$toc-bg-dark: transparent;
+// $toc-background-dark: #333;
+$toc-border-dark: #333;
+$toc-link-dark: #cecac3;
+$toc-heading-dark: #cecac3;
+
+$code-bg-light: #f8f8f8;
+$code-border-light: #2a7ae2;
+$code-text-light: #24292e;
+
+$code-bg-dark: #2d2d2d;
+$code-border-dark: #444;
+$code-text-dark: #e6e6e6;
+
+// Espaciado
+$spacing-unit: 30px;
+$content-padding: 15px 20px;
+
+// Tipografía
+$base-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  Helvetica, Arial, sans-serif;
+$heading-font-family: $base-font-family;
+$code-font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo,
+  monospace;
+$base-font-size: 16px;
+$small-font-size: $base-font-size * 0.875;
+$base-line-height: 1.5;
+
+// Breakpoints
+$mobile: 480px;
+$tablet: 768px;
+$desktop: 1024px;

@@ -1,0 +1,49 @@
+// Sección de botones de compartir
+.share-buttons {
+  margin: 40px 0;
+
+  h3 {
+    margin-bottom: 15px;
+  }
+}
+
+// Contenedor de botones
+.share-btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+// Botón individual
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  svg {
+    margin-right: 5px;
+  }
+}
+
+// Estilos por red social
+.twitter {
+  background-color: #1da1f2;
+}
+
+.linkedin {
+  background-color: #0077b5;
+}
+
+.facebook {
+  background-color: #3b5998;
+}

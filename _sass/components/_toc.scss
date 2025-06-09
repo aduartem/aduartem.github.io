@@ -1,0 +1,206 @@
+// Estilos base para la tabla de contenidos (tema claro)
+.toc {
+  ul {
+    li {
+      // Estilo base para todos los elementos
+      margin-bottom: 5px;
+      line-height: 1.5;
+
+      // Estilos específicos por nivel
+      &.toc-h1 {
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      &.toc-h2 {
+        font-size: 15px;
+        font-weight: 500;
+      }
+
+      &.toc-h3 {
+        font-size: 14px;
+        margin-left: 1em;
+      }
+
+      &.toc-h4 {
+        font-size: 13px;
+        margin-left: 2em;
+      }
+
+      &.toc-h5 {
+        font-size: 12px;
+        margin-left: 3em;
+      }
+
+      &.toc-h6 {
+        font-size: 12px;
+        margin-left: 4em;
+        font-style: italic;
+      }
+
+      a {
+        color: $toc-link-light;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+      }
+    }
+  }
+}
+
+.toc {
+  background-color: $toc-bg-light;
+  border: 1px solid $toc-border-light;
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin: 0 0 20px 0;
+  position: relative;
+  left: 0;
+  top: 0;
+
+  h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: $toc-heading-light;
+    padding-bottom: 8px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 1.2em;
+    margin-bottom: 0;
+
+    li {
+      margin-bottom: 5px;
+      line-height: 1.5;
+
+      a {
+        color: $toc-link-light;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+      }
+
+      &.toc-h3 {
+        margin-left: 1em;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.toc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#toc-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-size: 1rem;
+  padding: 0;
+  margin-left: auto;
+  transition: transform 0.3s ease;
+  -webkit-transition: transform 0.3s ease;
+  -moz-transition: transform 0.3s ease;
+  -ms-transition: transform 0.3s ease;
+  -o-transition: transform 0.3s ease;
+}
+
+/* Rotación de la flecha cuando no está colapsado */
+.toc:not(.toc-collapsed) #toc-toggle {
+  transform: rotate(180deg);
+}
+
+.toc-header h4 {
+  margin: 0;
+}
+
+#toc-toggle:hover {
+  color: #0077cc;
+}
+
+.toc-content {
+  max-height: 2000px;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.toc-collapsed .toc-content {
+  max-height: 0;
+}
+
+// Tema oscuro para la tabla de contenidos
+body.dark-theme {
+  .toc,
+  .table-of-contents,
+  #markdown-toc,
+  [id^='markdown-toc-'],
+  .contents-list,
+  .contents-table,
+  .contents {
+    background-color: $toc-bg-dark;
+    border: none;
+    box-shadow: none;
+    color: $toc-link-dark;
+
+    // Mantener exactamente las mismas dimensiones y posición
+    position: relative;
+    left: 0;
+    top: 0;
+
+    // Fondo sutil
+    background: linear-gradient(
+      to right,
+      rgba(30, 30, 30, 0.3),
+      rgba(30, 30, 30, 0.1)
+    );
+    border-radius: 8px;
+
+    h4,
+    h3,
+    .toc-title {
+      color: $toc-heading-dark;
+      padding-bottom: 4px;
+      margin-bottom: 15px;
+      margin-top: 0;
+    }
+
+    ul {
+      margin-left: 1.2em;
+      padding-left: 0;
+
+      li {
+        margin-bottom: 5px;
+
+        &.toc-h3 {
+          margin-left: 1em;
+        }
+
+        a {
+          color: $toc-link-dark;
+          transition: color 0.2s ease;
+
+          &:hover {
+            color: lighten($toc-link-dark, 10%);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+          }
+        }
+      }
+    }
+  }
+}

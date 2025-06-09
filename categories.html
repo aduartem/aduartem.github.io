@@ -4,13 +4,14 @@ title: Categorías
 permalink: /categories/
 ---
 
+{% include breadcrumb.html %}
+
 {% include page-banner.html %}
 
 <div class="categories-container">
   <!-- Barra lateral para navegación de categorías (visible solo en escritorio) -->
   <div class="categories-sidebar">
     <div class="sidebar-sticky">
-      <h3>Categorías</h3>
       <ul class="category-nav">
         {% assign categories_sorted = site.categories | sort %}
         {% for category in categories_sorted %}

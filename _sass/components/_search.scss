@@ -1,0 +1,139 @@
+// Estilos para el contenedor de búsqueda
+#search-container {
+  margin-bottom: 2rem;
+}
+
+#search-input {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #0366d6;
+    box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.2);
+  }
+}
+
+#results-container {
+  .search-result {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    a {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #0366d6;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #004ba0;
+        text-decoration: underline;
+      }
+    }
+
+    .date {
+      font-size: 0.9rem;
+      color: #666;
+      margin: 0.3rem 0;
+    }
+
+    .content {
+      color: #444;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+  }
+
+  .search-highlight {
+    background-color: rgba(255, 247, 120, 0.3);
+    padding: 0 2px;
+  }
+}
+
+
+
+/*
+
+// Contenedor de búsqueda
+#search-container {
+  margin-bottom: 40px;
+}
+
+// Campo de búsqueda
+#search-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+// Resultados de búsqueda
+#results-container {
+  margin-top: 20px;
+}
+
+// Resultado individual
+.search-result {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  
+  a {
+    font-size: 1.2em;
+    color: #0366d6;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  p {
+    margin: 5px 0;
+    color: #586069;
+    font-size: 0.9em;
+  }
+}
+
+// Tema oscuro
+body.dark-theme {
+  #search-input {
+    background-color: #1e2329;
+    border-color: #30363d;
+    color: #c9d1d9;
+    
+    &:focus {
+      border-color: #58a6ff;
+    }
+  }
+  
+  .search-result {
+    border-bottom-color: #30363d;
+    
+    a {
+      color: #58a6ff;
+    }
+    
+    p {
+      color: #8b949e;
+    }
+  }
+  
+  .search-highlight {
+    background-color: rgba(56, 139, 253, 0.1);
+  }
+}
+*/

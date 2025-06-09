@@ -2,10 +2,11 @@
 layout: default
 ---
 
+{% include breadcrumb.html %}
+
 {% include page-banner.html %}
 
 <div class="category-page">
-  <h1 class="category-title">{{ page.category | capitalize }}</h1>
 
   <div class="category-description">
     <p>Artículos en la categoría <strong>{{ page.category }}</strong></p>

@@ -1,7 +1,7 @@
+/* filepath: c:\Users\aduar\workspace\aduartem.github.io\_sass\minima.scss */
 @charset "utf-8";
 
 // Define defaults for each variable.
-
 $base-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
   Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
   'Segoe UI Symbol' !default;
@@ -38,9 +38,8 @@ $on-laptop: 800px !default;
   font-size: $base-font-size * $ratio;
 }
 
-// Import partials.
+// Import minima base partials
 @import 'minima/base', 'minima/layout', 'minima/syntax-highlighting';
 
-@import 'custom/post-images';
-@import 'custom/category-page';
-// @import 'custom/typography';
+// Import new component structure
+@import 'main';

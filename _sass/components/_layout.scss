@@ -1,0 +1,117 @@
+// Header del sitio
+.site-header {
+  border-top: 5px solid #424242;
+  border-bottom: 1px solid #e8e8e8;
+  min-height: 55px;
+  position: relative;
+}
+
+.site-title {
+  font-size: 26px;
+  font-weight: 300;
+  line-height: 54px;
+  letter-spacing: -1px;
+  margin-bottom: 0;
+  float: left;
+  text-decoration: none;
+}
+
+.site-nav {
+  float: right;
+  line-height: 54px;
+  margin-top: 10px;
+
+  .page-link {
+    color: #24292e;
+    line-height: 1.5;
+    margin-left: 20px;
+    font-weight: 500;
+  }
+}
+
+// Tema oscuro
+body.dark-theme {
+  .site-header {
+    border-top-color: #30363d;
+    border-bottom-color: #30363d;
+    background-color: #1a1a1a;
+  }
+
+  .site-title {
+    color: #c9d1d9;
+  }
+
+  .site-nav .page-link {
+    color: #c9d1d9;
+  }
+}
+
+// Ajustes responsivos
+@media screen and (max-width: 600px) {
+  .site-nav {
+    margin-top: 0px;
+    position: relative;
+    z-index: 10;
+
+    input:checked ~ .trigger {
+      position: absolute;
+      right: 0;
+      top: 100%; // Asegura que aparezca justo debajo del botón hamburguesa
+      background-color: #fff; // Fondo para tema claro
+      border: 1px solid #e8e8e8;
+      border-radius: 5px;
+      padding: 10px;
+      width: 200px; // Ancho fijo para el menú desplegable
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); // Sombra para mejor visibilidad
+      z-index: 11; // Mayor que el z-index del .site-nav
+
+      // Ajustes para el tema oscuro
+      body.dark-theme & {
+        background-color: #1a1a1a;
+        border-color: #30363d;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+      }
+
+      // Asegurar que los enlaces sean legibles
+      .page-link {
+        display: block;
+        margin: 0;
+        padding: 10px 15px;
+        border-bottom: 1px solid #e8e8e8;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        // Ajustes para tema oscuro
+        body.dark-theme & {
+          border-bottom-color: #30363d;
+        }
+      }
+    }
+
+    label[for='nav-trigger'] {
+      z-index: 12; // Para asegurar que quede por encima del menú desplegable
+      position: relative;
+    }
+  }
+
+  .categories-sidebar {
+    display: none;
+  }
+
+  .featured-categories {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 5px 0;
+
+    .wrapper {
+      justify-content: flex-start;
+      padding: 0 10px;
+    }
+
+    .featured-category {
+      margin: 0 5px;
+    }
+  }
+}
