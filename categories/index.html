@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang=" en"><head>
+  <style id="dark-mode-style">
+    html {
+      visibility: hidden;
+    }
+
+    html.dark-theme,
+    body.dark-theme {
+      background-color: #121212 !important;
+      color: #e1e1e1 !important;
+    }
+  </style>
+
+  <script>
+    (function () {
+      var theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark-theme');
+        document.body.classList.add('dark-theme');
+      }
+      // Importante: esto debe ejecutarse antes de cualquier renderizado
+      document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('dark-mode-style').textContent = 'html.dark-theme, body.dark-theme { background-color: #121212 !important; color: #e1e1e1 !important; }';
+      });
+      // Hacer visible la página solo después de aplicar el tema
+      document.addEventListener('DOMContentLoaded', function () {
+        document.documentElement.style.visibility = 'visible';
+      });
+    })();
+  </script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Categorías | Algoritmo Creativo</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Categorías" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tutoriales, artículos, vídeos y recursos sobre JavaScript, Angular, React, Node.JS, Python, MySQL, Linux y más. Desarrollo Web, Backend, Bases de Datos y Patrones de Diseño." />
+<meta property="og:description" content="Tutoriales, artículos, vídeos y recursos sobre JavaScript, Angular, React, Node.JS, Python, MySQL, Linux y más. Desarrollo Web, Backend, Bases de Datos y Patrones de Diseño." />
+<link rel="canonical" href="https://aduartem.github.io/categories/" />
+<meta property="og:url" content="https://aduartem.github.io/categories/" />
+<meta property="og:site_name" content="Algoritmo Creativo" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Categorías" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Tutoriales, artículos, vídeos y recursos sobre JavaScript, Angular, React, Node.JS, Python, MySQL, Linux y más. Desarrollo Web, Backend, Bases de Datos y Patrones de Diseño.","headline":"Categorías","url":"https://aduartem.github.io/categories/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/%20/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://aduartem.github.io/feed.xml" title="Algoritmo Creativo" /><script src="/%20/assets/js/smooth-scroll.js"></script>
+  <script src="/%20/assets/js/category-nav.js"></script>
+  <script src="/%20/assets/js/copy-code.js"></script>
+</head><body>
+
+  <!-- Barra de progreso de lectura -->
+  <div class="progress-container">
+    <div class="progress-bar" id="readingProgress"></div>
+  </div>
+
+  <script>
+    // Solo activar en páginas de artículos
+    if (document.querySelector('.post')) {
+      // Cuando el usuario hace scroll, actualiza la barra de progreso
+      window.onscroll = function () {
+        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var scrolled = (winScroll / height) * 100;
+        document.getElementById("readingProgress").style.width = scrolled + "%";
+
+        // Mostrar botón cuando usuario baja 300px (mantener código del botón arriba)
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+          document.getElementById("back-to-top").style.display = "block";
+        } else {
+          document.getElementById("back-to-top").style.display = "none";
+        }
+      };
+    }
+  </script><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Algoritmo Creativo</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path
+              d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z" />
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        <a class="page-link" href="/">Blog</a>
+        <a class="page-link" href="/categories/">Categorías</a>
+        <a class="page-link" href="/search/">Buscar</a>
+        <a class="page-link" href="/about/">Sobre el Blog</a>
+
+        <div class="theme-switch">
+          <input type="checkbox" id="theme-switch" class="theme-switch__checkbox">
+          <label for="theme-switch" class="theme-switch__label">
+            <span class="theme-switch__icons">
+              <span class="theme-switch__icon theme-switch__icon--sun">☀️</span>
+              <span class="theme-switch__icon theme-switch__icon--moon">🌙</span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Barra de categorías destacadas - solo se muestra en ciertas páginas -->
+
+<div class="featured-categories">
+  <div class="wrapper">
+    
+    
+    <a href="/category/springboot/" class="featured-category">springboot</a>
+    
+    <a href="/category/java/" class="featured-category">java</a>
+    
+    <a href="/category/linux/" class="featured-category">linux</a>
+    
+    <a href="/category/archlinux/" class="featured-category">archlinux</a>
+    
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <nav class="breadcrumb-nav">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">🏠 Inicio</a></li>
+    
+    <li class="breadcrumb-item active">Categorías</li>
+    
+  </ol>
+</nav>
+
+<div class="banner-container">
+  <img src="/assets/images/banner.jpeg" class="page-banner" alt="Banner del blog" />
+  <div class="profile-overlay left-aligned">
+    <img src="/assets/images/avatar_2.jpg" class="about-avatar" alt="Andrés Duarte" />
+    <div class="banner-text">
+      <h2 class="banner-title">Algoritmo Creativo</h2>
+      <p class="banner-subtitle">Ingeniería de Software, tecnología y aprendizajes</p>
+    </div>
+  </div>
+</div>
+
+<div class="hg-40"></div>
+
+<div class="categories-container">
+  <!-- Barra lateral para navegación de categorías (visible solo en escritorio) -->
+  <div class="categories-sidebar">
+    <div class="sidebar-sticky">
+      <ul class="category-nav">
+        
+        
+        <li><a href="#archlinux">archlinux</a></li>
+        
+        <li><a href="#java">java</a></li>
+        
+        <li><a href="#linux">linux</a></li>
+        
+        <li><a href="#springboot">springboot</a></li>
+        
+      </ul>
+    </div>
+  </div>
+
+  <!-- Contenido principal de categorías -->
+  <div class="categories-content">
+    
+    
+    <div class="category-section" id="archlinux">
+      <h2 class="category-name">archlinux</h2>
+      <ul class="post-list-by-category">
+        
+        <li>
+          <span class="post-meta">Jun 26, 2022</span>
+          <a class="post-link" href="/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI.html">Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)</a>
+        </li>
+        
+        <li>
+          <span class="post-meta">Jun 24, 2022</span>
+          <a class="post-link" href="/linux/archlinux/2022/06/24/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-BIOS.html">Guía de instalación de Arch Linux 2022.06.01 x86_64 (Boot)</a>
+        </li>
+        
+        <li>
+          <span class="post-meta">Nov 20, 2018</span>
+          <a class="post-link" href="/linux/archlinux/2018/11/20/Programas-que-no-pueden-faltar-en-Arch-Linux.html">20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch Linux 2018.08.01</a>
+        </li>
+        
+      </ul>
+    </div>
+    
+    <div class="category-section" id="java">
+      <h2 class="category-name">java</h2>
+      <ul class="post-list-by-category">
+        
+        <li>
+          <span class="post-meta">Jun 7, 2025</span>
+          <a class="post-link" href="/java/springboot/2025/06/07/Curso-de-spring-boot.html">Curso de Spring Boot</a>
+        </li>
+        
+      </ul>
+    </div>
+    
+    <div class="category-section" id="linux">
+      <h2 class="category-name">linux</h2>
+      <ul class="post-list-by-category">
+        
+        <li>
+          <span class="post-meta">Jun 26, 2022</span>
+          <a class="post-link" href="/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI.html">Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)</a>
+        </li>
+        
+        <li>
+          <span class="post-meta">Jun 24, 2022</span>
+          <a class="post-link" href="/linux/archlinux/2022/06/24/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-BIOS.html">Guía de instalación de Arch Linux 2022.06.01 x86_64 (Boot)</a>
+        </li>
+        
+        <li>
+          <span class="post-meta">Nov 20, 2018</span>
+          <a class="post-link" href="/linux/archlinux/2018/11/20/Programas-que-no-pueden-faltar-en-Arch-Linux.html">20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch Linux 2018.08.01</a>
+        </li>
+        
+      </ul>
+    </div>
+    
+    <div class="category-section" id="springboot">
+      <h2 class="category-name">springboot</h2>
+      <ul class="post-list-by-category">
+        
+        <li>
+          <span class="post-meta">Jun 7, 2025</span>
+          <a class="post-link" href="/java/springboot/2025/06/07/Curso-de-spring-boot.html">Curso de Spring Boot</a>
+        </li>
+        
+      </ul>
+    </div>
+    
+  </div>
+</div>
+    </div>
+  </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Algoritmo Creativo</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-3">
+        <p>Tutoriales, artículos, vídeos y recursos sobre JavaScript, Angular, React, Node.JS, Python, MySQL, Linux y más. Desarrollo Web, Backend, Bases de Datos y Patrones de Diseño.</p>
+      </div>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/aduartem"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">aduartem</span></a></li><li><a href="https://www.linkedin.com/in/aduartem"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">aduartem</span></a></li><li><a href="https://www.twitter.com/aduartem7"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">aduartem7</span></a></li></ul>
+</div>
+      <div class="footer-col footer-col-2">
+
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+<!-- Botón Volver Arriba -->
+  <button onclick="topFunction()" id="back-to-top" title="Volver arriba">▲</button>
+
+  <script>
+    // Botón de volver arriba
+    var backToTopButton = document.getElementById("back-to-top");
+
+    // Mostrar botón cuando usuario baja 300px
+    window.onscroll = function () {
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        backToTopButton.style.display = "block";
+      } else {
+        backToTopButton.style.display = "none";
+      }
+    };
+
+    // Cuando el usuario hace clic, scroll hasta arriba
+    function topFunction() {
+      document.body.scrollTop = 0; // Para Safari
+      document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE y Opera
+    }
+  </script>
+
+  <script src="/assets/js/theme-switcher.js"></script>
+
+</body>
+
+</html>

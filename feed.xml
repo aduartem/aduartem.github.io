@@ -1,0 +1,1708 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://aduartem.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://aduartem.github.io/" rel="alternate" type="text/html" /><updated>2025-06-09T06:41:47+00:00</updated><id>https://aduartem.github.io/feed.xml</id><title type="html">Algoritmo Creativo</title><subtitle>Tutoriales, artículos, vídeos y recursos sobre JavaScript, Angular, React, Node.JS, Python, MySQL, Linux y más. Desarrollo Web, Backend, Bases de Datos y Patrones de Diseño.</subtitle><entry><title type="html">Curso de Spring Boot</title><link href="https://aduartem.github.io/java/springboot/2025/06/07/Curso-de-spring-boot.html" rel="alternate" type="text/html" title="Curso de Spring Boot" /><published>2025-06-07T00:00:00+00:00</published><updated>2025-06-07T00:00:00+00:00</updated><id>https://aduartem.github.io/java/springboot/2025/06/07/Curso-de-spring-boot</id><content type="html" xml:base="https://aduartem.github.io/java/springboot/2025/06/07/Curso-de-spring-boot.html"><![CDATA[<h2 id="manejo-de-rutas-dinámicas-con-getmapping-y-pathvariable">Manejo de rutas dinámicas con @GetMapping y @PathVariable</h2>
+
+<p><code class="language-plaintext highlighter-rouge">@GetMapping</code> es una anotación que mapea solicitudes HTTP GET a métodos específicos de un controlador. <code class="language-plaintext highlighter-rouge">@PathVariable</code> se utiliza para extraer valores de la URL y asignarlos como parámetros del método.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/api/tasks/{id}"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="nf">getTaskById</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// El parámetro "id" se extrae de la URL /api/tasks/123</span>
+    <span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="n">task</span> <span class="o">=</span> <span class="n">taskRepository</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">task</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">value</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">value</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">orElseGet</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">NOT_FOUND</span><span class="o">));</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="consultas-parametrizadas-con-getmapping-y-requestparam">Consultas parametrizadas con @GetMapping y @RequestParam</h2>
+
+<p><code class="language-plaintext highlighter-rouge">@RequestParam</code> permite recuperar parámetros de consulta de la URL (query parameters).</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/api/tasks/search"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;&gt;</span> <span class="nf">searchTasks</span><span class="o">(</span><span class="nd">@RequestParam</span> <span class="nc">String</span> <span class="n">title</span><span class="o">,</span> <span class="nd">@RequestParam</span><span class="o">(</span><span class="n">required</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span> <span class="nc">Boolean</span> <span class="n">completed</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// Recibe parámetros como /api/tasks/search?title=Proyecto&amp;completed=true</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="n">tasks</span> <span class="o">=</span> <span class="n">taskRepository</span><span class="o">.</span><span class="na">findByTitleContainingAndCompletedEquals</span><span class="o">(</span><span class="n">title</span><span class="o">,</span> <span class="n">completed</span><span class="o">);</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">tasks</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="creación-de-recursos-con-postmapping-y-deserialización-con-requestbody">Creación de recursos con @PostMapping y deserialización con @RequestBody</h2>
+
+<p><code class="language-plaintext highlighter-rouge">@PostMapping</code> mapea solicitudes HTTP POST. <code class="language-plaintext highlighter-rouge">@RequestBody</code> convierte el cuerpo de la solicitud JSON en un objeto Java.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/api/tasks"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="nf">createTask</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">Task</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// "task" se crea a partir del JSON del cuerpo de la petición</span>
+    <span class="nc">Task</span> <span class="n">savedTask</span> <span class="o">=</span> <span class="n">taskRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">task</span><span class="o">);</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">savedTask</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">CREATED</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="control-avanzado-de-respuestas-http-con-responseentity">Control avanzado de respuestas HTTP con ResponseEntity</h2>
+
+<p><code class="language-plaintext highlighter-rouge">@ResponseBody</code> indica que el valor de retorno del método debe ser serializado directamente en el cuerpo de la respuesta HTTP. <code class="language-plaintext highlighter-rouge">ResponseEntity</code> permite mayor control sobre la respuesta, incluyendo encabezados y códigos de estado.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/api/tasks"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;&gt;</span> <span class="nf">getAllTasks</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="n">tasks</span> <span class="o">=</span> <span class="n">taskRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">tasks</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">);</span> <span class="c1">// Devuelve código 200 con la lista</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="implementando-el-patrón-dto-separación-de-datos-y-entidades">Implementando el patrón DTO: Separación de datos y entidades</h2>
+
+<p>Los DTO son objetos que transportan datos entre procesos o capas de aplicación. Permiten transferir solo los datos necesarios y no exponer la estructura completa de entidades.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// DTO para transferir solo datos relevantes de Task</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskDTO</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">completed</span><span class="o">;</span>
+
+    <span class="c1">// Constructores, getters y setters</span>
+
+    <span class="c1">// Método para convertir Entity a DTO</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">TaskDTO</span> <span class="nf">fromEntity</span><span class="o">(</span><span class="nc">Task</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">TaskDTO</span><span class="o">(</span><span class="n">task</span><span class="o">.</span><span class="na">getId</span><span class="o">(),</span> <span class="n">task</span><span class="o">.</span><span class="na">getTitle</span><span class="o">(),</span> <span class="n">task</span><span class="o">.</span><span class="na">isCompleted</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="diseño-de-arquitectura-multicapa-en-aplicaciones-spring-boot">Diseño de arquitectura multicapa en aplicaciones Spring Boot</h2>
+
+<p>Spring Boot facilita la implementación de arquitecturas en capas:</p>
+
+<ul>
+  <li><strong>Capa de presentación</strong>: Controladores REST (@Controller, @RestController)</li>
+  <li><strong>Capa de servicio</strong>: Lógica de negocio (@Service)</li>
+  <li><strong>Capa de acceso a datos</strong>: Repositorios (@Repository)</li>
+  <li><strong>Capa de dominio</strong>: Entidades y modelos</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>com.example.app
+├── controller    // Capa de presentación
+├── service       // Capa de servicio
+├── repository    // Capa de acceso a datos
+├── model         // Capa de dominio
+└── dto           // Objetos de transferencia
+</code></pre></div></div>
+
+<h2 id="separación-de-responsabilidades-con-anotaciones-repository-y-service">Separación de responsabilidades con anotaciones @Repository y @Service</h2>
+
+<ul>
+  <li><strong>@Repository</strong>: Marca una clase como repositorio, responsable de acceder a datos.</li>
+  <li><strong>@Service</strong>: Indica que una clase contiene lógica de negocio.</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Repository</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">TaskRepository</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="c1">// Métodos para acceso a datos</span>
+<span class="o">}</span>
+
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskService</span> <span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">TaskRepository</span> <span class="n">taskRepository</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="nf">getAllTasks</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">taskRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="principios-fundamentales-inversión-de-control-ioc-en-spring">Principios fundamentales: Inversión de Control (IoC) en Spring</h2>
+
+<p>Es un principio de diseño donde el flujo de control se invierte: en lugar de que el código de la aplicación llame a una biblioteca, el framework llama al código. Spring Boot implementa IoC mediante su contenedor de IoC que gestiona el ciclo de vida de los componentes.</p>
+
+<h2 id="inyección-de-dependencias-en-spring-boot">Inyección de dependencias en Spring Boot</h2>
+
+<p>Es una técnica donde un objeto recibe otros objetos de los que depende. Spring Boot inyecta automáticamente dependencias en lugar de que las clases las creen.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskController</span> <span class="o">{</span>
+    <span class="c1">// TaskService se inyecta automáticamente</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">TaskService</span> <span class="n">taskService</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="automatización-de-dependencias-con-autowired">Automatización de dependencias con @Autowired</h2>
+
+<p>Indica a Spring que inyecte automáticamente una dependencia. Puede aplicarse a constructores, métodos y campos.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotificationService</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">EmailService</span> <span class="n">emailService</span><span class="o">;</span>
+
+    <span class="nd">@Autowired</span> <span class="c1">// Inyección por constructor (recomendada)</span>
+    <span class="kd">public</span> <span class="nf">NotificationService</span><span class="o">(</span><span class="nc">EmailService</span> <span class="n">emailService</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">emailService</span> <span class="o">=</span> <span class="n">emailService</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="fundamentos-de-persistencia-orm--jpa">Fundamentos de persistencia: ORM + JPA</h2>
+
+<p>ORM (Object-Relational Mapping) mapea objetos Java a tablas de base de datos. JPA (Java Persistence API) es la especificación estándar para ORM en Java.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
+<span class="nd">@Table</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"tasks"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Task</span> <span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="hibernate-como-implementación-de-jpa">Hibernate como implementación de JPA</h2>
+
+<p>Hibernate es la implementación más popular de JPA. Spring Boot lo configura automáticamente como proveedor de persistencia predeterminado.</p>
+
+<h2 id="configuración-inicial-de-persistencia-con-jpa-y-hibernate">Configuración inicial de persistencia con JPA y Hibernate</h2>
+
+<ol>
+  <li>
+    <p><strong>Dependencias en pom.xml</strong>:</p>
+
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.mysql<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>mysql-connector-j<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Configuración en application.properties</strong>:</p>
+    <div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">spring.datasource.url</span><span class="p">=</span><span class="s">jdbc:mysql://localhost:3306/taskdb</span>
+<span class="py">spring.datasource.username</span><span class="p">=</span><span class="s">root</span>
+<span class="py">spring.datasource.password</span><span class="p">=</span><span class="s">password</span>
+<span class="py">spring.jpa.hibernate.ddl-auto</span><span class="p">=</span><span class="s">update</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="desarrollo-rápido-de-operaciones-crud-con-spring-data-jpa">Desarrollo rápido de operaciones CRUD con Spring Data JPA</h2>
+
+<p>Spring Data JPA proporciona el interfaz <code class="language-plaintext highlighter-rouge">JpaRepository</code> que incluye métodos CRUD básicos:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Repository</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">TaskRepository</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="c1">// Métodos personalizados</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="nf">findByCompleted</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">completed</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="modelado-de-relaciones-entre-entidades-con-jpahibernate">Modelado de relaciones entre entidades con JPA/Hibernate</h2>
+
+<h3 id="onetoone">@OneToOne</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
+    <span class="nd">@Id</span> <span class="nd">@GeneratedValue</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+
+    <span class="nd">@OneToOne</span><span class="o">(</span><span class="n">cascade</span> <span class="o">=</span> <span class="nc">CascadeType</span><span class="o">.</span><span class="na">ALL</span><span class="o">)</span>
+    <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"profile_id"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">UserProfile</span> <span class="n">profile</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="onetomany">@OneToMany</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
+    <span class="nd">@Id</span> <span class="nd">@GeneratedValue</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+
+    <span class="nd">@OneToMany</span><span class="o">(</span><span class="n">mappedBy</span> <span class="o">=</span> <span class="s">"user"</span><span class="o">,</span> <span class="n">cascade</span> <span class="o">=</span> <span class="nc">CascadeType</span><span class="o">.</span><span class="na">ALL</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="n">tasks</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+<span class="o">}</span>
+
+<span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Task</span> <span class="o">{</span>
+    <span class="nd">@ManyToOne</span>
+    <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"user_id"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">User</span> <span class="n">user</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="manytomany">@ManyToMany</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Task</span> <span class="o">{</span>
+    <span class="nd">@ManyToMany</span>
+    <span class="nd">@JoinTable</span><span class="o">(</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s">"task_tags"</span><span class="o">,</span>
+        <span class="n">joinColumns</span> <span class="o">=</span> <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"task_id"</span><span class="o">),</span>
+        <span class="n">inverseJoinColumns</span> <span class="o">=</span> <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"tag_id"</span><span class="o">)</span>
+    <span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Set</span><span class="o">&lt;</span><span class="nc">Tag</span><span class="o">&gt;</span> <span class="n">tags</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashSet</span><span class="o">&lt;&gt;();</span>
+<span class="o">}</span>
+
+<span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Tag</span> <span class="o">{</span>
+    <span class="nd">@ManyToMany</span><span class="o">(</span><span class="n">mappedBy</span> <span class="o">=</span> <span class="s">"tags"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Set</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="n">tasks</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashSet</span><span class="o">&lt;&gt;();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="despliegue-de-aplicaciones-spring-boot-con-docker-guía-práctica">Despliegue de aplicaciones Spring Boot con Docker: Guía práctica</h2>
+
+<ol>
+  <li>
+    <p><strong>Crear un Dockerfile</strong>:</p>
+
+    <div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> eclipse-temurin:17-jdk</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">COPY</span><span class="s"> target/*.jar app.jar</span>
+<span class="k">ENTRYPOINT</span><span class="s"> ["java","-jar","/app/app.jar"]</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Construir la imagen</strong>:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker build <span class="nt">-t</span> taskmanager-app <span class="nb">.</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Ejecutar el contenedor</strong>:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-p</span> 8080:8080 taskmanager-app
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Docker Compose</strong> (para incluir también la base de datos):</p>
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3'</span>
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">app</span><span class="pi">:</span>
+    <span class="na">build</span><span class="pi">:</span> <span class="s">.</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s1">'</span><span class="s">8080:8080'</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/taskdb</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">db</span>
+  <span class="na">db</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">mysql:8</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">MYSQL_ROOT_PASSWORD=password</span>
+      <span class="pi">-</span> <span class="s">MYSQL_DATABASE=taskdb</span>
+</code></pre></div>    </div>
+  </li>
+</ol>]]></content><author><name></name></author><category term="java" /><category term="springboot" /><category term="Java" /><category term="Spring Boot" /><category term="REST API" /><summary type="html"><![CDATA[Manejo de rutas dinámicas con @GetMapping y @PathVariable]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://aduartem.github.io/assets/images/posts/2025/spring-boot.jpeg" /><media:content medium="image" url="https://aduartem.github.io/assets/images/posts/2025/spring-boot.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)</title><link href="https://aduartem.github.io/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI.html" rel="alternate" type="text/html" title="Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)" /><published>2022-06-26T06:00:00+00:00</published><updated>2022-06-26T06:00:00+00:00</updated><id>https://aduartem.github.io/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI</id><content type="html" xml:base="https://aduartem.github.io/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI.html"><![CDATA[<p>Esta es una guía paso a paso de como instalar Arch Linux 2022.06.01 x86_64. Con esta guía el usuario será capaz de cambiar el idioma del teclado, particionar el disco, realizar la instalación de un entorno de escritorio y más, todo el proceso se realiza por línea de comandos.</p>
+
+<h2 id="1-instalación-base">1. Instalación base</h2>
+
+<p>Vamos a seleccionar la primera opción “Arch Linux install medium (x86_64, BIOS)”</p>
+
+<h3 id="11-deshabilitar-el-molesto-sonido-de-las-teclas-del-teclado">1.1 Deshabilitar el molesto sonido de las teclas del teclado</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>rmmod pcspkr
+</code></pre></div></div>
+
+<h3 id="12-cambiar-el-idioma-del-teclado-a-español">1.2 Cambiar el idioma del teclado a español.</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>loadkeys es
+</code></pre></div></div>
+
+<h3 id="13-probando-conectividad-con-la-red">1.3. Probando conectividad con la red.</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ping <span class="nt">-c</span> 3 www.google.com
+64 bytes from www.google.com <span class="o">(</span>74.125.224.113<span class="o">)</span>: <span class="nv">icmp_seq</span><span class="o">=</span>3 <span class="nv">ttl</span><span class="o">=</span>57 <span class="nb">time</span><span class="o">=</span>27.5 ms
+</code></pre></div></div>
+
+<h3 id="14-particionar-el-disco">1.4. Particionar el disco</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>fdisk <span class="nt">-l</span>
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cfdisk /dev/sda
+</code></pre></div></div>
+
+<p>Seleccionar label “<strong>uefi</strong>”.</p>
+
+<p>Si tenemos un sistema con 8 GiB o más de memoria probablemente podamos prescindir de la partición de swap. Sino podemos crear una. Crearemos las siguientes particiones:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tamaño</th>
+      <th>Tipo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>250M</td>
+      <td>EFI System</td>
+    </tr>
+    <tr>
+      <td>4G</td>
+      <td>Linux swap</td>
+    </tr>
+    <tr>
+      <td>resto</td>
+      <td>Linux, primaria</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A continuación vamos a crear nuestra primera partición; Para esto debemos seguir los siguientes pasos:<br />
+-&gt; Con la tecla “enter” seleccionar el espacio libre del disco y seleccionar “New”<br />
+-&gt; Partition size: 250M<br />
+-&gt; Seleccionar [Type]<br />
+-&gt; Seleccionar [EFI System]<br /></p>
+
+<p>Vamos a crear la segunda partición:
+-&gt; Presionamos la tecla de la flecha hacia abajo para seleccionar el espacio libre del disco y “enter” para seleccionar “New”<br />
+-&gt; Partition size: 4G<br />
+-&gt; Seleccionar [Type]<br />
+-&gt; Seleccionar “Linux swap”<br /></p>
+
+<p>Ahora crearemos la última partición:
+-&gt; Seleccionar el espacio libre del disco y seleccionar “New”<br />
+-&gt; En “Partition size: “ nos sugerirá lo que nos queda de espacio libre. Presionamos enter para asignar ese tamaño a nuestra nueva partición. Por defecto asignará tipo “Linux filesystem”, eso está bien, lo dejamos como está.<br /></p>
+
+<p>Finalmente
+-&gt; Seleccionar [Write]<br />
+-&gt; Para confirmar igresamos “yes” y presionamos la tecla enter.<br />
+-&gt; Seleccionar [Quit]<br /></p>
+
+<p>Si ejecutamos el comando <code class="language-plaintext highlighter-rouge">lsblk</code> podemos ver lo que hemos definido.</p>
+
+<h3 id="15-formateando-las-particiones">1.5. Formateando las particiones</h3>
+
+<h4 id="151-formatear-la-partición-efi">1.5.1. Formatear la partición EFI</h4>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mkfs.fat <span class="nt">-F32</span> /dev/sda1
+</code></pre></div></div>
+
+<h4 id="152-formatear-la-partición-">1.5.2. Formatear la partición /</h4>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mkfs.ext4 /dev/sda3
+</code></pre></div></div>
+
+<h4 id="16-crear-y-activar-la-swap">1.6. Crear y activar la swap</h4>
+
+<p>Creamos la swap o espacio de intercambio:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mkswap /dev/sda2
+</code></pre></div></div>
+
+<p>Y activamos la swap:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>swapon /dev/sda2
+</code></pre></div></div>
+
+<h3 id="17-montar-las-particiones">1.7. Montar las particiones</h3>
+
+<p>Lo siguiente que haremos es montar las particiones para empezar a usarlas, primero la partición root (/), que en esta guía es sda3 y luego la partición boot/efi (/boot/efi) que será sda1.</p>
+
+<p>Si tenemos un disco <strong>SSD</strong> montamos las particiones usando las opciones de montaje adecuados para que se use TRIM:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mount <span class="nt">-o</span> noatime,discard /dev/sda3 /mnt
+<span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> /mnt/boot/efi
+<span class="nv">$ </span>mount <span class="nt">-o</span> noatime,discard /dev/sda1 /mnt/boot/efi
+</code></pre></div></div>
+
+<p>Si tenemos un disco <strong>HDD</strong> montamos las particiones de la siguiente forma:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mount /dev/sda3 /mnt
+<span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> /mnt/boot/efi
+<span class="nv">$ </span>mount /dev/sda1 /mnt/boot/efi
+</code></pre></div></div>
+
+<h3 id="18-instalar-paquetes-del-sistema-base">1.8. Instalar paquetes del sistema base</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pacstrap <span class="nt">-i</span> /mnt linux linux-firmware linux-headers grub efibootmgr base base-devel <span class="nb">sudo </span>nano networkmanager
+</code></pre></div></div>
+
+<p>Nos dará elegir que paquetes queremos instalar. Presionar enter para que instale todo por defecto. Y luego ingresar “Y” para confirmar.</p>
+
+<h3 id="19-generando-el-fstab">1.9. Generando el FSTAB.</h3>
+
+<p>Este archivo define cómo deben montarse las particiones de disco en el sistema de archivos.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>genfstab <span class="nt">-U</span> <span class="nt">-p</span> /mnt <span class="o">&gt;</span> /mnt/etc/fstab
+</code></pre></div></div>
+
+<p>y comprobamos con:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat</span> <span class="o">!</span><span class="err">$</span>
+</code></pre></div></div>
+
+<h3 id="110-chroot-y-configuración-de-sistema-base">1.10. Chroot y configuración de sistema base</h3>
+
+<p>Hacemos un chroot para cambiar el directorio root que estamos usando para configurar nuestro sistema.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>arch-chroot /mnt
+</code></pre></div></div>
+
+<p>Vamos a utilizar el comando <code class="language-plaintext highlighter-rouge">passwd</code> para definir una contraseña para el usuarios root</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>passwd
+</code></pre></div></div>
+
+<h3 id="111-crear-usuario">1.11. Crear Usuario</h3>
+
+<p>Si ingresamos el comando <code class="language-plaintext highlighter-rouge">ls /home/</code> podemos ver que no existe ninguna carpeta de usuario.</p>
+
+<p>Para crear un usuario vamos a utilizar el comando <code class="language-plaintext highlighter-rouge">useradd</code>. En este ejemplo nuestro usuario se llamará “foo”, ustedes reemplacen el nombre del usuario por el que quieran.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>useradd <span class="nt">-m</span> foo
+</code></pre></div></div>
+
+<p>Si ingresamos nuevamente el comando <code class="language-plaintext highlighter-rouge">ls /home/ -l</code> podemos ver que ahora hay una nueva carpeta con el nombre del usuario y esta tiene usuario y grupo “foo”, esto quiere decir que a parte del usuario root que tiene acceso a todo, nuestro nuevo usuario es el único dueño de esta carpeta.</p>
+
+<p>Cambiamos la contraseña con <code class="language-plaintext highlighter-rouge">passwd</code>:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>passwd foo
+</code></pre></div></div>
+
+<p>Ahora vamos a agregar a nuestro nuevo usuario al grupo wheel para que este pueda ser super usuario:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>usermod <span class="nt">-aG</span> wheel foo
+</code></pre></div></div>
+
+<p>Revisamos los grupos de nuestro usuario con el comando <code class="language-plaintext highlighter-rouge">groups</code>.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">groups </span>foo
+</code></pre></div></div>
+
+<p>Y nos debería aparecer algo como:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wheel foo
+</code></pre></div></div>
+
+<p>Ahora vamos a abrir el archivo sudoers que sa encuentra en <code class="language-plaintext highlighter-rouge">/etc/sudoers</code>.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano /etc/sudoers
+</code></pre></div></div>
+
+<p>Descomentamos la siguiente línea:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># %wheel ALL=(ALL) ALL</span>
+</code></pre></div></div>
+
+<p>Quitando el signo “#”:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>%wheel <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> ALL
+</code></pre></div></div>
+
+<p>Y guardamos el archivo. Con esta configuración si ingresamos <code class="language-plaintext highlighter-rouge">sudo su</code>, el sistema nos pediré la contraseña del usuario antes de convertirlo en root.</p>
+
+<p>Para cambiar de usuario ocupamos el comando <code class="language-plaintext highlighter-rouge">su</code> y el nombre del usuario.</p>
+
+<p>A modo de prueba nos cambiamos de usuario:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>su foo
+</code></pre></div></div>
+
+<p>Podemos verificar nuestro usuario con el comando <code class="language-plaintext highlighter-rouge">whoami</code>.</p>
+
+<p>Ahora ingresemos el comando <code class="language-plaintext highlighter-rouge">sudo su</code></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>su
+</code></pre></div></div>
+
+<p>Nos pedirá contraseña la contraseña de nuestro usuario, la ingresamos y nuestro usuario será root nuevamente.</p>
+
+<p>Para salir de estos usuarios:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">exit</span>
+<span class="nv">$ </span><span class="nb">exit</span>
+</code></pre></div></div>
+
+<h3 id="112-vamos-a-establecer-la-región-del-teclado">1.12. Vamos a establecer la región del teclado</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano /etc/locale.gen
+</code></pre></div></div>
+
+<p>Hacemos ctrl+w para buscar, y filtramos por <code class="language-plaintext highlighter-rouge">en_US.UTF-8 UTF-8</code>. Esta línea la vamos a descomentar.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#en_US.UTF-8 UTF-8</span>
+</code></pre></div></div>
+
+<p>Quedando de esta forma:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>en_US.UTF-8 UTF-8
+</code></pre></div></div>
+
+<p>Y haremos lo mismo con <code class="language-plaintext highlighter-rouge">es_CL.UTF-8 UTF-8</code> en el caso de Chile o <code class="language-plaintext highlighter-rouge">es_ES.UTF-8 UTF-8</code> para el caso de España.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#es_CL.UTF-8 UTF-8</span>
+</code></pre></div></div>
+
+<p>Quedando de esta forma:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>es_CL.UTF-8 UTF-8
+</code></pre></div></div>
+
+<p>Una vez realizados los cambios, guardamos el archivo.</p>
+
+<p>Ahora ingresamos el siguiente comando para aplicar los cambios:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>locale-gen
+</code></pre></div></div>
+
+<p>La salida por pantalla debería ser algo como esto:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Generating locales...
+  en_US.UTF-8... <span class="k">done
+  </span>es_CL.UTF-8.. <span class="k">done
+</span>Generation complete.
+</code></pre></div></div>
+
+<p>Para evitar ingresar a cada rato el comando <code class="language-plaintext highlighter-rouge">loadkeys es</code> vamos a editar el archivo <code class="language-plaintext highlighter-rouge">/etc/vconsole.conf</code> para cambiar el mapa de teclas de las terminales TTY:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano /etc/vconsole.conf
+</code></pre></div></div>
+
+<p>Ingresamos lo siguiente:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">KEYMAP</span><span class="o">=</span>es
+</code></pre></div></div>
+
+<p>y guardamos el archivo.</p>
+
+<p>Con esto, la próxima vez que reinicies el equipo, va a estar en español el teclado.</p>
+
+<p>Para más información respecto a este tema te dejo el link de la documentación oficial de archlinux: <a href="https://wiki.archlinux.org/title/Linux_console/Keyboard_configuration">Linux console/Keyboard configuration</a></p>
+
+<h3 id="113-establecer-la-zona-horaria">1.13. Establecer la zona horaria</h3>
+
+<p>Establecemos la zona horaria de nuestro sistema:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ln</span> <span class="nt">-s</span> /usr/share/zoneinfo/America/Santiago /etc/localtime
+</code></pre></div></div>
+
+<p>Configuramos el reloj de hardware en modo UTC:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>hwclock <span class="nt">--systohc</span> <span class="nt">--utc</span>
+</code></pre></div></div>
+
+<h3 id="114-modificar-el-nombre-de-nuesta-máquina">1.14. Modificar el nombre de nuesta máquina</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo </span>archlinux <span class="o">&gt;</span> /etc/hostname
+</code></pre></div></div>
+
+<h3 id="115-configurar-el-archivo-hosts">1.15. Configurar el archivo hosts</h3>
+
+<p>Abrimos el archivo hosts:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano /etc/hosts
+</code></pre></div></div>
+
+<p>Ingresamos el siguiente contenido al final del archivo:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1     localhost
+::1           localhost
+</code></pre></div></div>
+
+<p>Guardamos el archivo.</p>
+
+<p>Comprobamos que el archivo quedó correctamente escrito:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat</span> /etc/hosts
+</code></pre></div></div>
+
+<h3 id="116-instalar-el-gestor-de-arranque-boot-loader">1.16. Instalar el gestor de arranque (Boot loader)</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>grub-install /dev/sda
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano /etc/default/grub
+</code></pre></div></div>
+
+<p>Editamos el archivo <code class="language-plaintext highlighter-rouge">/etc/default/grub</code> para descomentar/agregar la línea <code class="language-plaintext highlighter-rouge">GRUB_DISABLE_OS_PROBER=false</code>, guardamos y ejecutamos el siguiente comando para crear el archivo de configuración del grub:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>grub-mkconfig <span class="nt">-o</span> /boot/grub/grub.cfg
+</code></pre></div></div>
+
+<p><strong>Nota:</strong> -o es letra y no el número cero.</p>
+
+<h3 id="117-finalizar-la-instalación">1.17. Finalizar la instalación</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">exit</span>
+<span class="nv">$ </span>reboot
+</code></pre></div></div>
+
+<p>Si quieres ver la Guía oficial de instalación de Arch Linux <a href="https://wiki.archlinux.org/index.php/Install_guide">pincha aquí</a>.</p>
+
+<h2 id="2-post-instalación-base">2. Post instalación base</h2>
+
+<h3 id="21-habilitar-servicio-networkmanager">2.1. Habilitar servicio NetworkManager</h3>
+
+<p>Luego de iniciar sesión con nuestro usuario, lo primero que vamos a hacer es habilitar el servicio NetworkManager:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>NetworkManager.service
+</code></pre></div></div>
+
+<p>Una vez realizado esto, reiniciamos la máquina:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<p>también podemos reiniciar la máquina con:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>shutdown <span class="nt">-r</span> now
+</code></pre></div></div>
+
+<p>Una vez reiniciada, nos logueamos nuevamente y probamos conectividad con la red.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ping <span class="nt">-c</span> 3 www.google.com
+64 bytes from www.google.com <span class="o">(</span>74.125.224.113<span class="o">)</span>: <span class="nv">icmp_seq</span><span class="o">=</span>3 <span class="nv">ttl</span><span class="o">=</span>57 <span class="nb">time</span><span class="o">=</span>27.5 ms
+</code></pre></div></div>
+
+<h3 id="22-sincronizar-las-bases-de-datos-de-paquetes">2.2. Sincronizar las bases de datos de paquetes</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-Syu</span>
+</code></pre></div></div>
+
+<h3 id="23-instalar-neofetch">2.3. Instalar neofetch</h3>
+
+<p>Es un paquete que al ejecutarse en la terminal recopila información del sistema y la muestra al usuario de forma amigable, incluyendo un logotipo de la distro que se está utilizando en formato ASCII.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> neofetch
+</code></pre></div></div>
+
+<p>Una vez instalado, lo ejecutamos con el comando <code class="language-plaintext highlighter-rouge">neofetch</code>.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>neofetch
+</code></pre></div></div>
+
+<h3 id="24-xorg">2.4. Xorg</h3>
+
+<p>Antes de instalar el entorno de escritorio vamos a instalar el servidor de visualización y algunas utilidades:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> xorg xorg-server xorg-apps xorg-xinit xterm <span class="nt">--noconfirm</span>
+</code></pre></div></div>
+
+<p>Una vez finalizada la instalación ingresamos el siguiente comando para verificar que todo este bien:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>startx
+</code></pre></div></div>
+
+<p>Si nos muestra tres terminales con fondo de color blanco, es por que la instalación finalizo correctamente y podemos salir ingresando “exit”.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">exit</span>
+</code></pre></div></div>
+
+<h3 id="25-intel-graphics---xorg-drivers">2.5. Intel graphics - Xorg Drivers</h3>
+
+<p>Prerequisito: Xorg.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> xf86-video-intel xf86-input-synaptics
+</code></pre></div></div>
+
+<h3 id="26-lightdm">2.6. LightDM</h3>
+
+<p>LightDM es un ligero y rápido gestor de sesiones para X Window System. Vamos a ingresar los siguientes comandos:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> lightdm-gtk-greeter lightdm-service
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>lightdm.service
+<span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<h3 id="27-para-instalar-gnome-desktop">2.7. Para instalar Gnome Desktop</h3>
+
+<p>Tenemos dos opciones, instalar Gnome sin programas por defecto preinstalados o con todos los programas por defecto preinstalados</p>
+
+<p><strong>Instalación mímima</strong></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> gnome-control-center gdm
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>gdm.service
+<span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<p><strong>Instalación completa</strong></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> gnome
+</code></pre></div></div>
+
+<p>Nos preguntará sobre algunos paquetes, dejaremos todo por defecto. Vamos a presionar enter a todo.</p>
+
+<p>Una vez finalizada la instalación ingresaremos este comando para asegurarnos que en la pantalla de inicio de sesión el teclado esté configurado en español (o el lenguaje que queramos):</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>localectl set-x11-keymap es
+</code></pre></div></div>
+
+<p>Finalmente habilitamos el servicio de Gnome y reiniciamos el equipo.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>gdm.service
+<span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<h3 id="28-algunos-paquetes-recomendables">2.8. Algunos paquetes recomendables.</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">gufw</code>: Firewall.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">unrar</code>: Utilidad de descompresión de archivos .rar.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">git</code>: El sistema de control de versiones más utilizado hoy en día por desarrolladores de software.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">vim</code>: Potente editor de texto. Versión mejorada del editor Vi.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">wget</code>: Descarga archivos usando los protocolos de internet más usados como son HTTP, HTTPS, FPT, FTPS.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">zsh</code>: Potente intérprete de comandos.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">nmap</code>: Permite revisar los puertos de una máquina.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">net-tools</code>: Permite usar comandos como el ifconfig, entre otros.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">htop</code>: Completo sistema de monitorización.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">mlocate</code>: Permite hacer búsqueda de archivos en cualquier parte del sistema.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">tree</code>: Paquete para visualizar de manera rápida el árbol de carpetas/directorios.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ntfs-3g</code>: Soporte para dispositivos externos (pendrive y otros) que usen sistema de archivos NTFS.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">gvfs-smb</code>: Implementación del sistema de archivos virtual para GIO (backend SMB/CIFS; cliente de Windows)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">gvfs-mtp</code>: Este paquete da soporte para el protocolo de transferencia de datos multimedia MTP (Multimedia Transfer Protocol) de los sistemas Android.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">psensor</code>: Programa que monitorea la temperatura del hardware del equipo.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">dmidecode</code>: Herramienta que permite obtener información de los componentes de hardware del sistema.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">terminator</code>: Terminator es un emulador de terminal muy completo. Una de sus caracteristicas más destacables es que permite hacer split de la ventana para abrir multiples terminales.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">bleachbit</code>: Bleachbit Es una herramienta de limpieza del disco duro.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">vlc</code>: Reproductor multimedia que reproduce la mayoría de los archivos multimedia gracias a tiene la mayoría de codecs necesarios.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">gnome-tweak-tool</code>: Herramienta para configurar la apariencia de Gnome.</p>
+  </li>
+</ul>
+
+<p>Instalación:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> gufw unrar git vim wget zsh nmap net-tools htop mlocate tree  <span class="se">\</span>
+ntfs-3g gvfs-smb gvfs-mtp psensor dmidecode terminator bleachbit vlc gnome-tweak-tool
+</code></pre></div></div>
+
+<h3 id="29-wallpapers-y-fuentes">2.9. Wallpapers y fuentes</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> archlinux-wallpaper powerline-fonts nerd-fonts ttf-liberation ttf-dejavu ttf-freefont
+</code></pre></div></div>
+
+<h3 id="210-oh-my-zsh">2.10. Oh My Zsh</h3>
+
+<p>Oh My Zsh es un framework para la gestión de la configuración de Zsh. Permite instalar temas, plugins, helpers, etc fácilmente. Es open source.</p>
+
+<p>Para instalarlo:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>sh <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p><a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh - repositorio</a></p>
+
+<p><a href="https://ohmyz.sh/">sitio web oficial</a></p>
+
+<h3 id="si-el-sistema-está-instalado-en-una-vm-de-virtualbox">Si el sistema está instalado en una VM de Virtualbox</h3>
+
+<h4 id="virtualbox-guest-additions">Virtualbox Guest Additions</h4>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> virtualbox-guest-utils
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>vboxservice.service
+</code></pre></div></div>]]></content><author><name></name></author><category term="linux" /><category term="archlinux" /><category term="Linux" /><category term="ArchLinux" /><summary type="html"><![CDATA[Esta es una guía paso a paso de como instalar Arch Linux 2022.06.01 x86_64. Con esta guía el usuario será capaz de cambiar el idioma del teclado, particionar el disco, realizar la instalación de un entorno de escritorio y más, todo el proceso se realiza por línea de comandos. 1. Instalación base Vamos a seleccionar la primera opción “Arch Linux install medium (x86_64, BIOS)” 1.1 Deshabilitar el molesto sonido de las teclas del teclado $ rmmod pcspkr 1.2 Cambiar el idioma del teclado a español. $ loadkeys es 1.3. Probando conectividad con la red. $ ping -c 3 www.google.com 64 bytes from www.google.com (74.125.224.113): icmp_seq=3 ttl=57 time=27.5 ms 1.4. Particionar el disco $ fdisk -l $ cfdisk /dev/sda Seleccionar label “uefi”. Si tenemos un sistema con 8 GiB o más de memoria probablemente podamos prescindir de la partición de swap. Sino podemos crear una. Crearemos las siguientes particiones: Tamaño Tipo 250M EFI System 4G Linux swap resto Linux, primaria A continuación vamos a crear nuestra primera partición; Para esto debemos seguir los siguientes pasos: -&gt; Con la tecla “enter” seleccionar el espacio libre del disco y seleccionar “New” -&gt; Partition size: 250M -&gt; Seleccionar [Type] -&gt; Seleccionar [EFI System] Vamos a crear la segunda partición: -&gt; Presionamos la tecla de la flecha hacia abajo para seleccionar el espacio libre del disco y “enter” para seleccionar “New” -&gt; Partition size: 4G -&gt; Seleccionar [Type] -&gt; Seleccionar “Linux swap” Ahora crearemos la última partición: -&gt; Seleccionar el espacio libre del disco y seleccionar “New” -&gt; En “Partition size: “ nos sugerirá lo que nos queda de espacio libre. Presionamos enter para asignar ese tamaño a nuestra nueva partición. Por defecto asignará tipo “Linux filesystem”, eso está bien, lo dejamos como está. Finalmente -&gt; Seleccionar [Write] -&gt; Para confirmar igresamos “yes” y presionamos la tecla enter. -&gt; Seleccionar [Quit] Si ejecutamos el comando lsblk podemos ver lo que hemos definido. 1.5. Formateando las particiones 1.5.1. Formatear la partición EFI $ mkfs.fat -F32 /dev/sda1 1.5.2. Formatear la partición / $ mkfs.ext4 /dev/sda3 1.6. Crear y activar la swap Creamos la swap o espacio de intercambio: $ mkswap /dev/sda2 Y activamos la swap: $ swapon /dev/sda2 1.7. Montar las particiones Lo siguiente que haremos es montar las particiones para empezar a usarlas, primero la partición root (/), que en esta guía es sda3 y luego la partición boot/efi (/boot/efi) que será sda1. Si tenemos un disco SSD montamos las particiones usando las opciones de montaje adecuados para que se use TRIM: $ mount -o noatime,discard /dev/sda3 /mnt $ mkdir -p /mnt/boot/efi $ mount -o noatime,discard /dev/sda1 /mnt/boot/efi Si tenemos un disco HDD montamos las particiones de la siguiente forma: $ mount /dev/sda3 /mnt $ mkdir -p /mnt/boot/efi $ mount /dev/sda1 /mnt/boot/efi 1.8. Instalar paquetes del sistema base $ pacstrap -i /mnt linux linux-firmware linux-headers grub efibootmgr base base-devel sudo nano networkmanager Nos dará elegir que paquetes queremos instalar. Presionar enter para que instale todo por defecto. Y luego ingresar “Y” para confirmar. 1.9. Generando el FSTAB. Este archivo define cómo deben montarse las particiones de disco en el sistema de archivos. $ genfstab -U -p /mnt &gt; /mnt/etc/fstab y comprobamos con: $ cat !$ 1.10. Chroot y configuración de sistema base Hacemos un chroot para cambiar el directorio root que estamos usando para configurar nuestro sistema. $ arch-chroot /mnt Vamos a utilizar el comando passwd para definir una contraseña para el usuarios root $ passwd 1.11. Crear Usuario Si ingresamos el comando ls /home/ podemos ver que no existe ninguna carpeta de usuario. Para crear un usuario vamos a utilizar el comando useradd. En este ejemplo nuestro usuario se llamará “foo”, ustedes reemplacen el nombre del usuario por el que quieran. $ useradd -m foo Si ingresamos nuevamente el comando ls /home/ -l podemos ver que ahora hay una nueva carpeta con el nombre del usuario y esta tiene usuario y grupo “foo”, esto quiere decir que a parte del usuario root que tiene acceso a todo, nuestro nuevo usuario es el único dueño de esta carpeta. Cambiamos la contraseña con passwd: $ passwd foo Ahora vamos a agregar a nuestro nuevo usuario al grupo wheel para que este pueda ser super usuario: $ usermod -aG wheel foo Revisamos los grupos de nuestro usuario con el comando groups. $ groups foo Y nos debería aparecer algo como: wheel foo Ahora vamos a abrir el archivo sudoers que sa encuentra en /etc/sudoers. $ nano /etc/sudoers Descomentamos la siguiente línea: # %wheel ALL=(ALL) ALL Quitando el signo “#”: %wheel ALL=(ALL) ALL Y guardamos el archivo. Con esta configuración si ingresamos sudo su, el sistema nos pediré la contraseña del usuario antes de convertirlo en root. Para cambiar de usuario ocupamos el comando su y el nombre del usuario. A modo de prueba nos cambiamos de usuario: $ su foo Podemos verificar nuestro usuario con el comando whoami. Ahora ingresemos el comando sudo su $ sudo su Nos pedirá contraseña la contraseña de nuestro usuario, la ingresamos y nuestro usuario será root nuevamente. Para salir de estos usuarios: $ exit $ exit 1.12. Vamos a establecer la región del teclado $ nano /etc/locale.gen Hacemos ctrl+w para buscar, y filtramos por en_US.UTF-8 UTF-8. Esta línea la vamos a descomentar. #en_US.UTF-8 UTF-8 Quedando de esta forma: en_US.UTF-8 UTF-8 Y haremos lo mismo con es_CL.UTF-8 UTF-8 en el caso de Chile o es_ES.UTF-8 UTF-8 para el caso de España. #es_CL.UTF-8 UTF-8 Quedando de esta forma: es_CL.UTF-8 UTF-8 Una vez realizados los cambios, guardamos el archivo. Ahora ingresamos el siguiente comando para aplicar los cambios: $ locale-gen La salida por pantalla debería ser algo como esto: Generating locales... en_US.UTF-8... done es_CL.UTF-8.. done Generation complete. Para evitar ingresar a cada rato el comando loadkeys es vamos a editar el archivo /etc/vconsole.conf para cambiar el mapa de teclas de las terminales TTY: $ nano /etc/vconsole.conf Ingresamos lo siguiente: KEYMAP=es y guardamos el archivo. Con esto, la próxima vez que reinicies el equipo, va a estar en español el teclado. Para más información respecto a este tema te dejo el link de la documentación oficial de archlinux: Linux console/Keyboard configuration 1.13. Establecer la zona horaria Establecemos la zona horaria de nuestro sistema: $ ln -s /usr/share/zoneinfo/America/Santiago /etc/localtime Configuramos el reloj de hardware en modo UTC: $ hwclock --systohc --utc 1.14. Modificar el nombre de nuesta máquina $ echo archlinux &gt; /etc/hostname 1.15. Configurar el archivo hosts Abrimos el archivo hosts: $ nano /etc/hosts Ingresamos el siguiente contenido al final del archivo: 127.0.0.1 localhost ::1 localhost Guardamos el archivo. Comprobamos que el archivo quedó correctamente escrito: $ cat /etc/hosts 1.16. Instalar el gestor de arranque (Boot loader) $ grub-install /dev/sda $ nano /etc/default/grub Editamos el archivo /etc/default/grub para descomentar/agregar la línea GRUB_DISABLE_OS_PROBER=false, guardamos y ejecutamos el siguiente comando para crear el archivo de configuración del grub: $ grub-mkconfig -o /boot/grub/grub.cfg Nota: -o es letra y no el número cero. 1.17. Finalizar la instalación $ exit $ reboot Si quieres ver la Guía oficial de instalación de Arch Linux pincha aquí. 2. Post instalación base 2.1. Habilitar servicio NetworkManager Luego de iniciar sesión con nuestro usuario, lo primero que vamos a hacer es habilitar el servicio NetworkManager: $ sudo systemctl enable NetworkManager.service Una vez realizado esto, reiniciamos la máquina: $ sudo reboot también podemos reiniciar la máquina con: $ sudo shutdown -r now Una vez reiniciada, nos logueamos nuevamente y probamos conectividad con la red. $ ping -c 3 www.google.com 64 bytes from www.google.com (74.125.224.113): icmp_seq=3 ttl=57 time=27.5 ms 2.2. Sincronizar las bases de datos de paquetes $ sudo pacman -Syu 2.3. Instalar neofetch Es un paquete que al ejecutarse en la terminal recopila información del sistema y la muestra al usuario de forma amigable, incluyendo un logotipo de la distro que se está utilizando en formato ASCII. $ sudo pacman -S neofetch Una vez instalado, lo ejecutamos con el comando neofetch. $ neofetch 2.4. Xorg Antes de instalar el entorno de escritorio vamos a instalar el servidor de visualización y algunas utilidades: $ sudo pacman -S xorg xorg-server xorg-apps xorg-xinit xterm --noconfirm Una vez finalizada la instalación ingresamos el siguiente comando para verificar que todo este bien: $ startx Si nos muestra tres terminales con fondo de color blanco, es por que la instalación finalizo correctamente y podemos salir ingresando “exit”. $ exit 2.5. Intel graphics - Xorg Drivers Prerequisito: Xorg. $ sudo pacman -S xf86-video-intel xf86-input-synaptics 2.6. LightDM LightDM es un ligero y rápido gestor de sesiones para X Window System. Vamos a ingresar los siguientes comandos: $ sudo pacman -S lightdm-gtk-greeter lightdm-service $ sudo systemctl enable lightdm.service $ sudo reboot 2.7. Para instalar Gnome Desktop Tenemos dos opciones, instalar Gnome sin programas por defecto preinstalados o con todos los programas por defecto preinstalados Instalación mímima $ sudo pacman -S gnome-control-center gdm $ sudo systemctl enable gdm.service $ sudo reboot Instalación completa $ sudo pacman -S gnome Nos preguntará sobre algunos paquetes, dejaremos todo por defecto. Vamos a presionar enter a todo. Una vez finalizada la instalación ingresaremos este comando para asegurarnos que en la pantalla de inicio de sesión el teclado esté configurado en español (o el lenguaje que queramos): $ sudo localectl set-x11-keymap es Finalmente habilitamos el servicio de Gnome y reiniciamos el equipo. $ sudo systemctl enable gdm.service $ sudo reboot 2.8. Algunos paquetes recomendables. gufw: Firewall. unrar: Utilidad de descompresión de archivos .rar. git: El sistema de control de versiones más utilizado hoy en día por desarrolladores de software. vim: Potente editor de texto. Versión mejorada del editor Vi. wget: Descarga archivos usando los protocolos de internet más usados como son HTTP, HTTPS, FPT, FTPS. zsh: Potente intérprete de comandos. nmap: Permite revisar los puertos de una máquina. net-tools: Permite usar comandos como el ifconfig, entre otros. htop: Completo sistema de monitorización. mlocate: Permite hacer búsqueda de archivos en cualquier parte del sistema. tree: Paquete para visualizar de manera rápida el árbol de carpetas/directorios. ntfs-3g: Soporte para dispositivos externos (pendrive y otros) que usen sistema de archivos NTFS. gvfs-smb: Implementación del sistema de archivos virtual para GIO (backend SMB/CIFS; cliente de Windows) gvfs-mtp: Este paquete da soporte para el protocolo de transferencia de datos multimedia MTP (Multimedia Transfer Protocol) de los sistemas Android. psensor: Programa que monitorea la temperatura del hardware del equipo. dmidecode: Herramienta que permite obtener información de los componentes de hardware del sistema. terminator: Terminator es un emulador de terminal muy completo. Una de sus caracteristicas más destacables es que permite hacer split de la ventana para abrir multiples terminales. bleachbit: Bleachbit Es una herramienta de limpieza del disco duro. vlc: Reproductor multimedia que reproduce la mayoría de los archivos multimedia gracias a tiene la mayoría de codecs necesarios. gnome-tweak-tool: Herramienta para configurar la apariencia de Gnome. Instalación: $ sudo pacman -S gufw unrar git vim wget zsh nmap net-tools htop mlocate tree \ ntfs-3g gvfs-smb gvfs-mtp psensor dmidecode terminator bleachbit vlc gnome-tweak-tool 2.9. Wallpapers y fuentes $ sudo pacman -S archlinux-wallpaper powerline-fonts nerd-fonts ttf-liberation ttf-dejavu ttf-freefont 2.10. Oh My Zsh Oh My Zsh es un framework para la gestión de la configuración de Zsh. Permite instalar temas, plugins, helpers, etc fácilmente. Es open source. Para instalarlo: $ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" oh-my-zsh - repositorio sitio web oficial Si el sistema está instalado en una VM de Virtualbox Virtualbox Guest Additions $ sudo pacman -S virtualbox-guest-utils $ sudo systemctl enable vboxservice.service]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://aduartem.github.io/assets/images/posts/2018/arch-linux.png" /><media:content medium="image" url="https://aduartem.github.io/assets/images/posts/2018/arch-linux.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Guía de instalación de Arch Linux 2022.06.01 x86_64 (Boot)</title><link href="https://aduartem.github.io/linux/archlinux/2022/06/24/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-BIOS.html" rel="alternate" type="text/html" title="Guía de instalación de Arch Linux 2022.06.01 x86_64 (Boot)" /><published>2022-06-24T00:00:00+00:00</published><updated>2022-06-24T00:00:00+00:00</updated><id>https://aduartem.github.io/linux/archlinux/2022/06/24/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-BIOS</id><content type="html" xml:base="https://aduartem.github.io/linux/archlinux/2022/06/24/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-BIOS.html"><![CDATA[<p>Esta es una guía paso a paso de como instalar Arch Linux 2022.06.01 x86_64. Con esta guía el usuario será capaz de cambiar el idioma del teclado, particionar el disco, realizar la instalación de un entorno de escritorio y más, todo el proceso se realiza por línea de comandos.</p>
+
+<h2 id="1-instalación-base">1. Instalación base</h2>
+
+<p>Vamos a seleccionar la primera opción “Arch Linux install medium (x86_64, BIOS)”</p>
+
+<h3 id="11-deshabilitar-el-molesto-sonido-de-las-teclas-del-teclado">1.1 Deshabilitar el molesto sonido de las teclas del teclado</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>rmmod pcspkr
+</code></pre></div></div>
+
+<h3 id="12-cambiar-el-idioma-del-teclado-a-español">1.2 Cambiar el idioma del teclado a español.</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>loadkeys es
+</code></pre></div></div>
+
+<h3 id="13-probando-conectividad-con-la-red">1.3. Probando conectividad con la red.</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ping <span class="nt">-c</span> 3 www.google.com
+64 bytes from www.google.com <span class="o">(</span>74.125.224.113<span class="o">)</span>: <span class="nv">icmp_seq</span><span class="o">=</span>3 <span class="nv">ttl</span><span class="o">=</span>57 <span class="nb">time</span><span class="o">=</span>27.5 ms
+</code></pre></div></div>
+
+<h3 id="14-particiones-de-disco-duro-basadas-en-bios">1.4. Particiones de disco duro basadas en BIOS</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>fdisk <span class="nt">-l</span>
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cfdisk /dev/sda
+</code></pre></div></div>
+
+<p>Seleccionar label “<strong>dos</strong>”.</p>
+
+<p>Si tenemos un sistema con 8 GiB o más de memoria probablemente podamos prescindir de la partición de swap. Sino debemos crear una.</p>
+
+<p>Crearemos las siguientes particiones:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tamaño</th>
+      <th>Tipo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>250 M</td>
+      <td>Boot, primaria</td>
+    </tr>
+    <tr>
+      <td>4 G</td>
+      <td>Linux swap, primaria</td>
+    </tr>
+    <tr>
+      <td>resto</td>
+      <td>Linux, primaria</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>En esta guía crearemos las 3 particiones primarias del segundo caso.</p>
+
+<p>Solo puede crear cuatro particiones primarias en cualquier disco duro físico. Este límite de partición se extiende a la partición de intercambio de Linux, así como a cualquier instalación de sistema operativo o particiones con fines especiales adicionales, como /root, /home, /boot, etc., que desee crear. Si por alguna razón necesitamos más particiones podemos ocupar una partición extendida.</p>
+
+<p>Partición Extendida:</p>
+<ul>
+  <li>Es un tipo especial de partición que contiene “espacio libre” en el que se pueden crear más de las cuatro particiones primarias.</li>
+  <li>Dentro de la partición extendida podemos crear varias particiones, estas se llaman particiones lógicas. Podemos crear N particiones lógicas dentro de una partición extendida. Algunas convenciones al respecto:
+    <ul>
+      <li>Si va a crear una particion extendida, debemos tener máximo tres particiones primarias.</li>
+      <li>Sólo se debe crear una partición extendida en un disco duro (aunque puede tener una partición extendida en cada uno de los discos duros del sistema)</li>
+      <li>Una partición extendida no se puede formatear con un sistema de archivos como ext4, FAT o NTFS, ni puede contener datos directamente. Esa es la función de las unidades lógicas que se crean dentro de él.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>A continuación vamos a crear nuestra primera partición; Para esto debemos seguir los siguientes pasos:<br />
+-&gt; Con la tecla “enter” seleccionar el espacio libre del disco y seleccionar “New”<br />
+-&gt; Partition size: 250M<br />
+-&gt; Seleccionar [primary]<br />
+-&gt; Seleccionar [Bootable]<br /></p>
+
+<p>Ahora crearemos la segunda partición:
+-&gt; Presionamos la tecla de la flecha hacia abajo para seleccionar el espacio libre del disco y “enter” para seleccionar “New”<br />
+-&gt; Partition size: 4G<br />
+-&gt; Seleccionar [primary]<br />
+-&gt; Seleccionar [Type]<br />
+-&gt; Seleccionar “82 Linux swap / Solaris”<br /></p>
+
+<p>Ahora crearemos la última partición:
+-&gt; Seleccionar el espacio libre del disco y seleccionar “New”<br />
+-&gt; En “Partition size: “ nos sugerirá lo que nos queda de espacio libre. Presionamos enter para asignar ese tamaño a nuestra nueva partición.<br />
+-&gt; Seleccionar [primary]<br /></p>
+
+<p>Finalmente
+-&gt; Seleccionar [Write]<br />
+-&gt; Para confirmar igresamos “yes” y presionamos la tecla enter.<br />
+-&gt; Seleccionar [Quit]<br /></p>
+
+<p>Si ejecutamos el comando <code class="language-plaintext highlighter-rouge">lsblk</code> podemos ver lo que hemos definido.</p>
+
+<h3 id="15-formateando-las-particiones">1.5. Formateando las particiones</h3>
+
+<h4 id="151-formatear-la-partición-boot">1.5.1. Formatear la partición Boot</h4>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mkfs.ext3 /dev/sda1
+</code></pre></div></div>
+
+<h4 id="152-formatear-la-partición-">1.5.2. Formatear la partición /</h4>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mkfs.ext4 /dev/sda3
+</code></pre></div></div>
+
+<h4 id="16-crear-y-activar-la-swap">1.6. Crear y activar la swap</h4>
+
+<p>Creamos la swap o espacio de intercambio:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mkswap /dev/sda2
+</code></pre></div></div>
+
+<p>Y activamos la swap:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>swapon /dev/sda2
+</code></pre></div></div>
+
+<h3 id="17-montar-las-particiones">1.7. Montar las particiones</h3>
+
+<p>Lo siguiente que haremos es montar las particiones para empezar a usarlas, primero la partición root (/), que en esta guía es sda3 y luego la partición boot (/boot) que será sda1.</p>
+
+<p>Si tenemos un disco <strong>SSD</strong> montamos las particiones usando las opciones de montaje adecuados para que se use TRIM:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mount <span class="nt">-o</span> noatime,discard /dev/sda3 /mnt
+<span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> /mnt/boot
+<span class="nv">$ </span>mount <span class="nt">-o</span> noatime,discard /dev/sda1 /mnt/boot
+</code></pre></div></div>
+
+<p>Si tenemos un disco <strong>HDD</strong> montamos las particiones de la siguiente forma:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mount /dev/sda3 /mnt
+<span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> /mnt/boot
+<span class="nv">$ </span>mount /dev/sda1 /mnt/boot
+</code></pre></div></div>
+
+<h3 id="18-instalar-paquetes-del-sistema-base">1.8. Instalar paquetes del sistema base</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pacstrap <span class="nt">-i</span> /mnt linux linux-firmware linux-headers grub base base-devel <span class="nb">sudo </span>nano networkmanager wpa_supplicant
+</code></pre></div></div>
+
+<p>Nos dará elegir que paquetes queremos instalar. Presionar enter para que instale todo por defecto. Y luego ingresar “Y” para confirmar.</p>
+
+<h3 id="19-generando-el-fstab">1.9. Generando el FSTAB.</h3>
+
+<p>Este archivo define cómo deben montarse las particiones de disco en el sistema de archivos.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>genfstab <span class="nt">-U</span> <span class="nt">-p</span> /mnt <span class="o">&gt;</span> /mnt/etc/fstab
+</code></pre></div></div>
+
+<p>y comprobamos con:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat</span> <span class="o">!</span><span class="err">$</span>
+</code></pre></div></div>
+
+<h3 id="110-chroot-y-configuración-de-sistema-base">1.10. Chroot y configuración de sistema base</h3>
+
+<p>Hacemos un chroot para cambiar el directorio root que estamos usando para configurar nuestro sistema.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>arch-chroot /mnt
+</code></pre></div></div>
+
+<p>Vamos a utilizar el comando <code class="language-plaintext highlighter-rouge">passwd</code> para definir una contraseña para el usuarios root</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>passwd
+</code></pre></div></div>
+
+<h3 id="111-crear-usuario">1.11. Crear Usuario</h3>
+
+<p>Si ingresamos el comando <code class="language-plaintext highlighter-rouge">ls /home/</code> podemos ver que no existe ninguna carpeta de usuario.</p>
+
+<p>Para crear un usuario vamos a utilizar el comando <code class="language-plaintext highlighter-rouge">useradd</code>. En este ejemplo nuestro usuario se llamará “foo”, ustedes reemplacen el nombre del usuario por el que quieran.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>useradd <span class="nt">-m</span> foo
+</code></pre></div></div>
+
+<p>Si ingresamos nuevamente el comando <code class="language-plaintext highlighter-rouge">ls /home/ -l</code> podemos ver que ahora hay una nueva carpeta con el nombre del usuario y esta tiene usuario y grupo “foo”, esto quiere decir que a parte del usuario root que tiene acceso a todo, nuestro nuevo usuario es el único dueño de esta carpeta.</p>
+
+<p>Cambiamos la contraseña con <code class="language-plaintext highlighter-rouge">passwd</code>:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>passwd foo
+</code></pre></div></div>
+
+<p>Ahora vamos a agregar a nuestro nuevo usuario al grupo wheel para que este pueda ser super usuario:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>usermod <span class="nt">-aG</span> wheel foo
+</code></pre></div></div>
+
+<p>Revisamos los grupos de nuestro usuario con el comando <code class="language-plaintext highlighter-rouge">groups</code>.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">groups </span>foo
+</code></pre></div></div>
+
+<p>Y nos debería aparecer algo como:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wheel foo
+</code></pre></div></div>
+
+<p>Ahora vamos a abrir el archivo sudoers que sa encuentra en <code class="language-plaintext highlighter-rouge">/etc/sudoers</code>.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano /etc/sudoers
+</code></pre></div></div>
+
+<p>Descomentamos la siguiente línea:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># %wheel ALL=(ALL) ALL</span>
+</code></pre></div></div>
+
+<p>Quitando el signo “#”:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>%wheel <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> ALL
+</code></pre></div></div>
+
+<p>Y guardamos el archivo. Con esta configuración si ingresamos <code class="language-plaintext highlighter-rouge">sudo su</code>, el sistema nos pediré la contraseña del usuario antes de convertirlo en root.</p>
+
+<p>Para cambiar de usuario ocupamos el comando <code class="language-plaintext highlighter-rouge">su</code> y el nombre del usuario.</p>
+
+<p>A modo de prueba nos cambiamos de usuario:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>su foo
+</code></pre></div></div>
+
+<p>Podemos verificar nuestro usuario con el comando <code class="language-plaintext highlighter-rouge">whoami</code>.</p>
+
+<p>Ahora ingresemos el comando <code class="language-plaintext highlighter-rouge">sudo su</code></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>su
+</code></pre></div></div>
+
+<p>Nos pedirá contraseña la contraseña de nuestro usuario, la ingresamos y nuestro usuario será root nuevamente.</p>
+
+<p>Para salir de estos usuarios:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">exit</span>
+<span class="nv">$ </span><span class="nb">exit</span>
+</code></pre></div></div>
+
+<h3 id="112-vamos-a-establecer-la-región-del-teclado">1.12. Vamos a establecer la región del teclado</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano /etc/locale.gen
+</code></pre></div></div>
+
+<p>Hacemos ctrl+w para buscar, y filtramos por <code class="language-plaintext highlighter-rouge">en_US.UTF-8 UTF-8</code>. Esta línea la vamos a descomentar.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#en_US.UTF-8 UTF-8</span>
+</code></pre></div></div>
+
+<p>Quedando de esta forma:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>en_US.UTF-8 UTF-8
+</code></pre></div></div>
+
+<p>Y haremos lo mismo con <code class="language-plaintext highlighter-rouge">es_CL.UTF-8 UTF-8</code> en el caso de Chile o <code class="language-plaintext highlighter-rouge">es_ES.UTF-8 UTF-8</code> para el caso de España.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#es_CL.UTF-8 UTF-8</span>
+</code></pre></div></div>
+
+<p>Quedando de esta forma:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>es_CL.UTF-8 UTF-8
+</code></pre></div></div>
+
+<p>Una vez realizados los cambios, guardamos el archivo.</p>
+
+<p>Ahora ingresamos el siguiente comando para aplicar los cambios:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>locale-gen
+</code></pre></div></div>
+
+<p>La salida por pantalla debería ser algo como esto:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Generating locales...
+  en_US.UTF-8... <span class="k">done
+  </span>es_CL.UTF-8.. <span class="k">done
+</span>Generation complete.
+</code></pre></div></div>
+
+<p>Para evitar ingresar a cada rato el comando <code class="language-plaintext highlighter-rouge">loadkeys es</code> vamos a editar el archivo <code class="language-plaintext highlighter-rouge">/etc/vconsole.conf</code> para cambiar el mapa de teclas de las terminales TTY:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano /etc/vconsole.conf
+</code></pre></div></div>
+
+<p>Ingresamos lo siguiente:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">KEYMAP</span><span class="o">=</span>es
+</code></pre></div></div>
+
+<p>y guardamos el archivo.</p>
+
+<p>Con esto, la próxima vez que reinicies el equipo, va a estar en español el teclado.</p>
+
+<p>Para más información respecto a este tema te dejo el link de la documentación oficial de archlinux: <a href="https://wiki.archlinux.org/title/Linux_console/Keyboard_configuration">Linux console/Keyboard configuration</a></p>
+
+<h3 id="113-establecer-la-zona-horaria">1.13. Establecer la zona horaria</h3>
+
+<p>Establecemos la zona horaria de nuestro sistema:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ln</span> <span class="nt">-s</span> /usr/share/zoneinfo/America/Santiago /etc/localtime
+</code></pre></div></div>
+
+<p>Configuramos el reloj de hardware en modo UTC:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>hwclock <span class="nt">--systohc</span> <span class="nt">--utc</span>
+</code></pre></div></div>
+
+<h3 id="114-modificar-el-nombre-de-nuesta-máquina">1.14. Modificar el nombre de nuesta máquina</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo </span>archlinux <span class="o">&gt;</span> /etc/hostname
+</code></pre></div></div>
+
+<h3 id="115-configurar-el-archivo-hosts">1.15. Configurar el archivo hosts</h3>
+
+<p>Abrimos el archivo hosts:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano /etc/hosts
+</code></pre></div></div>
+
+<p>Ingresamos el siguiente contenido al final del archivo:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1     localhost
+::1           localhost
+</code></pre></div></div>
+
+<p>Guardamos el archivo.</p>
+
+<p>Comprobamos que el archivo quedó correctamente escrito:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat</span> /etc/hosts
+</code></pre></div></div>
+
+<h3 id="116-instalar-el-gestor-de-arranque-boot-loader">1.16. Instalar el gestor de arranque (Boot loader)</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>grub-install /dev/sda
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano /etc/default/grub
+</code></pre></div></div>
+
+<p>Editamos el archivo <code class="language-plaintext highlighter-rouge">/etc/default/grub</code> para descomentar/agregar la línea <code class="language-plaintext highlighter-rouge">GRUB_DISABLE_OS_PROBER=false</code>, guardamos y ejecutamos el siguiente comando para crear el archivo de configuración del grub:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>grub-mkconfig <span class="nt">-o</span> /boot/grub/grub.cfg
+</code></pre></div></div>
+
+<p><strong>Nota:</strong> -o es letra y no el número cero.</p>
+
+<h3 id="117-finalizar-la-instalación">1.17. Finalizar la instalación</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">exit</span>
+<span class="nv">$ </span>reboot
+</code></pre></div></div>
+
+<p>Si quieres ver la Guía oficial de instalación de Arch Linux <a href="https://wiki.archlinux.org/index.php/Install_guide">pincha aquí</a>.</p>
+
+<h1 id="2-post-instalación-base">2. Post instalación base</h1>
+
+<h3 id="21-habilitar-servicio-networkmanager">2.1. Habilitar servicio NetworkManager</h3>
+
+<p>Luego de iniciar sesión con nuestro usuario, lo primero que vamos a hacer es habilitar el servicio NetworkManager:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>NetworkManager.service
+</code></pre></div></div>
+
+<p>Una vez realizado esto, reiniciamos la máquina:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<p>también podemos reiniciar la máquina con:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>shutdown <span class="nt">-r</span> now
+</code></pre></div></div>
+
+<p>Una vez reiniciada, nos logueamos nuevamente y probamos conectividad con la red.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ping <span class="nt">-c</span> 3 www.google.com
+64 bytes from www.google.com <span class="o">(</span>74.125.224.113<span class="o">)</span>: <span class="nv">icmp_seq</span><span class="o">=</span>3 <span class="nv">ttl</span><span class="o">=</span>57 <span class="nb">time</span><span class="o">=</span>27.5 ms
+</code></pre></div></div>
+
+<h3 id="22-sincronizar-las-bases-de-datos-de-paquetes">2.2. Sincronizar las bases de datos de paquetes</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-Syu</span>
+</code></pre></div></div>
+
+<h3 id="23-instalar-neofetch">2.3. Instalar neofetch</h3>
+
+<p>Es un paquete que al ejecutarse en la terminal recopila información del sistema y la muestra al usuario de forma amigable, incluyendo un logotipo de la distro que se está utilizando en formato ASCII.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> neofetch
+</code></pre></div></div>
+
+<p>Una vez instalado, lo ejecutamos con el comando <code class="language-plaintext highlighter-rouge">neofetch</code>.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>neofetch
+</code></pre></div></div>
+
+<h3 id="24-xorg">2.4. Xorg</h3>
+
+<p>Antes de instalar el entorno de escritorio vamos a instalar el servidor de visualización y algunas utilidades:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> xorg xorg-server xorg-apps xorg-xinit xterm <span class="nt">--noconfirm</span>
+</code></pre></div></div>
+
+<p>Una vez finalizada la instalación ingresamos el siguiente comando para verificar que todo este bien:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>startx
+</code></pre></div></div>
+
+<p>Si nos muestra tres terminales con fondo de color blanco, es por que la instalación finalizo correctamente y podemos salir ingresando “exit”.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">exit</span>
+</code></pre></div></div>
+
+<h3 id="25-intel-graphics---xorg-drivers">2.5. Intel graphics - Xorg Drivers</h3>
+
+<p>Prerequisito: Xorg.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> xf86-video-intel xf86-input-synaptics
+</code></pre></div></div>
+
+<h3 id="26-lightdm">2.6. LightDM</h3>
+
+<p>LightDM es un ligero y rápido gestor de sesiones para X Window System. Vamos a ingresar los siguientes comandos:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> lightdm-gtk-greeter lightdm-service
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>lightdm.service
+<span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<h3 id="27-para-instalar-gnome-desktop">2.7. Para instalar Gnome Desktop</h3>
+
+<p>Tenemos dos opciones, instalar Gnome sin programas por defecto preinstalados o con todos los programas por defecto preinstalados</p>
+
+<p><strong>Instalación mímima</strong></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> gnome-control-center gdm
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>gdm.service
+<span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<p><strong>Instalación completa</strong></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> gnome
+</code></pre></div></div>
+
+<p>Nos preguntará sobre algunos paquetes, dejaremos todo por defecto. Vamos a presionar enter a todo.</p>
+
+<p>Una vez finalizada la instalación ingresaremos este comando para asegurarnos que en la pantalla de inicio de sesión el teclado esté configurado en español (o el lenguaje que queramos):</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>localectl set-x11-keymap es
+</code></pre></div></div>
+
+<p>Finalmente habilitamos el servicio de Gnome y reiniciamos el equipo.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>gdm.service
+<span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<h3 id="28-algunos-paquetes-recomendables">2.8. Algunos paquetes recomendables.</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">gufw</code>: Firewall.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">unrar</code>: Utilidad de descompresión de archivos .rar.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">git</code>: El sistema de control de versiones más utilizado hoy en día por desarrolladores de software.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">vim</code>: Potente editor de texto. Versión mejorada del editor Vi.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">wget</code>: Descarga archivos usando los protocolos de internet más usados como son HTTP, HTTPS, FPT, FTPS.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">zsh</code>: Potente intérprete de comandos.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">nmap</code>: Permite revisar los puertos de una máquina.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">net-tools</code>: Permite usar comandos como el ifconfig, entre otros.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">htop</code>: Completo sistema de monitorización.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">mlocate</code>: Permite hacer búsqueda de archivos en cualquier parte del sistema.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">tree</code>: Paquete para visualizar de manera rápida el árbol de carpetas/directorios.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ntfs-3g</code>: Soporte para dispositivos externos (pendrive y otros) que usen sistema de archivos NTFS.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">gvfs-smb</code>: Implementación del sistema de archivos virtual para GIO (backend SMB/CIFS; cliente de Windows)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">gvfs-mtp</code>: Este paquete da soporte para el protocolo de transferencia de datos multimedia MTP (Multimedia Transfer Protocol) de los sistemas Android.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">psensor</code>: Programa que monitorea la temperatura del hardware del equipo.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">dmidecode</code>: Herramienta que permite obtener información de los componentes de hardware del sistema.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">terminator</code>: Terminator es un emulador de terminal muy completo. Una de sus caracteristicas más destacables es que permite hacer split de la ventana para abrir multiples terminales.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">bleachbit</code>: Bleachbit Es una herramienta de limpieza del disco duro.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">vlc</code>: Reproductor multimedia que reproduce la mayoría de los archivos multimedia gracias a tiene la mayoría de codecs necesarios.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">gnome-tweak-tool</code>: Herramienta para configurar la apariencia de Gnome.</p>
+  </li>
+</ul>
+
+<p>Instalación:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> gufw unrar git vim wget zsh nmap net-tools htop mlocate tree  <span class="se">\</span>
+ntfs-3g gvfs-smb gvfs-mtp psensor dmidecode terminator bleachbit vlc gnome-tweak-tool
+</code></pre></div></div>
+
+<h3 id="29-wallpapers-y-fuentes">2.9. Wallpapers y fuentes</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> archlinux-wallpaper ttf-liberation ttf-dejavu ttf-freefont
+</code></pre></div></div>
+
+<h3 id="210-oh-my-zsh">2.10. Oh My Zsh</h3>
+
+<p>Oh My Zsh es un framework para la gestión de la configuración de Zsh. Permite instalar temas, plugins, helpers, etc fácilmente. Es open source.</p>
+
+<p>Para instalarlo:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>sh <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p><a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh - repositorio</a></p>
+
+<p><a href="https://ohmyz.sh/">sitio web oficial</a></p>
+
+<h3 id="si-el-sistema-está-instalado-en-una-vm-de-virtualbox">Si el sistema está instalado en una VM de Virtualbox</h3>
+
+<h4 id="virtualbox-guest-additions">Virtualbox Guest Additions</h4>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> virtualbox-guest-utils
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>vboxservice.service
+</code></pre></div></div>]]></content><author><name></name></author><category term="linux" /><category term="archlinux" /><category term="Linux" /><category term="ArchLinux" /><summary type="html"><![CDATA[Esta es una guía paso a paso de como instalar Arch Linux 2022.06.01 x86_64. Con esta guía el usuario será capaz de cambiar el idioma del teclado, particionar el disco, realizar la instalación de un entorno de escritorio y más, todo el proceso se realiza por línea de comandos. 1. Instalación base Vamos a seleccionar la primera opción “Arch Linux install medium (x86_64, BIOS)” 1.1 Deshabilitar el molesto sonido de las teclas del teclado $ rmmod pcspkr 1.2 Cambiar el idioma del teclado a español. $ loadkeys es 1.3. Probando conectividad con la red. $ ping -c 3 www.google.com 64 bytes from www.google.com (74.125.224.113): icmp_seq=3 ttl=57 time=27.5 ms 1.4. Particiones de disco duro basadas en BIOS $ fdisk -l $ cfdisk /dev/sda Seleccionar label “dos”. Si tenemos un sistema con 8 GiB o más de memoria probablemente podamos prescindir de la partición de swap. Sino debemos crear una. Crearemos las siguientes particiones: Tamaño Tipo 250 M Boot, primaria 4 G Linux swap, primaria resto Linux, primaria En esta guía crearemos las 3 particiones primarias del segundo caso. Solo puede crear cuatro particiones primarias en cualquier disco duro físico. Este límite de partición se extiende a la partición de intercambio de Linux, así como a cualquier instalación de sistema operativo o particiones con fines especiales adicionales, como /root, /home, /boot, etc., que desee crear. Si por alguna razón necesitamos más particiones podemos ocupar una partición extendida. Partición Extendida: Es un tipo especial de partición que contiene “espacio libre” en el que se pueden crear más de las cuatro particiones primarias. Dentro de la partición extendida podemos crear varias particiones, estas se llaman particiones lógicas. Podemos crear N particiones lógicas dentro de una partición extendida. Algunas convenciones al respecto: Si va a crear una particion extendida, debemos tener máximo tres particiones primarias. Sólo se debe crear una partición extendida en un disco duro (aunque puede tener una partición extendida en cada uno de los discos duros del sistema) Una partición extendida no se puede formatear con un sistema de archivos como ext4, FAT o NTFS, ni puede contener datos directamente. Esa es la función de las unidades lógicas que se crean dentro de él. A continuación vamos a crear nuestra primera partición; Para esto debemos seguir los siguientes pasos: -&gt; Con la tecla “enter” seleccionar el espacio libre del disco y seleccionar “New” -&gt; Partition size: 250M -&gt; Seleccionar [primary] -&gt; Seleccionar [Bootable] Ahora crearemos la segunda partición: -&gt; Presionamos la tecla de la flecha hacia abajo para seleccionar el espacio libre del disco y “enter” para seleccionar “New” -&gt; Partition size: 4G -&gt; Seleccionar [primary] -&gt; Seleccionar [Type] -&gt; Seleccionar “82 Linux swap / Solaris” Ahora crearemos la última partición: -&gt; Seleccionar el espacio libre del disco y seleccionar “New” -&gt; En “Partition size: “ nos sugerirá lo que nos queda de espacio libre. Presionamos enter para asignar ese tamaño a nuestra nueva partición. -&gt; Seleccionar [primary] Finalmente -&gt; Seleccionar [Write] -&gt; Para confirmar igresamos “yes” y presionamos la tecla enter. -&gt; Seleccionar [Quit] Si ejecutamos el comando lsblk podemos ver lo que hemos definido. 1.5. Formateando las particiones 1.5.1. Formatear la partición Boot $ mkfs.ext3 /dev/sda1 1.5.2. Formatear la partición / $ mkfs.ext4 /dev/sda3 1.6. Crear y activar la swap Creamos la swap o espacio de intercambio: $ mkswap /dev/sda2 Y activamos la swap: $ swapon /dev/sda2 1.7. Montar las particiones Lo siguiente que haremos es montar las particiones para empezar a usarlas, primero la partición root (/), que en esta guía es sda3 y luego la partición boot (/boot) que será sda1. Si tenemos un disco SSD montamos las particiones usando las opciones de montaje adecuados para que se use TRIM: $ mount -o noatime,discard /dev/sda3 /mnt $ mkdir -p /mnt/boot $ mount -o noatime,discard /dev/sda1 /mnt/boot Si tenemos un disco HDD montamos las particiones de la siguiente forma: $ mount /dev/sda3 /mnt $ mkdir -p /mnt/boot $ mount /dev/sda1 /mnt/boot 1.8. Instalar paquetes del sistema base $ pacstrap -i /mnt linux linux-firmware linux-headers grub base base-devel sudo nano networkmanager wpa_supplicant Nos dará elegir que paquetes queremos instalar. Presionar enter para que instale todo por defecto. Y luego ingresar “Y” para confirmar. 1.9. Generando el FSTAB. Este archivo define cómo deben montarse las particiones de disco en el sistema de archivos. $ genfstab -U -p /mnt &gt; /mnt/etc/fstab y comprobamos con: $ cat !$ 1.10. Chroot y configuración de sistema base Hacemos un chroot para cambiar el directorio root que estamos usando para configurar nuestro sistema. $ arch-chroot /mnt Vamos a utilizar el comando passwd para definir una contraseña para el usuarios root $ passwd 1.11. Crear Usuario Si ingresamos el comando ls /home/ podemos ver que no existe ninguna carpeta de usuario. Para crear un usuario vamos a utilizar el comando useradd. En este ejemplo nuestro usuario se llamará “foo”, ustedes reemplacen el nombre del usuario por el que quieran. $ useradd -m foo Si ingresamos nuevamente el comando ls /home/ -l podemos ver que ahora hay una nueva carpeta con el nombre del usuario y esta tiene usuario y grupo “foo”, esto quiere decir que a parte del usuario root que tiene acceso a todo, nuestro nuevo usuario es el único dueño de esta carpeta. Cambiamos la contraseña con passwd: $ passwd foo Ahora vamos a agregar a nuestro nuevo usuario al grupo wheel para que este pueda ser super usuario: $ usermod -aG wheel foo Revisamos los grupos de nuestro usuario con el comando groups. $ groups foo Y nos debería aparecer algo como: wheel foo Ahora vamos a abrir el archivo sudoers que sa encuentra en /etc/sudoers. $ nano /etc/sudoers Descomentamos la siguiente línea: # %wheel ALL=(ALL) ALL Quitando el signo “#”: %wheel ALL=(ALL) ALL Y guardamos el archivo. Con esta configuración si ingresamos sudo su, el sistema nos pediré la contraseña del usuario antes de convertirlo en root. Para cambiar de usuario ocupamos el comando su y el nombre del usuario. A modo de prueba nos cambiamos de usuario: $ su foo Podemos verificar nuestro usuario con el comando whoami. Ahora ingresemos el comando sudo su $ sudo su Nos pedirá contraseña la contraseña de nuestro usuario, la ingresamos y nuestro usuario será root nuevamente. Para salir de estos usuarios: $ exit $ exit 1.12. Vamos a establecer la región del teclado $ nano /etc/locale.gen Hacemos ctrl+w para buscar, y filtramos por en_US.UTF-8 UTF-8. Esta línea la vamos a descomentar. #en_US.UTF-8 UTF-8 Quedando de esta forma: en_US.UTF-8 UTF-8 Y haremos lo mismo con es_CL.UTF-8 UTF-8 en el caso de Chile o es_ES.UTF-8 UTF-8 para el caso de España. #es_CL.UTF-8 UTF-8 Quedando de esta forma: es_CL.UTF-8 UTF-8 Una vez realizados los cambios, guardamos el archivo. Ahora ingresamos el siguiente comando para aplicar los cambios: $ locale-gen La salida por pantalla debería ser algo como esto: Generating locales... en_US.UTF-8... done es_CL.UTF-8.. done Generation complete. Para evitar ingresar a cada rato el comando loadkeys es vamos a editar el archivo /etc/vconsole.conf para cambiar el mapa de teclas de las terminales TTY: $ nano /etc/vconsole.conf Ingresamos lo siguiente: KEYMAP=es y guardamos el archivo. Con esto, la próxima vez que reinicies el equipo, va a estar en español el teclado. Para más información respecto a este tema te dejo el link de la documentación oficial de archlinux: Linux console/Keyboard configuration 1.13. Establecer la zona horaria Establecemos la zona horaria de nuestro sistema: $ ln -s /usr/share/zoneinfo/America/Santiago /etc/localtime Configuramos el reloj de hardware en modo UTC: $ hwclock --systohc --utc 1.14. Modificar el nombre de nuesta máquina $ echo archlinux &gt; /etc/hostname 1.15. Configurar el archivo hosts Abrimos el archivo hosts: $ nano /etc/hosts Ingresamos el siguiente contenido al final del archivo: 127.0.0.1 localhost ::1 localhost Guardamos el archivo. Comprobamos que el archivo quedó correctamente escrito: $ cat /etc/hosts 1.16. Instalar el gestor de arranque (Boot loader) $ grub-install /dev/sda $ nano /etc/default/grub Editamos el archivo /etc/default/grub para descomentar/agregar la línea GRUB_DISABLE_OS_PROBER=false, guardamos y ejecutamos el siguiente comando para crear el archivo de configuración del grub: $ grub-mkconfig -o /boot/grub/grub.cfg Nota: -o es letra y no el número cero. 1.17. Finalizar la instalación $ exit $ reboot Si quieres ver la Guía oficial de instalación de Arch Linux pincha aquí. 2. Post instalación base 2.1. Habilitar servicio NetworkManager Luego de iniciar sesión con nuestro usuario, lo primero que vamos a hacer es habilitar el servicio NetworkManager: $ sudo systemctl enable NetworkManager.service Una vez realizado esto, reiniciamos la máquina: $ sudo reboot también podemos reiniciar la máquina con: $ sudo shutdown -r now Una vez reiniciada, nos logueamos nuevamente y probamos conectividad con la red. $ ping -c 3 www.google.com 64 bytes from www.google.com (74.125.224.113): icmp_seq=3 ttl=57 time=27.5 ms 2.2. Sincronizar las bases de datos de paquetes $ sudo pacman -Syu 2.3. Instalar neofetch Es un paquete que al ejecutarse en la terminal recopila información del sistema y la muestra al usuario de forma amigable, incluyendo un logotipo de la distro que se está utilizando en formato ASCII. $ sudo pacman -S neofetch Una vez instalado, lo ejecutamos con el comando neofetch. $ neofetch 2.4. Xorg Antes de instalar el entorno de escritorio vamos a instalar el servidor de visualización y algunas utilidades: $ sudo pacman -S xorg xorg-server xorg-apps xorg-xinit xterm --noconfirm Una vez finalizada la instalación ingresamos el siguiente comando para verificar que todo este bien: $ startx Si nos muestra tres terminales con fondo de color blanco, es por que la instalación finalizo correctamente y podemos salir ingresando “exit”. $ exit 2.5. Intel graphics - Xorg Drivers Prerequisito: Xorg. $ sudo pacman -S xf86-video-intel xf86-input-synaptics 2.6. LightDM LightDM es un ligero y rápido gestor de sesiones para X Window System. Vamos a ingresar los siguientes comandos: $ sudo pacman -S lightdm-gtk-greeter lightdm-service $ sudo systemctl enable lightdm.service $ sudo reboot 2.7. Para instalar Gnome Desktop Tenemos dos opciones, instalar Gnome sin programas por defecto preinstalados o con todos los programas por defecto preinstalados Instalación mímima $ sudo pacman -S gnome-control-center gdm $ sudo systemctl enable gdm.service $ sudo reboot Instalación completa $ sudo pacman -S gnome Nos preguntará sobre algunos paquetes, dejaremos todo por defecto. Vamos a presionar enter a todo. Una vez finalizada la instalación ingresaremos este comando para asegurarnos que en la pantalla de inicio de sesión el teclado esté configurado en español (o el lenguaje que queramos): $ sudo localectl set-x11-keymap es Finalmente habilitamos el servicio de Gnome y reiniciamos el equipo. $ sudo systemctl enable gdm.service $ sudo reboot 2.8. Algunos paquetes recomendables. gufw: Firewall. unrar: Utilidad de descompresión de archivos .rar. git: El sistema de control de versiones más utilizado hoy en día por desarrolladores de software. vim: Potente editor de texto. Versión mejorada del editor Vi. wget: Descarga archivos usando los protocolos de internet más usados como son HTTP, HTTPS, FPT, FTPS. zsh: Potente intérprete de comandos. nmap: Permite revisar los puertos de una máquina. net-tools: Permite usar comandos como el ifconfig, entre otros. htop: Completo sistema de monitorización. mlocate: Permite hacer búsqueda de archivos en cualquier parte del sistema. tree: Paquete para visualizar de manera rápida el árbol de carpetas/directorios. ntfs-3g: Soporte para dispositivos externos (pendrive y otros) que usen sistema de archivos NTFS. gvfs-smb: Implementación del sistema de archivos virtual para GIO (backend SMB/CIFS; cliente de Windows) gvfs-mtp: Este paquete da soporte para el protocolo de transferencia de datos multimedia MTP (Multimedia Transfer Protocol) de los sistemas Android. psensor: Programa que monitorea la temperatura del hardware del equipo. dmidecode: Herramienta que permite obtener información de los componentes de hardware del sistema. terminator: Terminator es un emulador de terminal muy completo. Una de sus caracteristicas más destacables es que permite hacer split de la ventana para abrir multiples terminales. bleachbit: Bleachbit Es una herramienta de limpieza del disco duro. vlc: Reproductor multimedia que reproduce la mayoría de los archivos multimedia gracias a tiene la mayoría de codecs necesarios. gnome-tweak-tool: Herramienta para configurar la apariencia de Gnome. Instalación: $ sudo pacman -S gufw unrar git vim wget zsh nmap net-tools htop mlocate tree \ ntfs-3g gvfs-smb gvfs-mtp psensor dmidecode terminator bleachbit vlc gnome-tweak-tool 2.9. Wallpapers y fuentes $ sudo pacman -S archlinux-wallpaper ttf-liberation ttf-dejavu ttf-freefont 2.10. Oh My Zsh Oh My Zsh es un framework para la gestión de la configuración de Zsh. Permite instalar temas, plugins, helpers, etc fácilmente. Es open source. Para instalarlo: $ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" oh-my-zsh - repositorio sitio web oficial Si el sistema está instalado en una VM de Virtualbox Virtualbox Guest Additions $ sudo pacman -S virtualbox-guest-utils $ sudo systemctl enable vboxservice.service]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://aduartem.github.io/assets/images/posts/2018/arch-linux.png" /><media:content medium="image" url="https://aduartem.github.io/assets/images/posts/2018/arch-linux.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch Linux 2018.08.01</title><link href="https://aduartem.github.io/linux/archlinux/2018/11/20/Programas-que-no-pueden-faltar-en-Arch-Linux.html" rel="alternate" type="text/html" title="20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch Linux 2018.08.01" /><published>2018-11-20T00:00:00+00:00</published><updated>2018-11-20T00:00:00+00:00</updated><id>https://aduartem.github.io/linux/archlinux/2018/11/20/Programas-que%20no-pueden-faltar-en-Arch-Linux</id><content type="html" xml:base="https://aduartem.github.io/linux/archlinux/2018/11/20/Programas-que-no-pueden-faltar-en-Arch-Linux.html"><![CDATA[<p>En este artículo haré mención de 20 programas que no pueden faltar en tú sistema Arch Linux. Haré una breve descripción de cada programa y como podemos instalarlo en nuestro equipo.</p>
+
+<p>Pero primero que todo, antes de instalar cualquier programa, como es de costumbre, vamos a actualizar el cache del repositorio de paquetes de pacman:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-Sy</span>
+</code></pre></div></div>
+
+<h2 id="net-tools">net-tools</h2>
+
+<p>El paquete net-tools nos permite usar comandos como el <strong>ifconfig</strong>, entre otros.</p>
+
+<p>Para instalar:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> net-tools
+</code></pre></div></div>
+
+<p><strong>Nota:</strong> Para ver revisar si un programa se encuentra en los repositorios oficiales de Arch Linux:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-Ss</span> <span class="o">{</span>nombrePrograma<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="secure-shell">Secure Shell</h2>
+
+<p>Cliente ssh, nos permite usar comandos como el <strong>ssh</strong>, <strong>ssh-keygen</strong>, entre otros.</p>
+
+<p>Para instalar:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> openssh
+</code></pre></div></div>
+
+<h2 id="tree">Tree</h2>
+
+<p>Paquete para visualizar de manera rápido el árbol de carpetas/directorios.</p>
+
+<p>Para instalar:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> tree
+</code></pre></div></div>
+
+<h2 id="zsh">ZSH</h2>
+
+<p>El Zsh (shell Z) es un potente intérprete de comandos</p>
+
+<p>Para instalar:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> zsh
+</code></pre></div></div>
+
+<h2 id="curl">Curl</h2>
+
+<p>Intérprete de comandos open source, software libre bajo la licencia MIT. Está orientado a la transferencia de archivos. Soporta los protocolos FTP, FTPS, HTTP, HTTPS, TFTP, SCP, SFTP, Telnet, DICT, FILE y LDAP, entre otros.</p>
+
+<p>Para instalar:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> curl
+</code></pre></div></div>
+
+<h2 id="wget">Wget</h2>
+
+<p>GNU Wget es un paquete de software libre y gratuito. Está orientado a la descarga de archivos usando los protocolos de internet más usados com son HTTP, HTTPS, FPT, FTPS. Es una herramienta de línea de comandos no interactiva, por lo que se puede llamar fácilmente desde scripts, cronjobs, desde la terminal, etc.</p>
+
+<p>Para instalar GNU Curl:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> wget
+</code></pre></div></div>
+
+<h2 id="locate">Locate</h2>
+
+<p>Es una nueva implementación del paquete locate. Nos permite hacer búsqueda de archivos en cualquier parte del sistema. Funciona en sistemas GNU/Linux.</p>
+
+<p>Para instalar ejecutar:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> mlocate
+<span class="nv">$ </span><span class="nb">sudo </span>updatedb
+</code></pre></div></div>
+
+<p>Para realizar una búsqueda:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>locate nombre_archivo
+</code></pre></div></div>
+
+<h2 id="dmidecode">dmidecode</h2>
+
+<p>Este paquete es una herramienta que permite obtener información de los componentes de hardware del sistema.</p>
+
+<p>Para instalar ingresar:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> dmidecode
+</code></pre></div></div>
+
+<p>Para listar las opciones que podemos consultar:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>dmidecode <span class="nt">-s</span> string
+</code></pre></div></div>
+
+<p>Comando linux para encontrar el número serial:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>dmidecode <span class="nt">-s</span> system-serial-number
+</code></pre></div></div>
+
+<p>Como obtener la versión y fecha de la bios:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>dmidecode <span class="nt">-s</span> bios-release-date
+<span class="nv">$ </span><span class="nb">sudo </span>dmidecode <span class="nt">-s</span> bios-version
+</code></pre></div></div>
+
+<p>Como obtener el nombre del producto del sistema:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>dmidecode <span class="nt">-s</span> system-product-name
+</code></pre></div></div>
+
+<h2 id="powerline">Powerline</h2>
+
+<p>Es un complemento para la línea de comandos. Le da super poderes.</p>
+
+<p>Instalación:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> powerline powerline-fonts
+</code></pre></div></div>
+
+<h2 id="otras-fuentes">Otras fuentes</h2>
+
+<p>Paquetes de fuentes.</p>
+
+<p>Instalación:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> ttf-liberation ttf-dejavu ttf-freefont
+</code></pre></div></div>
+
+<p>Instalar con AUR:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ttf-ms-fonts
+</code></pre></div></div>
+
+<h2 id="terminator">Terminator</h2>
+
+<p>Es un emulador de terminal muy completo. Permite hacer split de la ventana, crear pestañas, configurar el perfil para cambiar el tema o bien crear un nuevo tema, etc.</p>
+
+<p>Instalación:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> terminator
+</code></pre></div></div>
+
+<h2 id="vim">Vim</h2>
+
+<p>Vim es una versión mejorada del editor de texto Vi y uno de los editores de texto más poderosos hasta la fecha. Es open source y se distribuye bajo una licencia Charityware compatible con la licencia GPL.</p>
+
+<p>Instalación:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pacman <span class="nt">-S</span> vim
+</code></pre></div></div>
+
+<h2 id="git">Git</h2>
+
+<p>Git es un sistema de control de versiones, el más popular en la actualidad. Es software libre y código abierto, diseñado por Linux Torvalds.</p>
+
+<p>Instalación:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> git
+</code></pre></div></div>
+
+<p>Verificamos la versión de Git instalada:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git <span class="nt">--version</span>
+git version 2.18.0
+</code></pre></div></div>
+
+<p>Configurar usuario global:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git config <span class="nt">--global</span> user.name <span class="s2">"Mi nombre"</span>
+<span class="nv">$ </span>git config <span class="nt">--global</span> user.email <span class="s2">"mi@correo.com"</span>
+</code></pre></div></div>
+
+<p>Listar configuración:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git config <span class="nt">-l</span>
+</code></pre></div></div>
+
+<p>Generar llave ssh:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ssh-keygen <span class="nt">-t</span> rsa <span class="nt">-C</span> <span class="s2">"your_email@example.com"</span>
+</code></pre></div></div>
+
+<h2 id="oh-my-zsh">oh-my-zsh</h2>
+
+<p>Oh My Zsh es un framework para la gestión de la configuración de Zsh. Permite instalar temas, plugins, helpers, etc fácilmente. Es open source.</p>
+
+<p>Requisitos:</p>
+
+<ul>
+  <li>zsh</li>
+  <li>curl</li>
+  <li>git</li>
+  <li>Powerline Fonts</li>
+</ul>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>sh <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Una vez finalizada la instalación reiniciar la terminal.</p>
+
+<p>Para instalar el tema <strong>agnoster</strong> editar el archivo <strong>~/.zshrc</strong> y modificar el valor de ZSH_THEME=”robbyrussell” por ZSH_THEME=”agnoster”</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ZSH_THEME</span><span class="o">=</span><span class="s2">"agnoster"</span>
+</code></pre></div></div>
+
+<p><a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh - repositorio</a></p>
+
+<h2 id="ntfs-filesystem-driver-and-utilities">NTFS filesystem driver and utilities</h2>
+
+<p>Soporte para dispositivos externos (pendrive y otros).</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> ntfs-3g
+</code></pre></div></div>
+
+<h2 id="virtual-filesystem-implementation-for-gio">Virtual filesystem implementation for GIO</h2>
+
+<p>Implementación del sistema de archivos virtual para GIO (backend SMB/CIFS; cliente de Windows)</p>
+
+<p>Instalación:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> gvfs-smb
+</code></pre></div></div>
+
+<h2 id="soporte-media-transfer-protocol-mtp-android">Soporte Media Transfer Protocol (MTP), Android</h2>
+
+<p>Este paquete da soporte para el protocolo de transferencia de datos multimedia MTP (Multimedia Transfer Protocol) de los sistemas Android.</p>
+
+<p>Instalación:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> gvfs-mtp
+</code></pre></div></div>
+
+<h2 id="instalar-yaourt-usando-aur">Instalar Yaourt usando AUR</h2>
+
+<p>Yaourt es un gestor de paquetes como Pacman. La principal diferencia es que Pacman gestiona los repositorios oficiales, en cambio Yaourt los no oficiales (AUR).</p>
+
+<p>Antes de instalar Yaourt usando necesitamos tener instalado git y wget.</p>
+
+<p>Clonamos el repositorio AUR de package-query:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git clone https://aur.archlinux.org/package-query.git
+</code></pre></div></div>
+
+<p>Cambiamos de directorio a la carpeta del repositorio clonado e instalamos el paquete:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>package-query
+<span class="nv">$ </span>makepkg <span class="nt">-si</span>
+</code></pre></div></div>
+
+<p>Confirmamos la instalación. Una vez finalizada la instalación cambiamos de directorio y clonamos el repositorio AUR de Yaourt:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git clone https://aur.archlinux.org/yaourt.git
+</code></pre></div></div>
+
+<p>Cambiamos de directorio a la carpeta del repositorio clonado e instalamos el paquete:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>yaourt
+<span class="nv">$ </span>makepkg <span class="nt">-si</span>
+</code></pre></div></div>
+
+<p>Finalmente eliminamos las carpetas de los repos clonados:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span><span class="nb">rm</span> <span class="nt">-rf</span> package-query yaourt
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>yaourt <span class="nt">-V</span>
+yaourt 1.9
+página web: http://archlinux.fr/yaourt-en
+</code></pre></div></div>
+
+<h4 id="uso">Uso</h4>
+
+<p>Sintaxis:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yaourt &lt;operation&gt; <span class="o">[</span>options] <span class="o">[</span>packages]
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yaourt &lt;search pattern|package file&gt;
+</code></pre></div></div>
+
+<p>Para actualizar Arch Linux System, ejecutar:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>yaourt <span class="nt">-Syu</span>
+</code></pre></div></div>
+
+<p>Para instalar un paquete, ejecutar:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>yaourt <span class="nt">-S</span> &lt;package-name&gt;
+</code></pre></div></div>
+
+<p>Para hacer un upgrade de un paquete:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>yaourt <span class="nt">-U</span> &lt;package&gt;
+</code></pre></div></div>
+
+<p>Para eliminar un paquete:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>yaourt <span class="nt">-R</span> &lt;package-name&gt;
+</code></pre></div></div>
+
+<h2 id="vlc-media-player">VLC media player</h2>
+
+<p>Seguramente ya lo conocer… VLC es un reproductor multimedia libre y de código abierto multiplataforma. Reproduce la mayoría de archivos multimedia, DVD, Audio CD, VCD y diversos protocolos de transmisión.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> vlc
+</code></pre></div></div>
+
+<h2 id="libre-office">Libre Office</h2>
+
+<p>LibreOffice es un paquete de software de oficina libre y de código abierto</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> libreoffice-fresh
+<span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> libreoffice-fresh-es
+</code></pre></div></div>
+
+<p><a href="https://wiki.archlinux.org/index.php/LibreOffice_(Espa%C3%B1ol)#Instalaci.C3.B3n">Libre Office - Wiki Arch Linux</a></p>]]></content><author><name></name></author><category term="linux" /><category term="archlinux" /><category term="Linux" /><category term="ArchLinux" /><summary type="html"><![CDATA[En este artículo haré mención de 20 programas que no pueden faltar en tú sistema Arch Linux. Haré una breve descripción de cada programa y como podemos instalarlo en nuestro equipo.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://aduartem.github.io/assets/images/posts/2018/arch-linux.png" /><media:content medium="image" url="https://aduartem.github.io/assets/images/posts/2018/arch-linux.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

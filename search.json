@@ -1,0 +1,39 @@
+[
+  
+    {
+      "title"    : "Curso de Spring Boot",
+      "category" : "java, springboot",
+      "tags"     : "Java, Spring Boot, REST API",
+      "url"      : "/java/springboot/2025/06/07/Curso-de-spring-boot.html",
+      "date"     : "Jun 7, 2025",
+      "content"  : "Manejo de rutas dinámicas con @GetMapping y @PathVariable@GetMapping es una anotación que mapea solicitudes HTTP GET a métodos específicos de un controlador. @PathVariable se utiliza para extraer v..."
+    } ,
+  
+    {
+      "title"    : "Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)",
+      "category" : "linux, archlinux",
+      "tags"     : "Linux, ArchLinux",
+      "url"      : "/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI.html",
+      "date"     : "Jun 26, 2022",
+      "content"  : "Esta es una guía paso a paso de como instalar Arch Linux 2022.06.01 x86_64. Con esta guía el usuario será capaz de cambiar el idioma del teclado, particionar el disco, realizar la instalación de un..."
+    } ,
+  
+    {
+      "title"    : "Guía de instalación de Arch Linux 2022.06.01 x86_64 (Boot)",
+      "category" : "linux, archlinux",
+      "tags"     : "Linux, ArchLinux",
+      "url"      : "/linux/archlinux/2022/06/24/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-BIOS.html",
+      "date"     : "Jun 24, 2022",
+      "content"  : "Esta es una guía paso a paso de como instalar Arch Linux 2022.06.01 x86_64. Con esta guía el usuario será capaz de cambiar el idioma del teclado, particionar el disco, realizar la instalación de un..."
+    } ,
+  
+    {
+      "title"    : "20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch Linux 2018.08.01",
+      "category" : "linux, archlinux",
+      "tags"     : "Linux, ArchLinux",
+      "url"      : "/linux/archlinux/2018/11/20/Programas-que-no-pueden-faltar-en-Arch-Linux.html",
+      "date"     : "Nov 20, 2018",
+      "content"  : "En este artículo haré mención de 20 programas que no pueden faltar en tú sistema Arch Linux. Haré una breve descripción de cada programa y como podemos instalarlo en nuestro equipo.Pero primero que..."
+    } 
+  
+]
