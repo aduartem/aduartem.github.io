@@ -297,24 +297,6 @@ body.dark-theme .highlighter-rouge { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); }
 
 .banner-container { margin-bottom: 2rem; overflow: hidden; border-radius: 12px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); position: relative; }
 
-.page-banner { width: 100%; display: block; height: 220px; object-fit: cover; object-position: center; }
-
-.profile-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 72px 20px 20px 20px; background: linear-gradient(to top right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0.3) 70%, rgba(0, 0, 0, 0) 100%); display: flex; align-items: center; z-index: 2; min-height: 120px; }
-
-.left-aligned { justify-content: flex-start; }
-
-.about-avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); margin-right: 20px; flex-shrink: 0; }
-
-.banner-text { color: white; }
-
-.banner-title { margin: 0; font-size: 1.8rem; color: white; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); }
-
-.banner-subtitle { margin: 5px 0 0; font-size: 1rem; opacity: 0.9; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); }
-
-@media (max-width: 768px) { .profile-overlay { padding: 72px 15px 15px 15px; background: linear-gradient(to top right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.3) 80%); } .about-avatar { width: 80px; height: 80px; margin-right: 15px; } .banner-title { font-size: 1.4rem; } .banner-subtitle { font-size: 0.9rem; } .page-banner { height: 180px; } }
-
-@media (max-width: 480px) { .profile-overlay { padding: 72px 10px 10px 10px; } .about-avatar { width: 70px; height: 70px; } .banner-title { font-size: 1.2rem; } .banner-subtitle { font-size: 0.8rem; } }
-
 /* filepath: c:\Users\aduar\workspace\aduartem.github.io\_sass\components\_categories.scss */
 .post-category { display: inline-block; background-color: #f1f8ff; color: #0366d6; padding: 2px 5px; border-radius: 3px; font-size: 12px; margin-right: 5px; }
 
