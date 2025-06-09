@@ -1,0 +1,28 @@
+name: Jekyll CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v3
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2.2' # o la versión de Ruby que uses
+        bundler-cache: true # Bundles install dependencies
+    - name: Install Gems
+      run: bundle install
+    - name: Check Jekyll Version
+      run: jekyll -v
+    - name: Build with Jekyll
+      run: bundle exec jekyll build --trace
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: _site
