@@ -912,15 +912,48 @@ body.dark-theme {
     border-bottom-color: #333;
 
     .post-link {
-      color: #cecac3 !important; // Cambiado para mantener consistencia
+      color: #cecac3 !important;
     }
 
     .post-meta {
       color: #b0b0b0;
     }
 
+    .post-excerpt {
+      color: #d4d4d4;
+      font-size: 16px; // Asegurar consistencia
+      line-height: 1.6;
+    }
+
     .read-more {
-      color: #b8b4ae !important; // Un tono similar pero más oscuro para enlaces secundarios
+      color: #b8b4ae !important;
+      font-size: 15px; // Asegurar consistencia
+      font-weight: 500;
+
+      &:hover {
+        color: #e8e4db !important;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+    }
+  }
+
+  .read-more,
+  .post-read-more,
+  a.read-more,
+  .category-post-item .read-more {
+    color: #b8b4ae !important;
+    font-size: 15px;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: #e8e4db !important;
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
   }
 
@@ -951,7 +984,8 @@ body.dark-theme {
   h2 .post-link,
   h2 a.post-link,
   .post-list h3 a.post-link,
-  .post-list-by-category a.post-link {
+  .post-list-by-category a.post-link,
+  .home .post-list h3 a {
     color: #cecac3 !important;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -963,13 +997,7 @@ body.dark-theme {
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
     }
-
-    // Anular explícitamente la regla general
-    &:visited:hover {
-      color: #e8e4db !important;
-    }
   }
-
   // Para el enlace "Leer más" con un estilo distinto
   .post h2 a:hover,
   .home .post-list h3 a:hover,

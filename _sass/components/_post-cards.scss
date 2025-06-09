@@ -82,24 +82,30 @@ $thumbnail-border-radius: 12px;
 }
 
 // Extracto del post
-.post-excerpt {
-  font-size: 0.95rem;
-  line-height: 1.5;
+.post-excerpt,
+.category-post-item .post-excerpt {
+  font-size: 16px; // Aumentamos de 0.95rem a 16px para consistencia
+  line-height: 1.6; // Aumentamos de 1.5 a 1.6 para consistencia
   color: #555;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
 // Enlace "Leer más"
-.read-more {
+.read-more,
+.post-read-more,
+.category-post-item .read-more {
   color: #0066cc;
+  font-size: 15px; // Tamaño consistente
+  font-weight: 500; // Mismo peso que en dark mode
+  display: inline-block;
+  margin-top: 8px; // Mismo margen superior que en modo oscuro
   text-decoration: none;
-  margin-left: 5px;
-  font-weight: 500;
   transition: color 0.2s;
 
   &:hover {
     color: #004999;
     text-decoration: underline;
+    text-underline-offset: 3px; // Mismo offset que en el tema oscuro
   }
 }
 

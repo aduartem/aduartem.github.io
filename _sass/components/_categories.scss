@@ -72,6 +72,20 @@ $dark-category-bg-hover: #2d333b;
     }
   }
 
+  .post-excerpt {
+    font-size: 16px; // Asegurar consistencia con otras descripciones
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 0.6rem;
+  }
+
+  .read-more {
+    font-size: 15px; // Asegurar consistencia
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 8px;
+  }
+
   .post-info {
     flex-grow: 1;
     display: flex;

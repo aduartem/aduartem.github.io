@@ -1,49 +1,179 @@
-// Sección de botones de compartir
+// Estilos para botones de compartir
 .share-buttons {
-  margin: 40px 0;
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
 
   h3 {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .share-btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    // Colores para botones específicos
+    &.facebook {
+      background-color: #1877f2;
+
+      &:hover {
+        background-color: darken(#1877f2, 8%);
+      }
+    }
+
+    &.twitter {
+      background-color: #1da1f2;
+
+      &:hover {
+        background-color: darken(#1da1f2, 8%);
+      }
+    }
+
+    &.linkedin {
+      background-color: #0077b5;
+
+      &:hover {
+        background-color: darken(#0077b5, 8%);
+      }
+    }
+
+    &.whatsapp {
+      background-color: #25d366;
+
+      &:hover {
+        background-color: darken(#25d366, 8%);
+      }
+    }
+
+    &.telegram {
+      background-color: #0088cc;
+
+      &:hover {
+        background-color: darken(#0088cc, 8%);
+      }
+    }
+
+    &.email {
+      background-color: #777;
+
+      &:hover {
+        background-color: darken(#777, 8%);
+      }
+    }
+
+    svg,
+    img {
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+      fill: white; // Asegura que los iconos SVG sean blancos
+    }
+
+    span {
+      color: white; // Asegura que el texto siempre sea blanco
+    }
   }
 }
 
-// Contenedor de botones
-.share-btn-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
+// Media query para dispositivos móviles
+@media (max-width: 480px) {
+  .share-buttons {
+    .share-btn-container {
+      justify-content: flex-start;
+    }
 
-// Botón individual
-.share-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 15px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: white;
-  transition: opacity 0.2s;
+    .share-btn {
+      padding: 6px 10px;
+      font-size: 13px;
 
-  &:hover {
-    opacity: 0.9;
-  }
-
-  svg {
-    margin-right: 5px;
+      svg,
+      img {
+        width: 14px;
+        height: 14px;
+        margin-right: 4px;
+      }
+    }
   }
 }
 
-// Estilos por red social
-.twitter {
-  background-color: #1da1f2;
-}
+// Modificaciones para el tema oscuro
+body.dark-theme {
+  .share-buttons {
+    h3 {
+      color: #e1e1e1 !important;
+      margin-bottom: 12px;
+    }
 
-.linkedin {
-  background-color: #0077b5;
-}
+    .share-btn {
+      // Ajustes específicos para el tema oscuro
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
-.facebook {
-  background-color: #3b5998;
+      &:hover {
+        filter: brightness(1.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      // Forzar texto e iconos blancos
+      color: white !important;
+
+      svg,
+      img {
+        fill: white !important;
+      }
+
+      span {
+        color: white !important;
+      }
+
+      // Colores de redes sociales para tema oscuro
+      &.facebook {
+        background-color: #1877f2 !important;
+      }
+
+      &.twitter {
+        background-color: #1da1f2 !important; // Cambia a #25d366 si quieres que sea verde
+      }
+
+      &.linkedin {
+        background-color: #0077b5 !important;
+      }
+
+      &.whatsapp {
+        background-color: #25d366 !important;
+      }
+
+      &.telegram {
+        background-color: #0088cc !important;
+      }
+
+      &.email {
+        background-color: #666 !important;
+      }
+    }
+  }
 }
