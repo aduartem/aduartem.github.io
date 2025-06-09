@@ -16,6 +16,8 @@ jobs:
         with:
           ruby-version: '3.2.2' # o la versión de Ruby que uses
           bundler-cache: true # Bundles install dependencies
+      - name: Add Linux Platform to Bundle
+        run: bundle lock --add-platform x86_64-linux
       - name: Install Gems
         run: bundle install
       - name: Check Jekyll Version
