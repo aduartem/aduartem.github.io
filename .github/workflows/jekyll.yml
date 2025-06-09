@@ -15,13 +15,11 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2.2' # o la versión de Ruby que uses
-          bundler-cache: true # Bundles install dependencies
-      - name: Add Linux Platform to Bundle
-        run: bundle lock --add-platform x86_64-linux
+          bundler-cache: false # Desactivamos caché para evitar problemas iniciales
       - name: Install Gems
         run: bundle install
       - name: Check Jekyll Version
-        run: jekyll -v
+        run: bundle exec jekyll -v # Corregido para usar bundle exec
       - name: Build with Jekyll
         run: bundle exec jekyll build --trace
       - name: Deploy to GitHub Pages
