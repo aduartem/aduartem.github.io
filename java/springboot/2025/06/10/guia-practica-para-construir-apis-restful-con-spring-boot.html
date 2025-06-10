@@ -131,7 +131,7 @@
     <!-- Contador de tiempo de lectura -->
     
     <span class="reading-time">
-       12 minutos de lectura 
+       14 minutos de lectura 
         </span>
   </header>
 
@@ -312,76 +312,9 @@
 
 <h2 id="-anotaciones-para-controladores-rest-en-spring">🌐 Anotaciones para controladores REST en Spring</h2>
 
-<p>Estas anotaciones permiten mapear solicitudes HTTP (como GET, POST, PUT, etc.) a métodos específicos dentro de tus controladores.</p>
+<p>Las anotaciones en los controladores REST de Spring Boot permiten definir de manera sencilla cómo se manejan las rutas y cómo se recibe la información del cliente. Esto hace que la creación de endpoints sea clara, flexible y fácil de mantener.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Anotación</th>
-      <th>Uso principal</th>
-      <th>Paquete</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">@GetMapping</code></td>
-      <td>Maneja solicitudes <strong>GET</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.GetMapping</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">@PostMapping</code></td>
-      <td>Maneja solicitudes <strong>POST</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.PostMapping</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">@PutMapping</code></td>
-      <td>Maneja solicitudes <strong>PUT</strong> (actualizaciones completas)</td>
-      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.PutMapping</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">@PatchMapping</code></td>
-      <td>Maneja solicitudes <strong>PATCH</strong> (actualizaciones parciales)</td>
-      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.PatchMapping</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">@DeleteMapping</code></td>
-      <td>Maneja solicitudes <strong>DELETE</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.DeleteMapping</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">@PathVariable</code></td>
-      <td>Extrae datos directamente de la <strong>ruta URL</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.PathVariable</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">@RequestBody</code></td>
-      <td>Indica que un parámetro del método viene del <strong>cuerpo HTTP</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.RequestBody</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="-importación-típica-en-un-controlador-rest">📦 Importación típica en un controlador REST</h2>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PostMapping</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PutMapping</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PatchMapping</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.DeleteMapping</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestBody</span><span class="o">;</span>
-</code></pre></div></div>
-
-<p>ó</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.*</span><span class="o">;</span>
-</code></pre></div></div>
-
-<p>💡 Todas estas anotaciones pertenecen al <strong>paquete <code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation</code></strong>, el cual es esencial para construir controladores REST con Spring MVC o Spring Boot.</p>
-
-<h2 id="-mapeo-de-rutas-http-con-anotaciones-rest">📍 Mapeo de rutas HTTP con anotaciones REST</h2>
-
-<p>Spring Boot ofrece anotaciones específicas para cada tipo de verbo HTTP, facilitando la creación de rutas en tus controladores:</p>
+<h3 id="anotaciones-para-rutas-según-el-verbo-http">Anotaciones para rutas según el verbo HTTP</h3>
 
 <table>
   <thead>
@@ -419,6 +352,70 @@
     </tr>
   </tbody>
 </table>
+
+<h3 id="anotaciones-para-recibir-datos-del-cliente">Anotaciones para recibir datos del cliente</h3>
+
+<p>Estas anotaciones permiten a los controladores recibir información enviada por el cliente de distintas formas, facilitando la construcción de endpoints flexibles.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Anotación</th>
+      <th>Uso principal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@PathVariable</code></td>
+      <td>Extrae datos directamente de la <strong>ruta URL</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@RequestBody</code></td>
+      <td>Indica que un parámetro del método viene del <strong>cuerpo HTTP</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">@PathVariable</code> se utiliza para capturar valores dinámicos que forman parte de la URL (por ejemplo, un identificador en <code class="language-plaintext highlighter-rouge">/api/tareas/123</code>), mientras que <code class="language-plaintext highlighter-rouge">@RequestBody</code> permite recibir y deserializar datos enviados en el cuerpo de la petición, como objetos JSON en operaciones POST o PUT.
+Estas herramientas facilitan la construcción de endpoints flexibles y adaptados a diferentes necesidades de entrada de datos.</p>
+
+<p>💡 Todas estas anotaciones pertenecen al <strong>paquete <code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation</code></strong>, el cual es esencial para construir controladores REST con Spring MVC o Spring Boot.</p>
+
+<h4 id="ejemplo-de-importación">Ejemplo de importación</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.*</span><span class="o">;</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="buenas-prácticas">Buenas prácticas</h3>
+
+<ul>
+  <li>Utiliza DTOs para separar la lógica de tu dominio del formato de entrada/salida.</li>
+  <li>Valida los datos recibidos en el cuerpo de la petición usando anotaciones como <code class="language-plaintext highlighter-rouge">@Valid</code>.</li>
+  <li>Mantén tus controladores enfocados solo en la lógica de manejo de peticiones.</li>
+</ul>
+
+<h3 id="errores-comunes">Errores comunes</h3>
+
+<ul>
+  <li>Olvidar el <code class="language-plaintext highlighter-rouge">@RequestBody</code> en métodos POST/PUT, lo que puede resultar en parámetros nulos.</li>
+  <li>No mapear correctamente los nombres de las variables en la URL con <code class="language-plaintext highlighter-rouge">@PathVariable</code>.</li>
+  <li>No validar los datos recibidos, lo que puede provocar errores en tiempo de ejecución.</li>
+</ul>
+
+<p>Podemos importar cada anotación de forma individual o usar el comodín para importar todas:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PostMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PutMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PatchMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.DeleteMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestBody</span><span class="o">;</span>
+<span class="c1">// o simplemente</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.*</span><span class="o">;</span>
+</code></pre></div></div>
 
 <h2 id="ejemplo-completo-crud-de-tareas-️">Ejemplo completo: CRUD de tareas 🗂️</h2>
 
@@ -662,6 +659,32 @@
       <span class="pi">-</span> <span class="s">MYSQL_ROOT_PASSWORD=password</span>
       <span class="pi">-</span> <span class="s">MYSQL_DATABASE=taskdb</span>
 </code></pre></div></div>
+
+<h2 id="-preguntas-frecuentes-faq">❓ Preguntas frecuentes (FAQ)</h2>
+
+<h3 id="1-necesito-instalar-spring-por-separado-antes-de-usar-spring-boot">1. ¿Necesito instalar Spring por separado antes de usar Spring Boot?</h3>
+<p>No, Spring Boot incluye todo lo necesario. Solo necesitas agregar las dependencias en tu archivo <code class="language-plaintext highlighter-rouge">pom.xml</code> o <code class="language-plaintext highlighter-rouge">build.gradle</code> y el framework se encargará del resto.</p>
+
+<h3 id="2-puedo-usar-bases-de-datos-distintas-a-mysql">2. ¿Puedo usar bases de datos distintas a MySQL?</h3>
+<p>Sí, Spring Boot es compatible con múltiples bases de datos (PostgreSQL, H2, Oracle, SQL Server, etc.). Solo debes cambiar la dependencia y la configuración en <code class="language-plaintext highlighter-rouge">application.properties</code>.</p>
+
+<h3 id="3-cómo-valido-los-datos-que-recibe-mi-api">3. ¿Cómo valido los datos que recibe mi API?</h3>
+<p>Puedes usar anotaciones como <code class="language-plaintext highlighter-rouge">@Valid</code> junto con clases DTO y anotaciones de validación (<code class="language-plaintext highlighter-rouge">@NotNull</code>, <code class="language-plaintext highlighter-rouge">@Size</code>, etc.). Spring Boot integrará automáticamente la validación y devolverá errores claros al cliente.</p>
+
+<h3 id="4-qué-hago-si-recibo-un-error-404-o-405-en-mis-endpoints">4. ¿Qué hago si recibo un error 404 o 405 en mis endpoints?</h3>
+<p>Verifica que la ruta y el verbo HTTP coincidan con los definidos en tu controlador. También asegúrate de que las anotaciones (<code class="language-plaintext highlighter-rouge">@GetMapping</code>, <code class="language-plaintext highlighter-rouge">@PostMapping</code>, etc.) estén correctamente aplicadas.</p>
+
+<h3 id="5-cómo-puedo-probar-mi-api-localmente">5. ¿Cómo puedo probar mi API localmente?</h3>
+<p>Puedes usar herramientas como <a href="https://www.postman.com/">Postman</a> o <a href="https://curl.se/">curl</a> para enviar peticiones HTTP a tus endpoints y verificar las respuestas.</p>
+
+<h3 id="6-es-obligatorio-usar-docker-para-desplegar-mi-api">6. ¿Es obligatorio usar Docker para desplegar mi API?</h3>
+<p>No es obligatorio, pero Docker facilita el despliegue y la portabilidad de tu aplicación. Puedes ejecutar tu API directamente con <code class="language-plaintext highlighter-rouge">java -jar</code> o desplegarla en servicios en la nube.</p>
+
+<h3 id="7-cómo-manejo-los-errores-de-forma-global-en-mi-api">7. ¿Cómo manejo los errores de forma global en mi API?</h3>
+<p>Puedes crear una clase anotada con <code class="language-plaintext highlighter-rouge">@ControllerAdvice</code> y métodos con <code class="language-plaintext highlighter-rouge">@ExceptionHandler</code> para capturar y personalizar las respuestas de error de toda tu API.</p>
+
+<h3 id="8-puedo-documentar-mi-api-automáticamente">8. ¿Puedo documentar mi API automáticamente?</h3>
+<p>Sí, puedes usar herramientas como <a href="https://springdoc.org/">Springdoc OpenAPI</a> o <a href="https://swagger.io/">Swagger</a> para generar documentación interactiva de tus endpoints.</p>
 
 <h2 id="-conclusión">🧠 Conclusión</h2>
 
