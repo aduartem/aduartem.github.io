@@ -1,8 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // Función para verificar si el texto es solo una palabra o muy corto
+  function esSoloPalabra(texto) {
+    // Eliminar espacios en blanco al inicio y al final
+    const trimmed = texto.trim();
+    // Verificar si no contiene espacios (una sola palabra) o es muy corto (menos de 10 caracteres)
+    return !trimmed.includes(' ') || trimmed.length < 10;
+  }
+
   // Envolver cada bloque de código en un contenedor
   const codeBlocks = document.querySelectorAll('.highlighter-rouge');
 
   codeBlocks.forEach(function (block, index) {
+    // Encontrar el elemento de código dentro del bloque
+    const codeElement =
+      block.querySelector('code') || block.querySelector('pre');
+
+    // Si no hay elemento de código, o es solo una palabra, no agregar el botón de copiar
+    if (!codeElement || esSoloPalabra(codeElement.textContent)) {
+      return;
+    }
+
     // Crear el contenedor
     const wrapper = document.createElement('div');
     wrapper.className = 'highlight-wrapper';
@@ -21,15 +38,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Agregar funcionalidad de copiar
     copyButton.addEventListener('click', function () {
-      // Encontrar el código dentro del bloque
-      const codeElement =
-        block.querySelector('code') || block.querySelector('pre');
       let codeText = codeElement.textContent;
 
       // Crear un elemento textarea temporal
       const textArea = document.createElement('textarea');
       textArea.value = codeText;
-      textArea.style.position = 'fixed'; // Evitar desplazamiento
+      textArea.style.position = 'fixed';
       document.body.appendChild(textArea);
       textArea.select();
 

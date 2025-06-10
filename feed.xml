@@ -1,280 +1,418 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://aduartem.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://aduartem.github.io/" rel="alternate" type="text/html" /><updated>2025-06-09T15:59:26+00:00</updated><id>https://aduartem.github.io/feed.xml</id><title type="html">aduartem</title><subtitle>Tutoriales, artículos, vídeos y recursos sobre JavaScript, Angular, React, Node.JS, Python, MySQL, Linux y más. Desarrollo Web, Backend, Bases de Datos y Patrones de Diseño.</subtitle><entry><title type="html">Curso de Spring Boot</title><link href="https://aduartem.github.io/java/springboot/2025/06/07/Curso-de-spring-boot.html" rel="alternate" type="text/html" title="Curso de Spring Boot" /><published>2025-06-07T00:00:00+00:00</published><updated>2025-06-07T00:00:00+00:00</updated><id>https://aduartem.github.io/java/springboot/2025/06/07/Curso-de-spring-boot</id><content type="html" xml:base="https://aduartem.github.io/java/springboot/2025/06/07/Curso-de-spring-boot.html"><![CDATA[<h2 id="manejo-de-rutas-dinámicas-con-getmapping-y-pathvariable">Manejo de rutas dinámicas con @GetMapping y @PathVariable</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://aduartem.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://aduartem.github.io/" rel="alternate" type="text/html" /><updated>2025-06-10T05:26:48+00:00</updated><id>https://aduartem.github.io/feed.xml</id><title type="html">aduartem</title><subtitle>Tutoriales, artículos, vídeos y recursos sobre JavaScript, Angular, React, Node.JS, Python, MySQL, Linux y más. Desarrollo Web, Backend, Bases de Datos y Patrones de Diseño.</subtitle><entry><title type="html">🚀 Guía práctica para construir APIs RESTful con Spring Boot</title><link href="https://aduartem.github.io/java/springboot/2025/06/07/guia-practica-para-construir-apis-restful-con-spring-boot.html" rel="alternate" type="text/html" title="🚀 Guía práctica para construir APIs RESTful con Spring Boot" /><published>2025-06-07T00:00:00+00:00</published><updated>2025-06-07T00:00:00+00:00</updated><id>https://aduartem.github.io/java/springboot/2025/06/07/guia-practica-para-construir-apis-restful-con-spring-boot</id><content type="html" xml:base="https://aduartem.github.io/java/springboot/2025/06/07/guia-practica-para-construir-apis-restful-con-spring-boot.html"><![CDATA[<h2 id="introducción-">Introducción 🌱</h2>
 
-<p><code class="language-plaintext highlighter-rouge">@GetMapping</code> es una anotación que mapea solicitudes HTTP GET a métodos específicos de un controlador. <code class="language-plaintext highlighter-rouge">@PathVariable</code> se utiliza para extraer valores de la URL y asignarlos como parámetros del método.</p>
+<p>Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para construir APIs REST de forma rápida y robusta. En esta guía te mostraré cómo manejar rutas, controlar peticiones y respuestas, y estructurar tu aplicación siguiendo buenas prácticas. ¡Comencemos! 💪</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/api/tasks/{id}"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="nf">getTaskById</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
-    <span class="c1">// El parámetro "id" se extrae de la URL /api/tasks/123</span>
-    <span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="n">task</span> <span class="o">=</span> <span class="n">taskRepository</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
-    <span class="k">return</span> <span class="n">task</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">value</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">value</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">))</span>
+<h2 id="qué-es-spring-boot">¿Qué es <strong>Spring Boot</strong>?</h2>
+
+<p>Es una extensión <strong>opinada</strong> de Spring que:</p>
+
+<ul>
+  <li>Simplifica la configuración eliminando el “boilerplate”.</li>
+  <li>Incluye <strong>starters</strong>: dependencias que ya agregan todo lo necesario (ej.: <em>spring-boot-starter-web</em>, <em>spring-boot-starter-data-jpa</em>, etc.)</li>
+  <li>Incorpora un servidor embebido (Tomcat, Jetty…) para ejecutar aplicaciones como jar ejecutables</li>
+  <li>Ofrece <strong>autoconfiguración</strong> que detecta lo que tienes en el classpath y activa automáticamente lo pertinente</li>
+  <li>Trae características “lista para producción”: Actuator (métricas, health checks), configuración externa, logging integrado</li>
+</ul>
+
+<h2 id="️-qué-son-las-anotaciones-en-spring">🏷️ ¿Qué son las anotaciones en Spring?</h2>
+
+<p>Las <strong>anotaciones</strong> en Java (y en Spring) son <strong>marcas especiales</strong> que comienzan con <code class="language-plaintext highlighter-rouge">@</code> y se colocan sobre clases, métodos o atributos para darle instrucciones al framework sobre cómo debe comportarse ese elemento.</p>
+
+<p>👉 En el contexto de <strong>Spring</strong>, las anotaciones reemplazan mucha configuración manual (como XML) y hacen el código más limpio y fácil de mantener.</p>
+
+<h2 id="-ejemplos-comunes-de-anotaciones-en-spring-boot">🔧 Ejemplos comunes de anotaciones en Spring Boot</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Anotación</th>
+      <th>¿Para qué sirve?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@SpringBootApplication</code></td>
+      <td>Marca el punto de entrada principal de una app Spring Boot</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@Component</code></td>
+      <td>Indica que una clase es un componente administrado por Spring</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@Service</code></td>
+      <td>Similar a <code class="language-plaintext highlighter-rouge">@Component</code>, pero semánticamente indica lógica de negocio</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@Repository</code></td>
+      <td>Marca una clase que accede a la base de datos</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@Controller</code></td>
+      <td>Define una clase que maneja peticiones HTTP</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@Autowired</code></td>
+      <td>Inyecta automáticamente dependencias</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="-cómo-se-importan">📦 ¿Cómo se importan?</h2>
+
+<p>En la mayoría de los entornos de desarrollo como IntelliJ IDEA o Eclipse, cuando escribes una anotación, el IDE suele sugerir automáticamente el <strong>import</strong> correcto.</p>
+
+<p>Pero también puedes importarlas manualmente:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
+</code></pre></div></div>
+
+<p>💡 Estas anotaciones provienen de distintos paquetes dentro de Spring. Por ejemplo:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">@Component</code>, <code class="language-plaintext highlighter-rouge">@Service</code>, <code class="language-plaintext highlighter-rouge">@Repository</code>: vienen de <code class="language-plaintext highlighter-rouge">org.springframework.stereotype</code></li>
+  <li><code class="language-plaintext highlighter-rouge">@Autowired</code>: viene de <code class="language-plaintext highlighter-rouge">org.springframework.beans.factory.annotation</code></li>
+  <li><code class="language-plaintext highlighter-rouge">@SpringBootApplication</code>: viene de <code class="language-plaintext highlighter-rouge">org.springframework.boot.autoconfigure</code></li>
+</ul>
+
+<h2 id="-anotaciones-para-controladores-rest-en-spring">🌐 Anotaciones para controladores REST en Spring</h2>
+
+<p>Estas anotaciones permiten mapear solicitudes HTTP (como GET, POST, PUT, etc.) a métodos específicos dentro de tus controladores.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Anotación</th>
+      <th>Uso principal</th>
+      <th>Paquete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@GetMapping</code></td>
+      <td>Maneja solicitudes <strong>GET</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.GetMapping</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@PostMapping</code></td>
+      <td>Maneja solicitudes <strong>POST</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.PostMapping</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@PutMapping</code></td>
+      <td>Maneja solicitudes <strong>PUT</strong> (actualizaciones completas)</td>
+      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.PutMapping</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@PatchMapping</code></td>
+      <td>Maneja solicitudes <strong>PATCH</strong> (actualizaciones parciales)</td>
+      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.PatchMapping</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@DeleteMapping</code></td>
+      <td>Maneja solicitudes <strong>DELETE</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.DeleteMapping</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@PathVariable</code></td>
+      <td>Extrae datos directamente de la <strong>ruta URL</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.PathVariable</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">@RequestBody</code></td>
+      <td>Indica que un parámetro del método viene del <strong>cuerpo HTTP</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation.RequestBody</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="-importación-típica-en-un-controlador-rest">📦 Importación típica en un controlador REST</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PostMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PutMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PatchMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.DeleteMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestBody</span><span class="o">;</span>
+</code></pre></div></div>
+
+<p>ó</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.*</span><span class="o">;</span>
+</code></pre></div></div>
+
+<p>💡 Todas estas anotaciones pertenecen al <strong>paquete <code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation</code></strong>, el cual es esencial para construir controladores REST con Spring MVC o Spring Boot.</p>
+
+<h2 id="-mapeo-de-rutas-http-con-anotaciones-rest">📍 Mapeo de rutas HTTP con anotaciones REST</h2>
+
+<p>Spring Boot ofrece anotaciones específicas para cada tipo de verbo HTTP, facilitando la creación de rutas en tus controladores:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Verbo HTTP</th>
+      <th>Anotación</th>
+      <th>Uso común</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">@GetMapping</code></td>
+      <td>Obtener recursos</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">@PostMapping</code></td>
+      <td>Crear nuevos recursos</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td><code class="language-plaintext highlighter-rouge">@PutMapping</code></td>
+      <td>Reemplazar recursos</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">@DeleteMapping</code></td>
+      <td>Eliminar recursos</td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">@PatchMapping</code></td>
+      <td>Actualización parcial</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="ejemplo-completo-crud-de-tareas-️">Ejemplo completo: CRUD de tareas 🗂️</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api/tasks"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskController</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">TaskService</span> <span class="n">taskService</span><span class="o">;</span>
+
+    <span class="c1">// GET: obtener una tarea</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="nf">getTaskById</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">taskService</span><span class="o">.</span><span class="na">getTaskById</span><span class="o">(</span><span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">task</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">task</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">))</span>
             <span class="o">.</span><span class="na">orElseGet</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">NOT_FOUND</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// POST: crear una tarea</span>
+    <span class="nd">@PostMapping</span>
+    <span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="nf">createTask</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">Task</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Task</span> <span class="n">created</span> <span class="o">=</span> <span class="n">taskService</span><span class="o">.</span><span class="na">saveTask</span><span class="o">(</span><span class="n">task</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">created</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">CREATED</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// PUT: actualizar una tarea completamente</span>
+    <span class="nd">@PutMapping</span><span class="o">(</span><span class="s">"/{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="nf">updateTask</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">,</span> <span class="nd">@RequestBody</span> <span class="nc">Task</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">taskService</span><span class="o">.</span><span class="na">updateTask</span><span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="n">task</span><span class="o">),</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// PATCH: actualizar parcialmente una tarea</span>
+    <span class="nd">@PatchMapping</span><span class="o">(</span><span class="s">"/{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="nf">patchTask</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">,</span> <span class="nd">@RequestBody</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">updates</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">taskService</span><span class="o">.</span><span class="na">patchTask</span><span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="n">updates</span><span class="o">),</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// DELETE: eliminar una tarea</span>
+    <span class="nd">@DeleteMapping</span><span class="o">(</span><span class="s">"/{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Void</span><span class="o">&gt;</span> <span class="nf">deleteTask</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">taskService</span><span class="o">.</span><span class="na">deleteTask</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">NO_CONTENT</span><span class="o">);</span>
+    <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
-<h2 id="consultas-parametrizadas-con-getmapping-y-requestparam">Consultas parametrizadas con @GetMapping y @RequestParam</h2>
+<h2 id="-parámetros-dinámicos-y-consultas-personalizadas">🔍 Parámetros dinámicos y consultas personalizadas</h2>
 
-<p><code class="language-plaintext highlighter-rouge">@RequestParam</code> permite recuperar parámetros de consulta de la URL (query parameters).</p>
+<p>Ya sea extrayendo valores de la URL con <code class="language-plaintext highlighter-rouge">@PathVariable</code> o leyendo parámetros de consulta con <code class="language-plaintext highlighter-rouge">@RequestParam</code>, Spring Boot te da herramientas claras para manejar solicitudes complejas.</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/api/tasks/search"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;&gt;</span> <span class="nf">searchTasks</span><span class="o">(</span><span class="nd">@RequestParam</span> <span class="nc">String</span> <span class="n">title</span><span class="o">,</span> <span class="nd">@RequestParam</span><span class="o">(</span><span class="n">required</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span> <span class="nc">Boolean</span> <span class="n">completed</span><span class="o">)</span> <span class="o">{</span>
-    <span class="c1">// Recibe parámetros como /api/tasks/search?title=Proyecto&amp;completed=true</span>
-    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="n">tasks</span> <span class="o">=</span> <span class="n">taskRepository</span><span class="o">.</span><span class="na">findByTitleContainingAndCompletedEquals</span><span class="o">(</span><span class="n">title</span><span class="o">,</span> <span class="n">completed</span><span class="o">);</span>
+<h3 id="ejemplo-con-parámetros-de-búsqueda">Ejemplo con parámetros de búsqueda:</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/search"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;&gt;</span> <span class="nf">searchTasks</span><span class="o">(</span>
+    <span class="nd">@RequestParam</span> <span class="nc">String</span> <span class="n">title</span><span class="o">,</span>
+    <span class="nd">@RequestParam</span><span class="o">(</span><span class="n">required</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span> <span class="nc">Boolean</span> <span class="n">completed</span>
+<span class="o">)</span> <span class="o">{</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="n">tasks</span> <span class="o">=</span> <span class="n">taskService</span><span class="o">.</span><span class="na">findByTitleAndStatus</span><span class="o">(</span><span class="n">title</span><span class="o">,</span> <span class="n">completed</span><span class="o">);</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">tasks</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
-<h2 id="creación-de-recursos-con-postmapping-y-deserialización-con-requestbody">Creación de recursos con @PostMapping y deserialización con @RequestBody</h2>
+<h2 id="-separación-por-capas-arquitectura-limpia-en-spring-boot">🧱 Separación por capas: arquitectura limpia en Spring Boot</h2>
 
-<p><code class="language-plaintext highlighter-rouge">@PostMapping</code> mapea solicitudes HTTP POST. <code class="language-plaintext highlighter-rouge">@RequestBody</code> convierte el cuerpo de la solicitud JSON en un objeto Java.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/api/tasks"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="nf">createTask</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">Task</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
-    <span class="c1">// "task" se crea a partir del JSON del cuerpo de la petición</span>
-    <span class="nc">Task</span> <span class="n">savedTask</span> <span class="o">=</span> <span class="n">taskRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">task</span><span class="o">);</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">savedTask</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">CREATED</span><span class="o">);</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h2 id="control-avanzado-de-respuestas-http-con-responseentity">Control avanzado de respuestas HTTP con ResponseEntity</h2>
-
-<p><code class="language-plaintext highlighter-rouge">@ResponseBody</code> indica que el valor de retorno del método debe ser serializado directamente en el cuerpo de la respuesta HTTP. <code class="language-plaintext highlighter-rouge">ResponseEntity</code> permite mayor control sobre la respuesta, incluyendo encabezados y códigos de estado.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/api/tasks"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;&gt;</span> <span class="nf">getAllTasks</span><span class="o">()</span> <span class="o">{</span>
-    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="n">tasks</span> <span class="o">=</span> <span class="n">taskRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">tasks</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">OK</span><span class="o">);</span> <span class="c1">// Devuelve código 200 con la lista</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h2 id="implementando-el-patrón-dto-separación-de-datos-y-entidades">Implementando el patrón DTO: Separación de datos y entidades</h2>
-
-<p>Los DTO son objetos que transportan datos entre procesos o capas de aplicación. Permiten transferir solo los datos necesarios y no exponer la estructura completa de entidades.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// DTO para transferir solo datos relevantes de Task</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskDTO</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">completed</span><span class="o">;</span>
-
-    <span class="c1">// Constructores, getters y setters</span>
-
-    <span class="c1">// Método para convertir Entity a DTO</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">TaskDTO</span> <span class="nf">fromEntity</span><span class="o">(</span><span class="nc">Task</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nf">TaskDTO</span><span class="o">(</span><span class="n">task</span><span class="o">.</span><span class="na">getId</span><span class="o">(),</span> <span class="n">task</span><span class="o">.</span><span class="na">getTitle</span><span class="o">(),</span> <span class="n">task</span><span class="o">.</span><span class="na">isCompleted</span><span class="o">());</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h2 id="diseño-de-arquitectura-multicapa-en-aplicaciones-spring-boot">Diseño de arquitectura multicapa en aplicaciones Spring Boot</h2>
-
-<p>Spring Boot facilita la implementación de arquitecturas en capas:</p>
+<p>Para un desarrollo escalable, aplica una arquitectura multicapa:</p>
 
 <ul>
-  <li><strong>Capa de presentación</strong>: Controladores REST (@Controller, @RestController)</li>
-  <li><strong>Capa de servicio</strong>: Lógica de negocio (@Service)</li>
-  <li><strong>Capa de acceso a datos</strong>: Repositorios (@Repository)</li>
-  <li><strong>Capa de dominio</strong>: Entidades y modelos</li>
+  <li><strong>Controller</strong>: entrada de peticiones HTTP.</li>
+  <li><strong>Service</strong>: lógica de negocio.</li>
+  <li><strong>Repository</strong>: acceso a base de datos.</li>
+  <li><strong>DTO/Model</strong>: transporte de datos y mapeo a entidades.</li>
 </ul>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>com.example.app
-├── controller    // Capa de presentación
-├── service       // Capa de servicio
-├── repository    // Capa de acceso a datos
-├── model         // Capa de dominio
-└── dto           // Objetos de transferencia
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>com.example.app
+├── controller
+├── service
+├── repository
+├── dto
+└── model
 </code></pre></div></div>
 
-<h2 id="separación-de-responsabilidades-con-anotaciones-repository-y-service">Separación de responsabilidades con anotaciones @Repository y @Service</h2>
+<h2 id="-persistencia-con-jpa--hibernate">💾 Persistencia con JPA + Hibernate</h2>
 
-<ul>
-  <li><strong>@Repository</strong>: Marca una clase como repositorio, responsable de acceder a datos.</li>
-  <li><strong>@Service</strong>: Indica que una clase contiene lógica de negocio.</li>
-</ul>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Repository</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">TaskRepository</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="c1">// Métodos para acceso a datos</span>
-<span class="o">}</span>
-
-<span class="nd">@Service</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskService</span> <span class="o">{</span>
-    <span class="nd">@Autowired</span>
-    <span class="kd">private</span> <span class="nc">TaskRepository</span> <span class="n">taskRepository</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="nf">getAllTasks</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">taskRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h2 id="principios-fundamentales-inversión-de-control-ioc-en-spring">Principios fundamentales: Inversión de Control (IoC) en Spring</h2>
-
-<p>Es un principio de diseño donde el flujo de control se invierte: en lugar de que el código de la aplicación llame a una biblioteca, el framework llama al código. Spring Boot implementa IoC mediante su contenedor de IoC que gestiona el ciclo de vida de los componentes.</p>
-
-<h2 id="inyección-de-dependencias-en-spring-boot">Inyección de dependencias en Spring Boot</h2>
-
-<p>Es una técnica donde un objeto recibe otros objetos de los que depende. Spring Boot inyecta automáticamente dependencias en lugar de que las clases las creen.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskController</span> <span class="o">{</span>
-    <span class="c1">// TaskService se inyecta automáticamente</span>
-    <span class="nd">@Autowired</span>
-    <span class="kd">private</span> <span class="nc">TaskService</span> <span class="n">taskService</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h2 id="automatización-de-dependencias-con-autowired">Automatización de dependencias con @Autowired</h2>
-
-<p>Indica a Spring que inyecte automáticamente una dependencia. Puede aplicarse a constructores, métodos y campos.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Service</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotificationService</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">EmailService</span> <span class="n">emailService</span><span class="o">;</span>
-
-    <span class="nd">@Autowired</span> <span class="c1">// Inyección por constructor (recomendada)</span>
-    <span class="kd">public</span> <span class="nf">NotificationService</span><span class="o">(</span><span class="nc">EmailService</span> <span class="n">emailService</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">emailService</span> <span class="o">=</span> <span class="n">emailService</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h2 id="fundamentos-de-persistencia-orm--jpa">Fundamentos de persistencia: ORM + JPA</h2>
-
-<p>ORM (Object-Relational Mapping) mapea objetos Java a tablas de base de datos. JPA (Java Persistence API) es la especificación estándar para ORM en Java.</p>
+<p>Spring Boot configura automáticamente JPA (usualmente con Hibernate) para que puedas mapear objetos Java a tablas SQL fácilmente:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
-<span class="nd">@Table</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"tasks"</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Task</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span>
     <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
-
     <span class="kd">private</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">completed</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
-<h2 id="hibernate-como-implementación-de-jpa">Hibernate como implementación de JPA</h2>
+<p>Y para configurar la base de datos, basta con esto en <code class="language-plaintext highlighter-rouge">application.properties</code>:</p>
 
-<p>Hibernate es la implementación más popular de JPA. Spring Boot lo configura automáticamente como proveedor de persistencia predeterminado.</p>
-
-<h2 id="configuración-inicial-de-persistencia-con-jpa-y-hibernate">Configuración inicial de persistencia con JPA y Hibernate</h2>
-
-<ol>
-  <li>
-    <p><strong>Dependencias en pom.xml</strong>:</p>
-
-    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>com.mysql<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>mysql-connector-j<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p><strong>Configuración en application.properties</strong>:</p>
-    <div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">spring.datasource.url</span><span class="p">=</span><span class="s">jdbc:mysql://localhost:3306/taskdb</span>
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">spring.datasource.url</span><span class="p">=</span><span class="s">jdbc:mysql://localhost:3306/taskdb</span>
 <span class="py">spring.datasource.username</span><span class="p">=</span><span class="s">root</span>
-<span class="py">spring.datasource.password</span><span class="p">=</span><span class="s">password</span>
+<span class="py">spring.datasource.password</span><span class="p">=</span><span class="s">tu_clave</span>
 <span class="py">spring.jpa.hibernate.ddl-auto</span><span class="p">=</span><span class="s">update</span>
-</code></pre></div>    </div>
-  </li>
-</ol>
+</code></pre></div></div>
 
-<h2 id="desarrollo-rápido-de-operaciones-crud-con-spring-data-jpa">Desarrollo rápido de operaciones CRUD con Spring Data JPA</h2>
+<h2 id="-uso-de-dtos-para-separar-entidades-y-transporte-de-datos">📦 Uso de DTOs para separar entidades y transporte de datos</h2>
 
-<p>Spring Data JPA proporciona el interfaz <code class="language-plaintext highlighter-rouge">JpaRepository</code> que incluye métodos CRUD básicos:</p>
+<p>Un <strong>DTO (Data Transfer Object)</strong> es una clase que se utiliza para transportar datos entre el cliente y el servidor, sin exponer directamente las entidades del dominio.</p>
+
+<h3 id="ventajas-de-usar-dtos">Ventajas de usar DTOs</h3>
+
+<ul>
+  <li>🔒 Ocultas campos sensibles o irrelevantes de la entidad.</li>
+  <li>🧩 Puedes personalizar qué datos enviar o recibir según el caso de uso.</li>
+  <li>🔄 Desacoplas la lógica de persistencia del formato de comunicación.</li>
+</ul>
+
+<h3 id="ejemplo-de-dto-para-crear-tareas">Ejemplo de DTO para crear tareas:</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskCreateDTO</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">completed</span><span class="o">;</span>
+
+    <span class="c1">// Getters y setters</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Y para la respuesta:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskDTO</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">completed</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">TaskDTO</span> <span class="nf">fromEntity</span><span class="o">(</span><span class="nc">Task</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">TaskDTO</span> <span class="n">dto</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TaskDTO</span><span class="o">();</span>
+        <span class="n">dto</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="n">task</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+        <span class="n">dto</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="n">task</span><span class="o">.</span><span class="na">getTitle</span><span class="o">());</span>
+        <span class="n">dto</span><span class="o">.</span><span class="na">setCompleted</span><span class="o">(</span><span class="n">task</span><span class="o">.</span><span class="na">isCompleted</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">dto</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="-inyección-de-dependencias-en-spring-boot">🧪 Inyección de dependencias en Spring Boot</h2>
+
+<p>La <strong>inyección de dependencias (DI)</strong> permite a Spring proporcionar automáticamente los objetos que una clase necesita, sin que ella los cree manualmente.</p>
+
+<h3 id="ventajas">Ventajas:</h3>
+
+<ul>
+  <li>🔄 Menor acoplamiento entre clases.</li>
+  <li>🧪 Facilita las pruebas unitarias.</li>
+  <li>♻️ Mayor reutilización y mantenibilidad del código.</li>
+</ul>
+
+<h3 id="ejemplo">Ejemplo:</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskService</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">TaskRepository</span> <span class="n">taskRepository</span><span class="o">;</span>
+
+    <span class="nd">@Autowired</span> <span class="c1">// Constructor recomendado</span>
+    <span class="kd">public</span> <span class="nf">TaskService</span><span class="o">(</span><span class="nc">TaskRepository</span> <span class="n">taskRepository</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">taskRepository</span> <span class="o">=</span> <span class="n">taskRepository</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">Task</span> <span class="nf">saveTask</span><span class="o">(</span><span class="nc">Task</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">taskRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">task</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="️-acceso-a-datos-con-repository">🗃️ Acceso a datos con Repository</h2>
+
+<p>La anotación <code class="language-plaintext highlighter-rouge">@Repository</code> marca una interfaz como componente que accede a la base de datos. Usando <code class="language-plaintext highlighter-rouge">JpaRepository</code>, heredas métodos CRUD listos para usar.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Repository</span>
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">TaskRepository</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="c1">// Métodos personalizados</span>
     <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="nf">findByCompleted</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">completed</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
-<h2 id="modelado-de-relaciones-entre-entidades-con-jpahibernate">Modelado de relaciones entre entidades con JPA/Hibernate</h2>
+<h2 id="-llevando-todo-a-la-práctica-post-con-dto--di--repository">🔗 Llevando todo a la práctica: POST con DTO + DI + Repository</h2>
 
-<h3 id="onetoone">@OneToOne</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api/tasks"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskController</span> <span class="o">{</span>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
-    <span class="nd">@Id</span> <span class="nd">@GeneratedValue</span>
-    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">TaskService</span> <span class="n">taskService</span><span class="o">;</span>
 
-    <span class="nd">@OneToOne</span><span class="o">(</span><span class="n">cascade</span> <span class="o">=</span> <span class="nc">CascadeType</span><span class="o">.</span><span class="na">ALL</span><span class="o">)</span>
-    <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"profile_id"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="nc">UserProfile</span> <span class="n">profile</span><span class="o">;</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">public</span> <span class="nf">TaskController</span><span class="o">(</span><span class="nc">TaskService</span> <span class="n">taskService</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">taskService</span> <span class="o">=</span> <span class="n">taskService</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@PostMapping</span>
+    <span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">TaskDTO</span><span class="o">&gt;</span> <span class="nf">createTask</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">TaskCreateDTO</span> <span class="n">taskDto</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Task</span> <span class="n">task</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Task</span><span class="o">();</span>
+        <span class="n">task</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="n">taskDto</span><span class="o">.</span><span class="na">getTitle</span><span class="o">());</span>
+        <span class="n">task</span><span class="o">.</span><span class="na">setCompleted</span><span class="o">(</span><span class="n">taskDto</span><span class="o">.</span><span class="na">isCompleted</span><span class="o">());</span>
+
+        <span class="nc">Task</span> <span class="n">saved</span> <span class="o">=</span> <span class="n">taskService</span><span class="o">.</span><span class="na">saveTask</span><span class="o">(</span><span class="n">task</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="nc">TaskDTO</span><span class="o">.</span><span class="na">fromEntity</span><span class="o">(</span><span class="n">saved</span><span class="o">),</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">CREATED</span><span class="o">);</span>
+    <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
-<h3 id="onetomany">@OneToMany</h3>
+<h3 id="ventajas-de-esta-implementación">Ventajas de esta implementación</h3>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
-    <span class="nd">@Id</span> <span class="nd">@GeneratedValue</span>
-    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+<ul>
+  <li>✅ <strong>DTO</strong> protege tu modelo interno y simplifica la comunicación con el cliente.</li>
+  <li>✅ <strong>Inyección de dependencias</strong> facilita pruebas y mantiene tu código limpio.</li>
+  <li>✅ <strong>Repository</strong> centraliza el acceso a la base de datos, usando interfaces concisas.</li>
+</ul>
 
-    <span class="nd">@OneToMany</span><span class="o">(</span><span class="n">mappedBy</span> <span class="o">=</span> <span class="s">"user"</span><span class="o">,</span> <span class="n">cascade</span> <span class="o">=</span> <span class="nc">CascadeType</span><span class="o">.</span><span class="na">ALL</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="n">tasks</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
-<span class="o">}</span>
+<h2 id="-despliegue-con-docker-">📦 Despliegue con Docker 🐳</h2>
 
-<span class="nd">@Entity</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Task</span> <span class="o">{</span>
-    <span class="nd">@ManyToOne</span>
-    <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"user_id"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="nc">User</span> <span class="n">user</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></div></div>
+<p>Ejemplo de Dockerfile para construir tú imagen:</p>
 
-<h3 id="manytomany">@ManyToMany</h3>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Task</span> <span class="o">{</span>
-    <span class="nd">@ManyToMany</span>
-    <span class="nd">@JoinTable</span><span class="o">(</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="s">"task_tags"</span><span class="o">,</span>
-        <span class="n">joinColumns</span> <span class="o">=</span> <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"task_id"</span><span class="o">),</span>
-        <span class="n">inverseJoinColumns</span> <span class="o">=</span> <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"tag_id"</span><span class="o">)</span>
-    <span class="o">)</span>
-    <span class="kd">private</span> <span class="nc">Set</span><span class="o">&lt;</span><span class="nc">Tag</span><span class="o">&gt;</span> <span class="n">tags</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashSet</span><span class="o">&lt;&gt;();</span>
-<span class="o">}</span>
-
-<span class="nd">@Entity</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Tag</span> <span class="o">{</span>
-    <span class="nd">@ManyToMany</span><span class="o">(</span><span class="n">mappedBy</span> <span class="o">=</span> <span class="s">"tags"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="nc">Set</span><span class="o">&lt;</span><span class="nc">Task</span><span class="o">&gt;</span> <span class="n">tasks</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashSet</span><span class="o">&lt;&gt;();</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h2 id="despliegue-de-aplicaciones-spring-boot-con-docker-guía-práctica">Despliegue de aplicaciones Spring Boot con Docker: Guía práctica</h2>
-
-<ol>
-  <li>
-    <p><strong>Crear un Dockerfile</strong>:</p>
-
-    <div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> eclipse-temurin:17-jdk</span>
+<div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> eclipse-temurin:17-jdk</span>
 <span class="k">WORKDIR</span><span class="s"> /app</span>
 <span class="k">COPY</span><span class="s"> target/*.jar app.jar</span>
 <span class="k">ENTRYPOINT</span><span class="s"> ["java","-jar","/app/app.jar"]</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p><strong>Construir la imagen</strong>:</p>
+</code></pre></div></div>
 
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker build <span class="nt">-t</span> taskmanager-app <span class="nb">.</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p><strong>Ejecutar el contenedor</strong>:</p>
+<p>Ejemplo de configuración de Docker Compose:</p>
 
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-p</span> 8080:8080 taskmanager-app
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p><strong>Docker Compose</strong> (para incluir también la base de datos):</p>
-    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3'</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3'</span>
 <span class="na">services</span><span class="pi">:</span>
   <span class="na">app</span><span class="pi">:</span>
     <span class="na">build</span><span class="pi">:</span> <span class="s">.</span>
@@ -289,9 +427,23 @@
     <span class="na">environment</span><span class="pi">:</span>
       <span class="pi">-</span> <span class="s">MYSQL_ROOT_PASSWORD=password</span>
       <span class="pi">-</span> <span class="s">MYSQL_DATABASE=taskdb</span>
-</code></pre></div>    </div>
-  </li>
-</ol>]]></content><author><name></name></author><category term="java" /><category term="springboot" /><category term="Java" /><category term="Spring Boot" /><category term="REST API" /><summary type="html"><![CDATA[Manejo de rutas dinámicas con @GetMapping y @PathVariable]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://aduartem.github.io/assets/images/posts/2025/spring-boot.jpeg" /><media:content medium="image" url="https://aduartem.github.io/assets/images/posts/2025/spring-boot.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)</title><link href="https://aduartem.github.io/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI.html" rel="alternate" type="text/html" title="Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)" /><published>2022-06-26T06:00:00+00:00</published><updated>2022-06-26T06:00:00+00:00</updated><id>https://aduartem.github.io/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI</id><content type="html" xml:base="https://aduartem.github.io/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI.html"><![CDATA[<p>Esta es una guía paso a paso de como instalar Arch Linux 2022.06.01 x86_64. Con esta guía el usuario será capaz de cambiar el idioma del teclado, particionar el disco, realizar la instalación de un entorno de escritorio y más, todo el proceso se realiza por línea de comandos.</p>
+</code></pre></div></div>
+
+<h2 id="-conclusión">🧠 Conclusión</h2>
+
+<p>Spring Boot es una herramienta poderosa para desarrollar APIs REST modernas y bien estructuradas. Gracias a su conjunto de anotaciones como <code class="language-plaintext highlighter-rouge">@GetMapping</code>, <code class="language-plaintext highlighter-rouge">@PostMapping</code>, <code class="language-plaintext highlighter-rouge">@PutMapping</code>, <code class="language-plaintext highlighter-rouge">@DeleteMapping</code> y <code class="language-plaintext highlighter-rouge">@PatchMapping</code>, puedes construir endpoints eficientes de manera declarativa y clara 🧩. Al combinarlo con una arquitectura por capas, patrones como DTO y prácticas como el despliegue con Docker, obtienes una solución completa y lista para producción 🚀.</p>
+
+<p>¿Estás listo para construir tu próxima API con Spring Boot? ¡Manos a la obra! 💻🔥</p>
+
+<h2 id="-recursos-web-oficiales-para-profundizar">🌐 Recursos web oficiales para profundizar</h2>
+
+<ul>
+  <li><a href="https://spring.io/projects/spring-boot">Spring Boot</a></li>
+  <li><a href="https://spring.io/quickstart">Guía Quickstart</a></li>
+  <li><a href="https://spring.io/guides/gs/spring-boot">Construyendo una aplicación con Spring Boot</a></li>
+  <li><a href="https://spring.io/guides/gs/rest-service">Construyendo servicios web RESTful</a></li>
+  <li><a href="https://spring.io/guides">Guías</a></li>
+</ul>]]></content><author><name></name></author><category term="java" /><category term="springboot" /><category term="Java" /><category term="Spring Boot" /><category term="REST API" /><summary type="html"><![CDATA[Introducción 🌱]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://aduartem.github.io/assets/images/posts/2025/spring-boot.jpeg" /><media:content medium="image" url="https://aduartem.github.io/assets/images/posts/2025/spring-boot.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)</title><link href="https://aduartem.github.io/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI.html" rel="alternate" type="text/html" title="Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)" /><published>2022-06-26T06:00:00+00:00</published><updated>2022-06-26T06:00:00+00:00</updated><id>https://aduartem.github.io/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI</id><content type="html" xml:base="https://aduartem.github.io/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI.html"><![CDATA[<p>Esta es una guía paso a paso de como instalar Arch Linux 2022.06.01 x86_64. Con esta guía el usuario será capaz de cambiar el idioma del teclado, particionar el disco, realizar la instalación de un entorno de escritorio y más, todo el proceso se realiza por línea de comandos.</p>
 
 <h2 id="1-instalación-base">1. Instalación base</h2>
 
