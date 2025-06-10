@@ -67,41 +67,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 ## 🌐 Anotaciones para controladores REST en Spring
 
-Estas anotaciones permiten mapear solicitudes HTTP (como GET, POST, PUT, etc.) a métodos específicos dentro de tus controladores.
+Las anotaciones en los controladores REST de Spring Boot permiten definir de manera sencilla cómo se manejan las rutas y cómo se recibe la información del cliente. Esto hace que la creación de endpoints sea clara, flexible y fácil de mantener.
 
-| Anotación        | Uso principal                                                | Paquete                                                 |
-| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------- |
-| `@GetMapping`    | Maneja solicitudes **GET**                                   | `org.springframework.web.bind.annotation.GetMapping`    |
-| `@PostMapping`   | Maneja solicitudes **POST**                                  | `org.springframework.web.bind.annotation.PostMapping`   |
-| `@PutMapping`    | Maneja solicitudes **PUT** (actualizaciones completas)       | `org.springframework.web.bind.annotation.PutMapping`    |
-| `@PatchMapping`  | Maneja solicitudes **PATCH** (actualizaciones parciales)     | `org.springframework.web.bind.annotation.PatchMapping`  |
-| `@DeleteMapping` | Maneja solicitudes **DELETE**                                | `org.springframework.web.bind.annotation.DeleteMapping` |
-| `@PathVariable`  | Extrae datos directamente de la **ruta URL**                 | `org.springframework.web.bind.annotation.PathVariable`  |
-| `@RequestBody`   | Indica que un parámetro del método viene del **cuerpo HTTP** | `org.springframework.web.bind.annotation.RequestBody`   |
-
-## 📦 Importación típica en un controlador REST
-
-```java
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-```
-
-ó
-
-```java
-import org.springframework.web.bind.annotation.*;
-```
-
-💡 Todas estas anotaciones pertenecen al **paquete `org.springframework.web.bind.annotation`**, el cual es esencial para construir controladores REST con Spring MVC o Spring Boot.
-
-## 📍 Mapeo de rutas HTTP con anotaciones REST
-
-Spring Boot ofrece anotaciones específicas para cada tipo de verbo HTTP, facilitando la creación de rutas en tus controladores:
+### Anotaciones para rutas según el verbo HTTP
 
 | Verbo HTTP | Anotación        | Uso común                    |
 |------------|------------------|------------------------------|
@@ -111,6 +79,54 @@ Spring Boot ofrece anotaciones específicas para cada tipo de verbo HTTP, facili
 | DELETE     | `@DeleteMapping` | Eliminar recursos            |
 | PATCH      | `@PatchMapping`  | Actualización parcial        |
 
+### Anotaciones para recibir datos del cliente
+
+Estas anotaciones permiten a los controladores recibir información enviada por el cliente de distintas formas, facilitando la construcción de endpoints flexibles.
+
+| Anotación        | Uso principal                                                |
+| ---------------- | ------------------------------------------------------------ |
+| `@PathVariable`  | Extrae datos directamente de la **ruta URL**                 |
+| `@RequestBody`   | Indica que un parámetro del método viene del **cuerpo HTTP** |
+
+
+`@PathVariable` se utiliza para capturar valores dinámicos que forman parte de la URL (por ejemplo, un identificador en `/api/tareas/123`), mientras que `@RequestBody` permite recibir y deserializar datos enviados en el cuerpo de la petición, como objetos JSON en operaciones POST o PUT.
+Estas herramientas facilitan la construcción de endpoints flexibles y adaptados a diferentes necesidades de entrada de datos.
+
+💡 Todas estas anotaciones pertenecen al **paquete `org.springframework.web.bind.annotation`**, el cual es esencial para construir controladores REST con Spring MVC o Spring Boot.
+
+#### Ejemplo de importación
+
+```java
+import org.springframework.web.bind.annotation.*;
+```
+
+---
+
+### Buenas prácticas
+
+- Utiliza DTOs para separar la lógica de tu dominio del formato de entrada/salida.
+- Valida los datos recibidos en el cuerpo de la petición usando anotaciones como `@Valid`.
+- Mantén tus controladores enfocados solo en la lógica de manejo de peticiones.
+
+### Errores comunes
+
+- Olvidar el `@RequestBody` en métodos POST/PUT, lo que puede resultar en parámetros nulos.
+- No mapear correctamente los nombres de las variables en la URL con `@PathVariable`.
+- No validar los datos recibidos, lo que puede provocar errores en tiempo de ejecución.
+
+Podemos importar cada anotación de forma individual o usar el comodín para importar todas:
+
+```java
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+// o simplemente
+import org.springframework.web.bind.annotation.*;
+```
 
 ## Ejemplo completo: CRUD de tareas 🗂️
 
@@ -359,6 +375,32 @@ services:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=taskdb
 ```
+
+## ❓ Preguntas frecuentes (FAQ)
+
+### 1. ¿Necesito instalar Spring por separado antes de usar Spring Boot?
+No, Spring Boot incluye todo lo necesario. Solo necesitas agregar las dependencias en tu archivo `pom.xml` o `build.gradle` y el framework se encargará del resto.
+
+### 2. ¿Puedo usar bases de datos distintas a MySQL?
+Sí, Spring Boot es compatible con múltiples bases de datos (PostgreSQL, H2, Oracle, SQL Server, etc.). Solo debes cambiar la dependencia y la configuración en `application.properties`.
+
+### 3. ¿Cómo valido los datos que recibe mi API?
+Puedes usar anotaciones como `@Valid` junto con clases DTO y anotaciones de validación (`@NotNull`, `@Size`, etc.). Spring Boot integrará automáticamente la validación y devolverá errores claros al cliente.
+
+### 4. ¿Qué hago si recibo un error 404 o 405 en mis endpoints?
+Verifica que la ruta y el verbo HTTP coincidan con los definidos en tu controlador. También asegúrate de que las anotaciones (`@GetMapping`, `@PostMapping`, etc.) estén correctamente aplicadas.
+
+### 5. ¿Cómo puedo probar mi API localmente?
+Puedes usar herramientas como [Postman](https://www.postman.com/) o [curl](https://curl.se/) para enviar peticiones HTTP a tus endpoints y verificar las respuestas.
+
+### 6. ¿Es obligatorio usar Docker para desplegar mi API?
+No es obligatorio, pero Docker facilita el despliegue y la portabilidad de tu aplicación. Puedes ejecutar tu API directamente con `java -jar` o desplegarla en servicios en la nube.
+
+### 7. ¿Cómo manejo los errores de forma global en mi API?
+Puedes crear una clase anotada con `@ControllerAdvice` y métodos con `@ExceptionHandler` para capturar y personalizar las respuestas de error de toda tu API.
+
+### 8. ¿Puedo documentar mi API automáticamente?
+Sí, puedes usar herramientas como [Springdoc OpenAPI](https://springdoc.org/) o [Swagger](https://swagger.io/) para generar documentación interactiva de tus endpoints.
 
 
 ## 🧠 Conclusión
