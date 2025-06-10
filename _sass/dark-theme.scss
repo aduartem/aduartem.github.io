@@ -493,11 +493,11 @@ body.dark-theme {
     .category-link.active,
     .featured-category.active,
     a.active {
-      background-color: #2a2a2a !important; // Era #28384a
-      color: #cecac3 !important; // Era #fff
-      border-color: #cecac3 !important; // Era $dark-brand-color
+      background-color: #2a2a2a !important;
+      color: #cecac3 !important;
+      border-color: #cecac3 !important;
       text-decoration: none !important;
-      box-shadow: 0 0 5px rgba(206, 202, 195, 0.3) !important; // Era rgba(109, 158, 235, 0.5)
+      box-shadow: 0 0 5px rgba(206, 202, 195, 0.3) !important;
     }
   }
 
@@ -529,15 +529,6 @@ body.dark-theme {
   // Categorías en modo oscuro
   .featured-categories {
     .featured-category {
-      &.active,
-      &.current,
-      &:active,
-      &.selected {
-        background-color: #28384a !important;
-        color: #fff !important;
-        border-bottom: 2px solid $dark-brand-color !important;
-      }
-
       &:hover {
         background-color: #1e2a38 !important;
         color: $dark-brand-color !important;
@@ -1115,5 +1106,9 @@ body.dark-theme {
     a {
       color: #e6e6e6 !important;
     }
+  }
+
+  a.breadcrumb-home {
+    color: $dark-link !important;
   }
 }
