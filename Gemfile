@@ -8,8 +8,6 @@ group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
   gem "jemoji"
   gem "jekyll-seo-tag", "~> 2.7"
-  # Comentamos temporalmente jekyll-picture-tag
-  # gem "jekyll-picture-tag", "~> 2.0"
 end
 
 platforms :mingw, :x64_mingw, :mswin, :jruby do

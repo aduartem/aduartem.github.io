@@ -33,13 +33,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <!-- Meta etiquetas adicionales para SEO -->
+  {% if page.description %}
+  <meta name="description" content="{{ page.description | truncate: 160 }}">
+  {% endif %}
+
+  <meta name="author" content="{{ site.author | default: site.title }}">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
   {%- seo -%}
   <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
   {%- feed_meta -%}
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
   {%- include google-analytics.html -%}
   {%- endif -%}
-  <script src="{{ "/assets/js/smooth-scroll.js" | relative_url }}"></script>
-  <script src="{{ "/assets/js/category-nav.js" | relative_url }}"></script>
-  <script src="{{ "/assets/js/copy-code.js" | relative_url }}"></script>
 </head>

@@ -94,25 +94,7 @@ Estas herramientas facilitan la construcción de endpoints flexibles y adaptados
 
 💡 Todas estas anotaciones pertenecen al **paquete `org.springframework.web.bind.annotation`**, el cual es esencial para construir controladores REST con Spring MVC o Spring Boot.
 
-#### Ejemplo de importación
-
-```java
-import org.springframework.web.bind.annotation.*;
-```
-
----
-
-### Buenas prácticas
-
-- Utiliza DTOs para separar la lógica de tu dominio del formato de entrada/salida.
-- Valida los datos recibidos en el cuerpo de la petición usando anotaciones como `@Valid`.
-- Mantén tus controladores enfocados solo en la lógica de manejo de peticiones.
-
-### Errores comunes
-
-- Olvidar el `@RequestBody` en métodos POST/PUT, lo que puede resultar en parámetros nulos.
-- No mapear correctamente los nombres de las variables en la URL con `@PathVariable`.
-- No validar los datos recibidos, lo que puede provocar errores en tiempo de ejecución.
+#### Importación
 
 Podemos importar cada anotación de forma individual o usar el comodín para importar todas:
 
@@ -127,6 +109,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 // o simplemente
 import org.springframework.web.bind.annotation.*;
 ```
+
+
+### Buenas prácticas
+
+- Utiliza DTOs para separar la lógica de tu dominio del formato de entrada/salida.
+- Valida los datos recibidos en el cuerpo de la petición usando anotaciones como `@Valid`.
+- Mantén tus controladores enfocados solo en la lógica de manejo de peticiones.
+
+
+### Error común
+
+- No validar los datos recibidos, lo que puede provocar errores en tiempo de ejecución.
 
 ## Ejemplo completo: CRUD de tareas 🗂️
 

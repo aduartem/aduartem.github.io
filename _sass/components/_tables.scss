@@ -1,0 +1,106 @@
+// Estilos para tablas con scroll horizontal
+
+.post-content {
+  // Contenedor para tablas que puede tener scroll
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-collapse: collapse;
+    margin: 1.5em 0;
+
+    // Asegura que la tabla tenga un ancho mínimo razonable
+    min-width: 100%;
+
+    // Para navegadores modernos
+    overflow-y: hidden;
+
+    // Estilo de bordes y formato
+    border: none;
+    border-radius: 4px;
+
+    // Tema oscuro
+    body.dark-theme & {
+      border-color: #30363d;
+    }
+  }
+
+  // Estilos para celdas de tabla
+  th,
+  td {
+    padding: 8px 12px;
+    border: 1px solid #e8e8e8;
+    min-width: 100px; // Ancho mínimo para evitar que las celdas se compriman demasiado
+
+    // Tema oscuro
+    body.dark-theme & {
+      border-color: #30363d;
+    }
+  }
+
+  // Encabezados de tabla
+  th {
+    background-color: #f6f8fa;
+    font-weight: 600;
+    text-align: left;
+
+    // Tema oscuro
+    body.dark-theme & {
+      background-color: #21262d;
+    }
+  }
+
+  // Filas alternas para mejor legibilidad
+  tr:nth-child(even) {
+    background-color: #f8f8f8;
+
+    // Tema oscuro
+    body.dark-theme & {
+      background-color: #161b22;
+    }
+  }
+
+  // Hover sobre filas para mejor experiencia de usuario
+  tr:hover {
+    background-color: #f1f1f1;
+
+    // Tema oscuro
+    body.dark-theme & {
+      background-color: #1d2126;
+    }
+  }
+}
+
+// Indicador visual de scroll horizontal
+.table-responsive-indicator {
+  position: relative;
+
+  &::after {
+    content: '→';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    animation: fadeInOut 1.5s infinite;
+    pointer-events: none;
+    display: none;
+  }
+
+  &.has-scroll::after {
+    display: block;
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}

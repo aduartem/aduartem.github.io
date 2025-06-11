@@ -43,27 +43,9 @@
   <!-- Botón Volver Arriba -->
   <button onclick="topFunction()" id="back-to-top" title="Volver arriba">▲</button>
 
-  <script>
-    // Botón de volver arriba
-    var backToTopButton = document.getElementById("back-to-top");
-
-    // Mostrar botón cuando usuario baja 300px
-    window.onscroll = function () {
-      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-        backToTopButton.style.display = "block";
-      } else {
-        backToTopButton.style.display = "none";
-      }
-    };
-
-    // Cuando el usuario hace clic, scroll hasta arriba
-    function topFunction() {
-      document.body.scrollTop = 0; // Para Safari
-      document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE y Opera
-    }
-  </script>
-
   <script src="{{ site.baseurl }}/assets/js/theme-switcher.js"></script>
+
+  {%- include scripts.html -%}
 
 </body>
 

@@ -11,14 +11,10 @@ document.addEventListener('DOMContentLoaded', function () {
       themeSwitch.checked = true;
     }
   } else {
-    if (
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    ) {
-      body.classList.add('dark-theme');
-      themeSwitch.checked = true;
-      localStorage.setItem('theme', 'dark-theme');
-    }
+    // Establecer tema claro por defecto
+    body.classList.add('light-theme');
+    themeSwitch.checked = false;
+    localStorage.setItem('theme', 'light-theme');
   }
 
   themeSwitch.addEventListener('change', function () {

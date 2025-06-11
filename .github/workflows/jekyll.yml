@@ -14,14 +14,16 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2.2' # o la versión de Ruby que uses
-          bundler-cache: false # Desactivamos caché para evitar problemas iniciales
+          ruby-version: '3.2.2'
+          bundler-cache: false
       - name: Install Gems
         run: bundle install
       - name: Check Jekyll Version
-        run: bundle exec jekyll -v # Corregido para usar bundle exec
+        run: bundle exec jekyll -v
       - name: Build with Jekyll
-        run: bundle exec jekyll build --trace
+        env:
+          JEKYLL_ENV: production
+        run: JEKYLL_ENV=production bundle exec jekyll build --trace
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:

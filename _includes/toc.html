@@ -61,7 +61,7 @@
         // Usar sessionStorage en lugar de localStorage para que persista solo en la sesión actual
         sessionStorage.setItem('tocState-' + window.location.pathname, 'collapsed');
       } else {
-        tocToggle.textContent = '▲';
+        tocToggle.textContent = '▼';
         tocToggle.setAttribute('aria-label', 'Plegar contenido');
         // Usar sessionStorage y guardar el estado para esta URL específica
         sessionStorage.setItem('tocState-' + window.location.pathname, 'expanded');
@@ -78,7 +78,7 @@
     // Solo expandir si hay un estado específico guardado para esta página
     if (pageSpecificState === 'expanded') {
       tocContainer.classList.remove('toc-collapsed');
-      tocToggle.textContent = '▲';
+      tocToggle.textContent = '▼';
     }
   });
 </script>
