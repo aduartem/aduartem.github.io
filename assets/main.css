@@ -906,6 +906,8 @@ body.dark-theme .post-meta { color: #b0b0b0; }
 
 .progress-container .progress-bar { height: 4px; background: #2a7ae2; width: 0%; }
 
+.post-content { overflow-wrap: break-word; /* Rompe palabras largas si no caben en la línea */ word-wrap: break-word; /* Similar a overflow-wrap, para compatibilidad */ overflow: hidden; /* Oculta el texto que se desborda */ display: inline-block; /* Asegura que el ancho se ajuste al contenido */ max-width: 100%; }
+
 body.dark-theme #back-to-top { background-color: #4cacfc; }
 
 body.dark-theme #back-to-top:hover { background-color: #3b8fd0; }

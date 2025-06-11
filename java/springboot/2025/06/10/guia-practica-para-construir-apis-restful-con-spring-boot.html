@@ -143,7 +143,7 @@
     <!-- Contador de tiempo de lectura -->
     
     <span class="reading-time">
-       14 minutos de lectura 
+       12 minutos de lectura 
         </span>
   </header>
 
@@ -664,32 +664,6 @@ Estas herramientas facilitan la construcción de endpoints flexibles y adaptados
       <span class="pi">-</span> <span class="s">MYSQL_ROOT_PASSWORD=password</span>
       <span class="pi">-</span> <span class="s">MYSQL_DATABASE=taskdb</span>
 </code></pre></div></div>
-
-<h2 id="-preguntas-frecuentes-faq">❓ Preguntas frecuentes (FAQ)</h2>
-
-<h3 id="1-necesito-instalar-spring-por-separado-antes-de-usar-spring-boot">1. ¿Necesito instalar Spring por separado antes de usar Spring Boot?</h3>
-<p>No, Spring Boot incluye todo lo necesario. Solo necesitas agregar las dependencias en tu archivo <code class="language-plaintext highlighter-rouge">pom.xml</code> o <code class="language-plaintext highlighter-rouge">build.gradle</code> y el framework se encargará del resto.</p>
-
-<h3 id="2-puedo-usar-bases-de-datos-distintas-a-mysql">2. ¿Puedo usar bases de datos distintas a MySQL?</h3>
-<p>Sí, Spring Boot es compatible con múltiples bases de datos (PostgreSQL, H2, Oracle, SQL Server, etc.). Solo debes cambiar la dependencia y la configuración en <code class="language-plaintext highlighter-rouge">application.properties</code>.</p>
-
-<h3 id="3-cómo-valido-los-datos-que-recibe-mi-api">3. ¿Cómo valido los datos que recibe mi API?</h3>
-<p>Puedes usar anotaciones como <code class="language-plaintext highlighter-rouge">@Valid</code> junto con clases DTO y anotaciones de validación (<code class="language-plaintext highlighter-rouge">@NotNull</code>, <code class="language-plaintext highlighter-rouge">@Size</code>, etc.). Spring Boot integrará automáticamente la validación y devolverá errores claros al cliente.</p>
-
-<h3 id="4-qué-hago-si-recibo-un-error-404-o-405-en-mis-endpoints">4. ¿Qué hago si recibo un error 404 o 405 en mis endpoints?</h3>
-<p>Verifica que la ruta y el verbo HTTP coincidan con los definidos en tu controlador. También asegúrate de que las anotaciones (<code class="language-plaintext highlighter-rouge">@GetMapping</code>, <code class="language-plaintext highlighter-rouge">@PostMapping</code>, etc.) estén correctamente aplicadas.</p>
-
-<h3 id="5-cómo-puedo-probar-mi-api-localmente">5. ¿Cómo puedo probar mi API localmente?</h3>
-<p>Puedes usar herramientas como <a href="https://www.postman.com/">Postman</a> o <a href="https://curl.se/">curl</a> para enviar peticiones HTTP a tus endpoints y verificar las respuestas.</p>
-
-<h3 id="6-es-obligatorio-usar-docker-para-desplegar-mi-api">6. ¿Es obligatorio usar Docker para desplegar mi API?</h3>
-<p>No es obligatorio, pero Docker facilita el despliegue y la portabilidad de tu aplicación. Puedes ejecutar tu API directamente con <code class="language-plaintext highlighter-rouge">java -jar</code> o desplegarla en servicios en la nube.</p>
-
-<h3 id="7-cómo-manejo-los-errores-de-forma-global-en-mi-api">7. ¿Cómo manejo los errores de forma global en mi API?</h3>
-<p>Puedes crear una clase anotada con <code class="language-plaintext highlighter-rouge">@ControllerAdvice</code> y métodos con <code class="language-plaintext highlighter-rouge">@ExceptionHandler</code> para capturar y personalizar las respuestas de error de toda tu API.</p>
-
-<h3 id="8-puedo-documentar-mi-api-automáticamente">8. ¿Puedo documentar mi API automáticamente?</h3>
-<p>Sí, puedes usar herramientas como <a href="https://springdoc.org/">Springdoc OpenAPI</a> o <a href="https://swagger.io/">Swagger</a> para generar documentación interactiva de tus endpoints.</p>
 
 <h2 id="-conclusión">🧠 Conclusión</h2>
 
