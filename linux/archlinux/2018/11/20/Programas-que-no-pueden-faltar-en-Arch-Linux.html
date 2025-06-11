@@ -33,7 +33,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <!-- Meta etiquetas adicionales para SEO -->
+  
+
+  <meta name="author" content="aduartem">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch Linux 2018.08.01 | aduartem</title>
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch Linux 2018.08.01" />
@@ -54,10 +61,15 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2018-11-20T00:00:00+00:00","datePublished":"2018-11-20T00:00:00+00:00","description":"En este artículo haré mención de 20 programas que no pueden faltar en tú sistema Arch Linux. Haré una breve descripción de cada programa y como podemos instalarlo en nuestro equipo.","headline":"20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch Linux 2018.08.01","image":{"alt":"Arch Linux","url":"https://aduartem.github.io/assets/images/posts/2018/arch-linux.png","@type":"imageObject"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://aduartem.github.io/linux/archlinux/2018/11/20/Programas-que-no-pueden-faltar-en-Arch-Linux.html"},"url":"https://aduartem.github.io/linux/archlinux/2018/11/20/Programas-que-no-pueden-faltar-en-Arch-Linux.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://aduartem.github.io/feed.xml" title="aduartem" /><script src="/assets/js/smooth-scroll.js"></script>
-  <script src="/assets/js/category-nav.js"></script>
-  <script src="/assets/js/copy-code.js"></script>
-</head><body>
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://aduartem.github.io/feed.xml" title="aduartem" /><!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EWKVTR3NVS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EWKVTR3NVS');
+</script></head><body>
 
   <!-- Barra de progreso de lectura -->
   <div class="progress-container">
@@ -207,7 +219,7 @@
         // Usar sessionStorage en lugar de localStorage para que persista solo en la sesión actual
         sessionStorage.setItem('tocState-' + window.location.pathname, 'collapsed');
       } else {
-        tocToggle.textContent = '▲';
+        tocToggle.textContent = '▼';
         tocToggle.setAttribute('aria-label', 'Plegar contenido');
         // Usar sessionStorage y guardar el estado para esta URL específica
         sessionStorage.setItem('tocState-' + window.location.pathname, 'expanded');
@@ -224,7 +236,7 @@
     // Solo expandir si hay un estado específico guardado para esta página
     if (pageSpecificState === 'expanded') {
       tocContainer.classList.remove('toc-collapsed');
-      tocToggle.textContent = '▲';
+      tocToggle.textContent = '▼';
     }
   });
 </script>
@@ -653,28 +665,10 @@ página web: http://archlinux.fr/yaourt-en
 <!-- Botón Volver Arriba -->
   <button onclick="topFunction()" id="back-to-top" title="Volver arriba">▲</button>
 
-  <script>
-    // Botón de volver arriba
-    var backToTopButton = document.getElementById("back-to-top");
-
-    // Mostrar botón cuando usuario baja 300px
-    window.onscroll = function () {
-      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-        backToTopButton.style.display = "block";
-      } else {
-        backToTopButton.style.display = "none";
-      }
-    };
-
-    // Cuando el usuario hace clic, scroll hasta arriba
-    function topFunction() {
-      document.body.scrollTop = 0; // Para Safari
-      document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE y Opera
-    }
-  </script>
-
-  <script src="/assets/js/theme-switcher.js"></script>
-
-</body>
+  <script src="/assets/js/theme-switcher.js"></script><script>
+  var env = "production";
+  console.log('environment: [' + env + ']');
+  console.log('length: ' + env.length);
+</script><script src="/assets/js/min/all.min.js"></script></body>
 
 </html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://aduartem.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://aduartem.github.io/" rel="alternate" type="text/html" /><updated>2025-06-10T06:23:06+00:00</updated><id>https://aduartem.github.io/feed.xml</id><title type="html">aduartem</title><subtitle>Tutoriales, artículos, vídeos y recursos sobre JavaScript, Angular, React, Node.JS, Python, MySQL, Linux y más. Desarrollo Web, Backend, Bases de Datos y Patrones de Diseño.</subtitle><entry><title type="html">🚀 Guía práctica para construir APIs RESTful con Spring Boot</title><link href="https://aduartem.github.io/java/springboot/2025/06/10/guia-practica-para-construir-apis-restful-con-spring-boot.html" rel="alternate" type="text/html" title="🚀 Guía práctica para construir APIs RESTful con Spring Boot" /><published>2025-06-10T00:00:00+00:00</published><updated>2025-06-10T00:00:00+00:00</updated><id>https://aduartem.github.io/java/springboot/2025/06/10/guia-practica-para-construir-apis-restful-con-spring-boot</id><content type="html" xml:base="https://aduartem.github.io/java/springboot/2025/06/10/guia-practica-para-construir-apis-restful-con-spring-boot.html"><![CDATA[<h2 id="introducción-">Introducción 🌱</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://aduartem.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://aduartem.github.io/" rel="alternate" type="text/html" /><updated>2025-06-11T00:44:38+00:00</updated><id>https://aduartem.github.io/feed.xml</id><title type="html">aduartem</title><subtitle>Tutoriales, artículos, vídeos y recursos sobre JavaScript, Angular, React, Node.JS, Python, MySQL, Linux y más. Desarrollo Web, Backend, Bases de Datos y Patrones de Diseño.</subtitle><entry><title type="html">🚀 Guía práctica para construir APIs RESTful con Spring Boot</title><link href="https://aduartem.github.io/java/springboot/2025/06/10/guia-practica-para-construir-apis-restful-con-spring-boot.html" rel="alternate" type="text/html" title="🚀 Guía práctica para construir APIs RESTful con Spring Boot" /><published>2025-06-10T00:00:00+00:00</published><updated>2025-06-10T00:00:00+00:00</updated><id>https://aduartem.github.io/java/springboot/2025/06/10/guia-practica-para-construir-apis-restful-con-spring-boot</id><content type="html" xml:base="https://aduartem.github.io/java/springboot/2025/06/10/guia-practica-para-construir-apis-restful-con-spring-boot.html"><![CDATA[<h2 id="introducción-">Introducción 🌱</h2>
 
 <p>Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para construir APIs REST de forma rápida y robusta. En esta guía te mostraré cómo manejar rutas, controlar peticiones y respuestas, y estructurar tu aplicación siguiendo buenas prácticas. ¡Comencemos! 💪</p>
 
@@ -147,28 +147,7 @@ Estas herramientas facilitan la construcción de endpoints flexibles y adaptados
 
 <p>💡 Todas estas anotaciones pertenecen al <strong>paquete <code class="language-plaintext highlighter-rouge">org.springframework.web.bind.annotation</code></strong>, el cual es esencial para construir controladores REST con Spring MVC o Spring Boot.</p>
 
-<h4 id="ejemplo-de-importación">Ejemplo de importación</h4>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.*</span><span class="o">;</span>
-</code></pre></div></div>
-
-<hr />
-
-<h3 id="buenas-prácticas">Buenas prácticas</h3>
-
-<ul>
-  <li>Utiliza DTOs para separar la lógica de tu dominio del formato de entrada/salida.</li>
-  <li>Valida los datos recibidos en el cuerpo de la petición usando anotaciones como <code class="language-plaintext highlighter-rouge">@Valid</code>.</li>
-  <li>Mantén tus controladores enfocados solo en la lógica de manejo de peticiones.</li>
-</ul>
-
-<h3 id="errores-comunes">Errores comunes</h3>
-
-<ul>
-  <li>Olvidar el <code class="language-plaintext highlighter-rouge">@RequestBody</code> en métodos POST/PUT, lo que puede resultar en parámetros nulos.</li>
-  <li>No mapear correctamente los nombres de las variables en la URL con <code class="language-plaintext highlighter-rouge">@PathVariable</code>.</li>
-  <li>No validar los datos recibidos, lo que puede provocar errores en tiempo de ejecución.</li>
-</ul>
+<h4 id="importación">Importación</h4>
 
 <p>Podemos importar cada anotación de forma individual o usar el comodín para importar todas:</p>
 
@@ -182,6 +161,20 @@ Estas herramientas facilitan la construcción de endpoints flexibles y adaptados
 <span class="c1">// o simplemente</span>
 <span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.*</span><span class="o">;</span>
 </code></pre></div></div>
+
+<h3 id="buenas-prácticas">Buenas prácticas</h3>
+
+<ul>
+  <li>Utiliza DTOs para separar la lógica de tu dominio del formato de entrada/salida.</li>
+  <li>Valida los datos recibidos en el cuerpo de la petición usando anotaciones como <code class="language-plaintext highlighter-rouge">@Valid</code>.</li>
+  <li>Mantén tus controladores enfocados solo en la lógica de manejo de peticiones.</li>
+</ul>
+
+<h3 id="error-común">Error común</h3>
+
+<ul>
+  <li>No validar los datos recibidos, lo que puede provocar errores en tiempo de ejecución.</li>
+</ul>
 
 <h2 id="ejemplo-completo-crud-de-tareas-️">Ejemplo completo: CRUD de tareas 🗂️</h2>
 
