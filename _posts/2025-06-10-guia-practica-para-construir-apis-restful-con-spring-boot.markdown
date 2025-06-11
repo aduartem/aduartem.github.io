@@ -370,33 +370,6 @@ services:
       - MYSQL_DATABASE=taskdb
 ```
 
-## ❓ Preguntas frecuentes (FAQ)
-
-### 1. ¿Necesito instalar Spring por separado antes de usar Spring Boot?
-No, Spring Boot incluye todo lo necesario. Solo necesitas agregar las dependencias en tu archivo `pom.xml` o `build.gradle` y el framework se encargará del resto.
-
-### 2. ¿Puedo usar bases de datos distintas a MySQL?
-Sí, Spring Boot es compatible con múltiples bases de datos (PostgreSQL, H2, Oracle, SQL Server, etc.). Solo debes cambiar la dependencia y la configuración en `application.properties`.
-
-### 3. ¿Cómo valido los datos que recibe mi API?
-Puedes usar anotaciones como `@Valid` junto con clases DTO y anotaciones de validación (`@NotNull`, `@Size`, etc.). Spring Boot integrará automáticamente la validación y devolverá errores claros al cliente.
-
-### 4. ¿Qué hago si recibo un error 404 o 405 en mis endpoints?
-Verifica que la ruta y el verbo HTTP coincidan con los definidos en tu controlador. También asegúrate de que las anotaciones (`@GetMapping`, `@PostMapping`, etc.) estén correctamente aplicadas.
-
-### 5. ¿Cómo puedo probar mi API localmente?
-Puedes usar herramientas como [Postman](https://www.postman.com/) o [curl](https://curl.se/) para enviar peticiones HTTP a tus endpoints y verificar las respuestas.
-
-### 6. ¿Es obligatorio usar Docker para desplegar mi API?
-No es obligatorio, pero Docker facilita el despliegue y la portabilidad de tu aplicación. Puedes ejecutar tu API directamente con `java -jar` o desplegarla en servicios en la nube.
-
-### 7. ¿Cómo manejo los errores de forma global en mi API?
-Puedes crear una clase anotada con `@ControllerAdvice` y métodos con `@ExceptionHandler` para capturar y personalizar las respuestas de error de toda tu API.
-
-### 8. ¿Puedo documentar mi API automáticamente?
-Sí, puedes usar herramientas como [Springdoc OpenAPI](https://springdoc.org/) o [Swagger](https://swagger.io/) para generar documentación interactiva de tus endpoints.
-
-
 ## 🧠 Conclusión
 
 Spring Boot es una herramienta poderosa para desarrollar APIs REST modernas y bien estructuradas. Gracias a su conjunto de anotaciones como `@GetMapping`, `@PostMapping`, `@PutMapping`, `@DeleteMapping` y `@PatchMapping`, puedes construir endpoints eficientes de manera declarativa y clara 🧩. Al combinarlo con una arquitectura por capas, patrones como DTO y prácticas como el despliegue con Docker, obtienes una solución completa y lista para producción 🚀.
