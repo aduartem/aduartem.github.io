@@ -10,7 +10,7 @@ tags:
 - Spring Boot
 - REST API
 image:
-  path: /assets/images/posts/2025/spring-boot.jpeg
+  path: /assets/images/posts/2025/07f58bb1-cb8e-4869-b0b9-10bca603ebc9.jpg
   alt: "Spring Boot"
 ---
 

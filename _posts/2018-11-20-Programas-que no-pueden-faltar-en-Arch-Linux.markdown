@@ -1,6 +1,6 @@
 ---
 title:
-  20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch
+  💻 20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch
   Linux 2018.08.01
 layout: post
 date: '2018-11-20 00:00:00'
@@ -11,7 +11,7 @@ tags:
   - Linux
   - ArchLinux
 image:
-  path: /assets/images/posts/2018/arch-linux.png
+  path: /assets/images/posts/2018/52feee0c-1970-4cf3-ba95-27bf92f89b57.png
   alt: "Arch Linux"
 ---
 

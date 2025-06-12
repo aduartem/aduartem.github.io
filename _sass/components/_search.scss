@@ -32,12 +32,12 @@
     a {
       font-size: 1.2rem;
       font-weight: 600;
-      color: #0366d6;
+      color: #1a1a1a;
       text-decoration: none;
       transition: color 0.2s ease;
 
       &:hover {
-        color: #004ba0;
+        color: $text-link-hover-color;
         text-decoration: underline;
       }
     }

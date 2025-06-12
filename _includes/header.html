@@ -37,7 +37,7 @@
 {% unless page.layout == 'post' %}
 <div class="featured-categories">
   <div class="wrapper">
-    {% assign categories_list = "springboot,java,linux,archlinux" | split: "," %}
+    {% assign categories_list = "🌱springboot,☕java,🐧linux,💻archlinux" | split: "," %}
     {% for category in categories_list %}
     <a href="{{ site.baseurl }}/category/{{ category | slugify }}/" class="featured-category">{{ category }}</a>
     {% endfor %}

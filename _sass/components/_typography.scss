@@ -6,7 +6,6 @@ $medium-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue',
 $medium-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier,
   monospace;
 
-// Aplicar fuentes de Medium al sitio
 body {
   font-family: $medium-serif;
   font-size: 18px;
@@ -16,12 +15,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-// Eliminar la segunda declaración de body que sobrescribe la anterior
-// body {
-//   font-family: 'Playfair Display', $medium-serif;
-// }
-
-// Títulos y elementos UI con la fuente sans-serif de Medium
 h1,
 h2,
 h3,

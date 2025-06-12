@@ -1,5 +1,5 @@
 ---
-title: Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)
+title: 🐧 Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)
 layout: post
 date: '2022-06-26 02:00:00 -0400'
 categories:
@@ -9,7 +9,7 @@ tags:
 - Linux
 - ArchLinux
 image:
-  path: /assets/images/posts/2018/arch-linux.png
+  path: /assets/images/posts/2018/f34a2f25-c4f4-4dae-927f-d08ecf25e07b.png
   alt: "Arch Linux"
 ---
 

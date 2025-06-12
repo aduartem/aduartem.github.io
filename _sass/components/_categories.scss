@@ -24,7 +24,7 @@ $dark-category-bg-hover: #2d333b;
 .post-category {
   display: inline-block;
   background-color: $category-light-bg;
-  color: $category-primary-color;
+  color: $text-color;
   padding: 2px 5px;
   border-radius: 3px;
   font-size: 12px;
@@ -99,12 +99,12 @@ $dark-category-bg-hover: #2d333b;
     }
 
     .post-link {
-      color: $category-text-color;
+      color: $text-color;
       text-decoration: none;
       transition: color 0.2s ease;
 
       &:hover {
-        color: $category-primary-color;
+        color: $text-link-hover-color;
       }
     }
 
@@ -121,14 +121,14 @@ $dark-category-bg-hover: #2d333b;
     }
 
     .read-more {
-      color: $category-primary-color;
+      color: $text-color;
       text-decoration: none;
       margin-left: 5px;
       font-weight: 500;
       transition: color 0.2s;
 
       &:hover {
-        color: $category-hover-color;
+        color: $text-link-hover-color;
         text-decoration: underline;
       }
     }
@@ -161,7 +161,7 @@ $dark-category-bg-hover: #2d333b;
   }
 
   a {
-    color: $category-primary-color;
+    color: $text-color;
     text-decoration: none;
     font-weight: 500;
 
@@ -182,11 +182,11 @@ $dark-category-bg-hover: #2d333b;
       transition: all 0.2s ease;
 
       &:hover {
-        background-color: $category-bg-hover;
+        background-color: $text-link-hover-color;
       }
 
       a {
-        color: $category-text-color;
+        color: $text-color;
       }
     }
   }
@@ -260,7 +260,7 @@ $dark-category-bg-hover: #2d333b;
   }
 
   a {
-    color: $category-primary-color;
+    color: $text-color;
     text-decoration: none;
     display: block;
     padding: 5px 10px;
@@ -324,11 +324,12 @@ $dark-category-bg-hover: #2d333b;
 
   .post-link {
     font-size: 1.1rem;
-    color: $category-primary-color;
+    color: $text-color;
     text-decoration: none;
     display: inline-block;
 
     &:hover {
+      color: $text-link-hover-color;
       text-decoration: underline;
     }
   }
