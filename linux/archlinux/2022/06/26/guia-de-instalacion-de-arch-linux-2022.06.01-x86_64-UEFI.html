@@ -79,16 +79,12 @@
   </div>
 
   <script>
-    // Solo activar en páginas de artículos
     if (document.querySelector('.post')) {
-      // Cuando el usuario hace scroll, actualiza la barra de progreso
       window.onscroll = function () {
         var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
         var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         var scrolled = (winScroll / height) * 100;
         document.getElementById("readingProgress").style.width = scrolled + "%";
-
-        // Mostrar botón cuando usuario baja 300px (mantener código del botón arriba)
         if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
           document.getElementById("back-to-top").style.display = "block";
         } else {
@@ -175,27 +171,22 @@
     const tocContainer = document.querySelector('.toc');
     const tocToggle = document.getElementById('toc-toggle');
 
-    // Si no hay encabezados, ocultar el TOC completamente
     if (headings.length === 0) {
       tocContainer.style.display = 'none';
       return;
     }
 
-    // Crear una variable para contar los ítems agregados
     let addedItems = 0;
 
-    // Generar la tabla de contenidos
     headings.forEach(function (heading, index) {
-      // Usar el ID existente del encabezado si está presente, o crear uno nuevo
       const id = heading.id || 'heading-' + index;
-      heading.id = id; // Asignar ID si no tiene uno
+      heading.id = id;
 
       const li = document.createElement('li');
       const a = document.createElement('a');
       a.textContent = heading.textContent;
       a.href = '#' + id;
 
-      // Añadir clases según el nivel del encabezado
       switch (heading.tagName) {
         case 'H1': li.classList.add('toc-h1'); break;
         case 'H2': li.classList.add('toc-h2'); break;
@@ -210,32 +201,25 @@
       addedItems++;
     });
 
-    // Implementar la funcionalidad de toggle
     tocToggle.addEventListener('click', function () {
       tocContainer.classList.toggle('toc-collapsed');
 
-      // Cambiar el símbolo según el estado
       if (tocContainer.classList.contains('toc-collapsed')) {
         tocToggle.textContent = '▼';
         tocToggle.setAttribute('aria-label', 'Desplegar contenido');
-        // Usar sessionStorage en lugar de localStorage para que persista solo en la sesión actual
+
         sessionStorage.setItem('tocState-' + window.location.pathname, 'collapsed');
       } else {
         tocToggle.textContent = '▼';
         tocToggle.setAttribute('aria-label', 'Plegar contenido');
-        // Usar sessionStorage y guardar el estado para esta URL específica
         sessionStorage.setItem('tocState-' + window.location.pathname, 'expanded');
       }
     });
 
-    // Verificar estado para esta URL específica
     const pageSpecificState = sessionStorage.getItem('tocState-' + window.location.pathname);
-
-    // Siempre comienza colapsado por defecto, ignoramos localStorage
     tocContainer.classList.add('toc-collapsed');
     tocToggle.textContent = '▼';
 
-    // Solo expandir si hay un estado específico guardado para esta página
     if (pageSpecificState === 'expanded') {
       tocContainer.classList.remove('toc-collapsed');
       tocToggle.textContent = '▼';
