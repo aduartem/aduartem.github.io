@@ -6,6 +6,7 @@
     "minify-js": "gulp minify-js",
     "build": "gulp build",
     "start:dev": "set \"JEKYLL_ENV=development\" && bundle exec jekyll serve",
+    "start:dev:drafts": "set \"JEKYLL_ENV=development\" && bundle exec jekyll serve --drafts",
     "start:prod": "npm run minify-js && set \"JEKYLL_ENV=production\" && bundle exec jekyll serve",
     "build:prod": "npm run minify-js && set \"JEKYLL_ENV=production\" && bundle exec jekyll build --trace",
     "build:prod:linux": "npm run minify-js && JEKYLL_ENV=production bundle exec jekyll build --trace"

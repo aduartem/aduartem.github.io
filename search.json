@@ -2,36 +2,36 @@
   
     {
       "title"    : "🚀 Guía práctica para construir APIs RESTful con Spring Boot",
-      "category" : "java, springboot",
+      "category" : "java, spring-boot",
       "tags"     : "Java, Spring Boot, REST API",
-      "url"      : "/java/springboot/2025/06/10/guia-practica-para-construir-apis-restful-con-spring-boot.html",
+      "url"      : "/java/spring-boot/2025/06/10/guia-practica-para-construir-apis-restful-con-spring-boot.html",
       "date"     : "Jun 10, 2025",
-      "content"  : "Introducción 🌱Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hac..."
+      "content"  : "Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para c..."
     } ,
   
     {
-      "title"    : "🐧 Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)",
-      "category" : "linux, archlinux",
-      "tags"     : "Linux, ArchLinux",
-      "url"      : "/linux/archlinux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI.html",
+      "title"    : "Guía de instalación de Arch Linux 2022.06.01 x86_64 (UEFI)",
+      "category" : "linux, arch-linux",
+      "tags"     : "Linux, Arch Linux",
+      "url"      : "/linux/arch-linux/2022/06/26/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-UEFI.html",
       "date"     : "Jun 26, 2022",
       "content"  : "Esta es una guía paso a paso de como instalar Arch Linux 2022.06.01 x86_64. Con esta guía el usuario será capaz de cambiar el idioma del teclado, particionar el disco, realizar la instalación de un..."
     } ,
   
     {
-      "title"    : "🐧 Guía de instalación de Arch Linux 2022.06.01 x86_64 (Boot)",
-      "category" : "linux, archlinux",
-      "tags"     : "Linux, ArchLinux",
-      "url"      : "/linux/archlinux/2022/06/24/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-BIOS.html",
+      "title"    : "Guía de instalación de Arch Linux 2022.06.01 x86_64 (Boot)",
+      "category" : "linux, arch-linux",
+      "tags"     : "Linux, Arch Linux",
+      "url"      : "/linux/arch-linux/2022/06/24/guia-de-instalacion-de-arch-linux-2022.06.01-x86_64-BIOS.html",
       "date"     : "Jun 24, 2022",
       "content"  : "Esta es una guía paso a paso de como instalar Arch Linux 2022.06.01 x86_64. Con esta guía el usuario será capaz de cambiar el idioma del teclado, particionar el disco, realizar la instalación de un..."
     } ,
   
     {
       "title"    : "💻 20 Programas que no pueden faltar en Arch Linux - Post instalación de Arch Linux 2018.08.01",
-      "category" : "linux, archlinux",
-      "tags"     : "Linux, ArchLinux",
-      "url"      : "/linux/archlinux/2018/11/20/Programas-que-no-pueden-faltar-en-Arch-Linux.html",
+      "category" : "linux, arch-linux",
+      "tags"     : "Linux, Arch Linux",
+      "url"      : "/linux/arch-linux/2018/11/20/Programas-que-no-pueden-faltar-en-Arch-Linux.html",
       "date"     : "Nov 20, 2018",
       "content"  : "En este artículo haré mención de 20 programas que no pueden faltar en tú sistema Arch Linux. Haré una breve descripción de cada programa y como podemos instalarlo en nuestro equipo.Pero primero que..."
     } 

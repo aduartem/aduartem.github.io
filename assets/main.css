@@ -854,7 +854,7 @@ body.dark-theme .share-buttons .share-btn.email { background-color: #666 !import
 
 .theme-switch .theme-switch__checkbox:checked + .theme-switch__label:before { transform: translateX(24px); }
 
-body { font-family: "Playfair Display", "Charter", "Georgia", Cambria, "Times New Roman", Times, serif; font-size: 18px; line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+body { font-family: Open Sans, sans-serif; font-size: 18px; line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
 
 h1, h2, h3, h4, h5, h6, .site-title, .site-nav, .post-title, .category-title, .featured-category, .category-button, .site-header, .site-footer, .theme-switch__label, .sidebar, .sidebar-module-title, .post-meta, .read-more, button, .button, input[type='submit'], .pagination, .site-description, .search-input, .all-categories-title, .category-count, #results-container { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
 
@@ -908,11 +908,26 @@ body.dark-theme .post-meta { color: #b0b0b0; }
 
 .e-content { overflow-wrap: break-word; /* Rompe palabras largas si no caben en la línea */ word-wrap: break-word; /* Similar a overflow-wrap, para compatibilidad */ overflow: hidden; /* Oculta el texto que se desborda */ display: inline-block; /* Asegura que el ancho se ajuste al contenido */ max-width: 100%; }
 
+/* Ocultar featured-categories en dispositivos móviles y tablets */
+@media screen and (max-width: 768px) { .featured-categories { display: none; } }
+
+/* Estilos para el botón volver - tema claro */
+.back-button { display: inline-block; padding: 6px 12px; background-color: #f0f0f0; color: #333; text-decoration: none; border-radius: 4px; font-size: 0.9rem; transition: background-color 0.3s ease, color 0.3s ease; /* Solo transición para color y fondo */ border: 1px solid transparent; /* Borde transparente con mismo grosor */ box-sizing: border-box; /* Asegura que padding y bordes no afecten las dimensiones */ position: relative; /* Para mantener la posición estable */ margin-bottom: 20px; }
+
+.back-button:hover { background-color: #e0e0e0; color: #000; /* Negro para el modo claro en hover */ text-decoration: none; /* Sin cambios en bordes o padding */ }
+
+/* Soporte para tema oscuro */
+@media (prefers-color-scheme: dark) { .back-button { background-color: #333; color: #f0f0f0; } .back-button:hover { background-color: #444; } }
+
 body.dark-theme #back-to-top { background-color: #4cacfc; }
 
 body.dark-theme #back-to-top:hover { background-color: #3b8fd0; }
 
 body.dark-theme .progress-bar { background: #4cacfc; }
+
+body.dark-theme .back-button { background-color: #51EBA0; color: #333; font-weight: 700; }
+
+body.dark-theme .back-button:hover { background-color: #5ca12d; color: white; font-weight: 700; text-decoration: none; }
 
 /* @import "variables"; */
 body.dark-theme { color: #e6e6e6; background-color: #1a1a1a; /* Estilos para la página de categorías en modo oscuro */ /* Estilos para posts en categorías */ }
@@ -1294,5 +1309,13 @@ body.dark-theme .all-categories .categories-list li:hover { background-color: #3
 body.dark-theme .all-categories .categories-list li a { color: #e6e6e6 !important; }
 
 body.dark-theme a.breadcrumb-home { color: #cecac3 !important; }
+
+body.dark-theme .social-media-list a { color: #51EBA0 !important; }
+
+body.dark-theme .social-media-list a:hover { color: #51EBA0 !important; text-decoration: underline; }
+
+body.dark-theme .social-media-list a .username { color: #51EBA0 !important; }
+
+body.dark-theme .social-media-list a svg { fill: #51EBA0 !important; }
 
 /*# sourceMappingURL=main.css.map */
