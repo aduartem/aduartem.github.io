@@ -72,9 +72,9 @@
 /* Estilos para el botón volver - tema claro */
 .back-button {
   display: inline-block;
-  padding: 6px 12px;
-  background-color: #f0f0f0;
-  color: #333;
+  padding: 4px 10px;
+  background-color: #f0f0f0 !important;
+  color: #333 !important;
   text-decoration: none;
   border-radius: 4px;
   font-size: 0.9rem;
@@ -86,8 +86,8 @@
 }
 
 .back-button:hover {
-  background-color: #e0e0e0;
-  color: #000; /* Negro para el modo claro en hover */
+  background-color: #333 !important;
+  color: #e0e0e0 !important; /* Negro para el modo claro en hover */
   text-decoration: none;
   /* Sin cambios en bordes o padding */
 }
@@ -101,6 +101,7 @@
 
   .back-button:hover {
     background-color: #444;
+    color: #f0f0f0;
   }
 }
 
@@ -119,15 +120,15 @@ body.dark-theme {
   }
 
   .back-button {
-    background-color: $green-button;
-    color: #333;
-    font-weight: 700;
+    background-color: #333 !important;
+    color: $green-text !important;
+    font-weight: 500;
   }
 
   .back-button:hover {
-    background-color: #5ca12d;
-    color: white;
-    font-weight: 700;
+    background-color: $green-button-hover !important;
+    color: #333 !important;
+    font-weight: 500;
     text-decoration: none;
   }
 }
