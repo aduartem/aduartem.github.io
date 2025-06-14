@@ -4,7 +4,7 @@ title: "🚀 Guía práctica para construir APIs RESTful con Spring Boot"
 date: 2025-06-10
 categories:
 - java
-- springboot
+- spring-boot
 tags:
 - Java
 - Spring Boot
@@ -14,11 +14,10 @@ image:
   alt: "Spring Boot"
 ---
 
-## Introducción 🌱
 
 Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para construir APIs REST de forma rápida y robusta. En esta guía te mostraré cómo manejar rutas, controlar peticiones y respuestas, y estructurar tu aplicación siguiendo buenas prácticas. ¡Comencemos! 💪
 
-## ¿Qué es **Spring Boot**?
+## 🌱 ¿Qué es **Spring Boot**?
 
 Es una extensión **opinada** de Spring que:
 

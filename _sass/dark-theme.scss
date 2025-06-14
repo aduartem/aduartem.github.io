@@ -1111,4 +1111,23 @@ body.dark-theme {
   a.breadcrumb-home {
     color: $dark-link !important;
   }
+
+  .social-media-list {
+    a {
+      color: $green-text !important;
+
+      &:hover {
+        color: $green-text !important; // Una versión ligeramente más oscura para el hover
+        text-decoration: underline;
+      }
+
+      .username {
+        color: $green-text !important;
+      }
+
+      svg {
+        fill: $green-text !important;
+      }
+    }
+  }
 }

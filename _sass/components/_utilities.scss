@@ -62,6 +62,48 @@
   max-width: 100%;
 }
 
+/* Ocultar featured-categories en dispositivos móviles y tablets */
+@media screen and (max-width: 768px) {
+  .featured-categories {
+    display: none;
+  }
+}
+
+/* Estilos para el botón volver - tema claro */
+.back-button {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #f0f0f0;
+  color: #333;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Solo transición para color y fondo */
+  border: 1px solid transparent; /* Borde transparente con mismo grosor */
+  box-sizing: border-box; /* Asegura que padding y bordes no afecten las dimensiones */
+  position: relative; /* Para mantener la posición estable */
+  margin-bottom: 20px;
+}
+
+.back-button:hover {
+  background-color: #e0e0e0;
+  color: #000; /* Negro para el modo claro en hover */
+  text-decoration: none;
+  /* Sin cambios en bordes o padding */
+}
+
+/* Soporte para tema oscuro */
+@media (prefers-color-scheme: dark) {
+  .back-button {
+    background-color: #333;
+    color: #f0f0f0;
+  }
+
+  .back-button:hover {
+    background-color: #444;
+  }
+}
+
 // Tema oscuro
 body.dark-theme {
   #back-to-top {
@@ -74,5 +116,18 @@ body.dark-theme {
 
   .progress-bar {
     background: #4cacfc;
+  }
+
+  .back-button {
+    background-color: $green-button;
+    color: #333;
+    font-weight: 700;
+  }
+
+  .back-button:hover {
+    background-color: #5ca12d;
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
   }
 }

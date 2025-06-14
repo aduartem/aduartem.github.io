@@ -8,8 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const targetId = this.getAttribute('href');
       if (targetId === '#') return;
 
-      const targetElement = document.querySelector(targetId);
-      if (!targetElement) return;
+      const escapedId = CSS.escape(targetId.substring(1));
+      const targetElement = document.querySelector(`#${escapedId}`);
+
+      if (!targetElement) {
+        console.warn(`Elemento con ID "${targetId}" no encontrado`);
+        return;
+      }
 
       targetElement.classList.add('highlight-target');
 
