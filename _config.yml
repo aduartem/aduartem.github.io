@@ -69,6 +69,6 @@ plugins:
 
 category_dictionary:
   "java": "Java"
-  "spring-boot": "Spring Boot"
+  "springboot": "Spring Boot"
   "linux": "Linux"
   "arch-linux": "Arch Linux"
