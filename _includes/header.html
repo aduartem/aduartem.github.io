@@ -33,8 +33,6 @@
   </div>
 </header>
 
-<!-- Barra de categorías destacadas - solo se muestra en ciertas páginas -->
-{% unless page.layout == 'post' %}
 <div class="featured-categories">
   <div class="wrapper">
     {% for category_item in site.category_dictionary %}
@@ -44,4 +42,3 @@
     {% endfor %}
   </div>
 </div>
-{% endunless %}
