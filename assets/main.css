@@ -912,12 +912,12 @@ body.dark-theme .post-meta { color: #b0b0b0; }
 @media screen and (max-width: 768px) { .featured-categories { display: none; } }
 
 /* Estilos para el botón volver - tema claro */
-.back-button { display: inline-block; padding: 6px 12px; background-color: #f0f0f0; color: #333; text-decoration: none; border-radius: 4px; font-size: 0.9rem; transition: background-color 0.3s ease, color 0.3s ease; /* Solo transición para color y fondo */ border: 1px solid transparent; /* Borde transparente con mismo grosor */ box-sizing: border-box; /* Asegura que padding y bordes no afecten las dimensiones */ position: relative; /* Para mantener la posición estable */ margin-bottom: 20px; }
+.back-button { display: inline-block; padding: 4px 10px; background-color: #f0f0f0 !important; color: #333 !important; text-decoration: none; border-radius: 4px; font-size: 0.9rem; transition: background-color 0.3s ease, color 0.3s ease; /* Solo transición para color y fondo */ border: 1px solid transparent; /* Borde transparente con mismo grosor */ box-sizing: border-box; /* Asegura que padding y bordes no afecten las dimensiones */ position: relative; /* Para mantener la posición estable */ margin-bottom: 20px; }
 
-.back-button:hover { background-color: #e0e0e0; color: #000; /* Negro para el modo claro en hover */ text-decoration: none; /* Sin cambios en bordes o padding */ }
+.back-button:hover { background-color: #333 !important; color: #e0e0e0 !important; /* Negro para el modo claro en hover */ text-decoration: none; /* Sin cambios en bordes o padding */ }
 
 /* Soporte para tema oscuro */
-@media (prefers-color-scheme: dark) { .back-button { background-color: #333; color: #f0f0f0; } .back-button:hover { background-color: #444; } }
+@media (prefers-color-scheme: dark) { .back-button { background-color: #333; color: #f0f0f0; } .back-button:hover { background-color: #444; color: #f0f0f0; } }
 
 body.dark-theme #back-to-top { background-color: #4cacfc; }
 
@@ -925,9 +925,9 @@ body.dark-theme #back-to-top:hover { background-color: #3b8fd0; }
 
 body.dark-theme .progress-bar { background: #4cacfc; }
 
-body.dark-theme .back-button { background-color: #51EBA0; color: #333; font-weight: 700; }
+body.dark-theme .back-button { background-color: #333 !important; color: #51EBA0 !important; font-weight: 500; }
 
-body.dark-theme .back-button:hover { background-color: #5ca12d; color: white; font-weight: 700; text-decoration: none; }
+body.dark-theme .back-button:hover { background-color: #49d18f !important; color: #333 !important; font-weight: 500; text-decoration: none; }
 
 /* @import "variables"; */
 body.dark-theme { color: #e6e6e6; background-color: #1a1a1a; /* Estilos para la página de categorías en modo oscuro */ /* Estilos para posts en categorías */ }
