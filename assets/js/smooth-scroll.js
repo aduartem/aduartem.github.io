@@ -8,8 +8,18 @@ document.addEventListener('DOMContentLoaded', function () {
       const targetId = this.getAttribute('href');
       if (targetId === '#') return;
 
-      const escapedId = CSS.escape(targetId.substring(1));
-      const targetElement = document.querySelector(`#${escapedId}`);
+      const elementId = targetId.substring(1);
+      let targetElement = document.getElementById(elementId);
+
+      if (!targetElement) {
+        try {
+          const escapedId = CSS.escape(elementId);
+          targetElement = document.querySelector(`#${escapedId}`);
+        } catch (err) {
+          console.warn(`No se pudo encontrar el elemento con ID: ${elementId}`);
+          return;
+        }
+      }
 
       if (!targetElement) {
         console.warn(`Elemento con ID "${targetId}" no encontrado`);
