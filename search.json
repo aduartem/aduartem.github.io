@@ -2,9 +2,9 @@
   
     {
       "title"    : "🚀 Guía práctica para construir APIs RESTful con Spring Boot",
-      "category" : "java, spring-boot",
+      "category" : "java, springboot",
       "tags"     : "Java, Spring Boot, REST API",
-      "url"      : "/java/spring-boot/2025/06/10/guia-practica-para-construir-apis-restful-con-spring-boot.html",
+      "url"      : "/java/springboot/2025/06/10/guia-practica-para-construir-apis-restful-con-spring-boot.html",
       "date"     : "Jun 10, 2025",
       "content"  : "Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para c..."
     } ,
