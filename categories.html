@@ -13,7 +13,7 @@ permalink: /categories/
       <ul class="category-nav">
         {% assign categories_sorted = site.categories | sort %}
         {% for category in categories_sorted %}
-        <li><a href="#{{ category[0] | slugify }}">{{ category[0] | replace: "-", " " | capitalize }}</a></li>
+        <li><a href="#{{ category[0] | slugify }}">{{ category[0] | replace: "-", " " }}</a></li>
         {% endfor %}
       </ul>
     </div>
@@ -24,7 +24,7 @@ permalink: /categories/
     {% assign categories_sorted = site.categories | sort %}
     {% for category in categories_sorted %}
     <div class="category-section" id="{{ category[0] | slugify }}">
-      <h2 class="category-name">{{ category[0] | replace: "-", " " | capitalize }}</h2>
+      <h2 class="category-name">{{ category[0] | replace: "-", " " }}</h2>
       <ul class="post-list-by-category">
         {% for post in category[1] %}
         <li>

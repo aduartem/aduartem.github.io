@@ -37,7 +37,7 @@ layout: default
             &nbsp;•&nbsp;
             <span class="post-categories">
               {%- for category in post.categories -%}
-              <a class="post-category" href="{{ site.baseurl }}/category/{{ category | slugify }}">{{ category }}</a>
+              <a class="post-category" href="{{ site.baseurl }}/category/{{ category | slugify }}">{{ category | replace: "-", " " }}</a>
               {%- unless forloop.last %}, {% endunless -%}
               {%- endfor -%}
             </span>

@@ -11,7 +11,7 @@ layout: default
   </div>
 
   <div class="category-description">
-    <p>Artículos en la categoría <strong>{{ page.category | replace: "-", " " | capitalize }}</strong></p>
+    <p>Artículos en la categoría <strong>{{ page.category | replace: "-", " " }}</strong></p>
     {% assign category = page.category %}
   </div>
 
@@ -52,7 +52,7 @@ layout: default
       {% assign all_categories = site.categories | sort %}
       {% for category in all_categories %}
       <li>
-        <a href="/category/{{ category[0] | slugify }}/">{{ category[0] | replace: "-", " " | capitalize }}</a>
+        <a href="/category/{{ category[0] | slugify }}/">{{ category[0] | replace: "-", " " }}</a>
         <span class="category-count">({{ category[1].size }})</span>
       </li>
       {% endfor %}
