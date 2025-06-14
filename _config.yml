@@ -33,6 +33,8 @@ github_username: aduartem
 linkedin_username: aduartem
 #youtube_username: AndrésDuarteM
 
+permalink: /:title/
+
 picture:
   source: "assets/images"
   output: "assets/images/generated"
@@ -46,6 +48,7 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 # Exclude from processing.
 # The following items will not be processed, by default.
@@ -69,6 +72,6 @@ plugins:
 
 category_dictionary:
   "java": "Java"
-  "springboot": "Spring Boot"
+  "spring-boot": "Spring Boot"
   "linux": "Linux"
   "arch-linux": "Arch Linux"

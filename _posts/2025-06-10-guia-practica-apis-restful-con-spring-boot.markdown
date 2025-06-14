@@ -4,7 +4,7 @@ title: "🚀 Guía práctica para construir APIs RESTful con Spring Boot"
 date: 2025-06-10
 categories:
 - java
-- springboot
+- spring-boot
 tags:
 - Java
 - Spring Boot
