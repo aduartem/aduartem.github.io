@@ -4,15 +4,18 @@ module Jekyll
       @site = site
       @base = base
       @dir = dir
-      @name = 'index.html'  # Esto está bien, pero necesitamos corregir otras cosas
+      @name = 'index.html'
+
+      self.process(@name)
 
       self.read_yaml(File.join(base, '_layouts'), 'category.html')
       self.data['category'] = category
-      self.data['title'] = "Categoría: #{category}"
+      self.data['title'] = "#{category}"
 
-      # Definir explícitamente la extensión del archivo y el conversor
+      normalized_category = category.to_s.downcase.gsub(' ', '-')
+      self.data['permalink'] = "/category/#{normalized_category}/"
+
       @ext = '.html'
-      @path = File.join(@base, @dir, 'index.html')
     end
   end
 
@@ -23,9 +26,9 @@ module Jekyll
       if site.layouts.key? 'category'
         dir = 'category'
         site.categories.keys.each do |category|
-          # Simplificar esta línea para evitar problemas con nil
-          category_dir = File.join(dir, category.to_s.downcase.gsub(' ', '-'))
-          site.pages << CategoryPage.new(site, site.source, category_dir, category)
+          # Normaliza la categoría para URL
+          normalized_category = category.to_s.downcase.gsub(' ', '-')
+          site.pages << CategoryPage.new(site, site.source, File.join(dir, normalized_category), category)
         end
       end
     end
