@@ -83,6 +83,7 @@
   box-sizing: border-box; /* Asegura que padding y bordes no afecten las dimensiones */
   position: relative; /* Para mantener la posición estable */
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .back-button:hover {
@@ -130,5 +131,6 @@ body.dark-theme {
     color: #333 !important;
     font-weight: 500;
     text-decoration: none;
+    cursor: pointer;
   }
 }

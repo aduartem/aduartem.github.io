@@ -21,11 +21,11 @@ Spring Boot se ha convertido en uno de los frameworks más populares para desarr
 
 Es una extensión **opinada** de Spring que:
 
-  * Simplifica la configuración eliminando el “boilerplate”.
+  * Simplifica la configuración eliminando el "boilerplate".
   * Incluye **starters**: dependencias que ya agregan todo lo necesario (ej.: *spring-boot-starter-web*, *spring-boot-starter-data-jpa*, etc.)
   * Incorpora un servidor embebido (Tomcat, Jetty...) para ejecutar aplicaciones como jar ejecutables
   * Ofrece **autoconfiguración** que detecta lo que tienes en el classpath y activa automáticamente lo pertinente
-  * Trae características “lista para producción”: Actuator (métricas, health checks), configuración externa, logging integrado
+  * Trae características "lista para producción": Actuator (métricas, health checks), configuración externa, logging integrado
 
 ## 🏷️ ¿Qué son las anotaciones en Spring?
 

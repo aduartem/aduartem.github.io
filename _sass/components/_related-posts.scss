@@ -49,13 +49,13 @@ body.dark-theme {
 
   .related-post {
     background-color: #1e2329;
-    border-left-color: #58a6ff;
+    border-left-color: $dark-brand-color !important;
 
     a {
       color: #c9d1d9;
 
       &:hover {
-        color: #58a6ff;
+        color: $dark-brand-color !important;
       }
     }
   }

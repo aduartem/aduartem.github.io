@@ -23,19 +23,17 @@ permalink: /categories/
   <div class="categories-content">
     {% assign categories_sorted = site.categories | sort %}
     {% for category in categories_sorted %}
-      {% assign category_name = category[0] %}
-      {% assign category_key = site.category_dictionary[category_name] | default: category_name | slugify %}
-      <div class="category-section" id="{{ category_key }}">
-        <h2 class="category-name">{{ category_name | replace: "-", " " | capitalize }}</h2>
-        <ul class="post-list-by-category">
-          {% for post in category[1] %}
-          <li>
-            <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
+    <div class="category-section" id="{{ category[0] | slugify }}">
+      <h2 class="category-name">{{ category[0] | replace: "-", " " | capitalize }}</h2>
+      <ul class="post-list-by-category">
+        {% for post in category[1] %}
+        <li>
+          <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
     {% endfor %}
   </div>
 </div>

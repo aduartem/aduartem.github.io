@@ -15,6 +15,14 @@ $dark-border: #333;
 $green-button: #51EBA0;
 $green-button-hover: #49d18f;
 $green-text: #51EBA0;
+$dark-brand-color: $green-text;
+$dark-link-color: #1f98ff;
+$dark-background-color: #1a1a1a;
+$dark-text-color: #e6e6e6;
+$dark-grey-color: #828282;
+$dark-grey-color-light: lighten($dark-grey-color, 40%);
+$dark-grey-color-dark: darken($dark-grey-color, 25%);
+$dark-code-background: #2d2d2d;
 
 // Colores específicos para componentes
 $toc-bg-light: #f8f9fa;
