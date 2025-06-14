@@ -3,15 +3,6 @@ const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const concat = require('gulp-concat');
 
-// Tarea para minificar JavaScript
-// gulp.task('minify-js', function () {
-//   return gulp
-//     .src('assets/js/*.js')
-//     .pipe(uglify())
-//     .pipe(rename({ suffix: '.min' }))
-//     .pipe(gulp.dest('assets/js/min'));
-// });
-
 // Tarea para minificar y combinar JavaScript
 gulp.task('minify-js', function () {
   return gulp

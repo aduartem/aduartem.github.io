@@ -4,10 +4,11 @@
   console.log('length: ' + env.length);
 </script>
 {%- if jekyll.environment == 'development' -%}
-<script src="{{'/assets/js/smooth-scroll.js' | relative_url}}"></script>
+<script src="{{'/assets/js/back-to-top.js' | relative_url}}"></script>
 <script src="{{'/assets/js/category-nav.js' | relative_url}}"></script>
 <script src="{{'/assets/js/copy-code.js' | relative_url}}"></script>
-<script src="{{'/assets/js/back-to-top.js' | relative_url}}"></script>
+<script src="{{'/assets/js/smooth-scroll.js' | relative_url}}"></script>
+<script src="{{'/assets/js/theme-switcher.js' | relative_url}}"></script>
 {%- endif -%}
 
 {%- if jekyll.environment == 'production' -%}

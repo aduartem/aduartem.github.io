@@ -5,10 +5,22 @@ layout: default
 
 
 <div class="back-button-container">
-  <a href="javascript:history.back()" class="back-button">
+  <a onclick="handleGoBack()" class="back-button">
     <span class="back-icon">&#8592;</span> Volver
   </a>
 </div>
+<script>
+  function handleGoBack() {
+    siteUrl = "{{ site.url }}";
+    const isInternalReferrer = document.referrer && document.referrer.includes(siteUrl);
+
+    if (isInternalReferrer) {
+      window.history.back();
+    } else {
+      window.location.href = siteUrl;
+    }
+  }
+</script>
 
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
