@@ -341,9 +341,10 @@ public class TaskController {
 - ✅ **Repository** centraliza el acceso a la base de datos, usando interfaces concisas.
 
 
-## 🔗 ¿Este ejemplo es posible mejorarlo aún más? Definitivamente Si! *(Nuevo: 16/06/2025)*
+## 🔁 Refactor: del ejemplo simple a una arquitectura limpia *(Nuevo: 16/06/2025)*
 
-Este ejemplo podemos mejorar de la siguiente forma:
+El ejemplo anterior funciona bien, pero aún mezcla responsabilidades dentro del controlador (como la creación manual de la entidad `Task`). A continuación, veremos cómo aplicar una arquitectura más limpia mediante separación de capas, uso de DTOs especializados, mapeadores dedicados y validación declarativa.
+
 
 1. ```TaskCreateDTO.java```
 
