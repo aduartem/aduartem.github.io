@@ -662,9 +662,9 @@ Estas herramientas facilitan la construcción de endpoints flexibles y adaptados
   <li>✅ <strong>Repository</strong> centraliza el acceso a la base de datos, usando interfaces concisas.</li>
 </ul>
 
-<h2 id="-este-ejemplo-es-posible-mejorarlo-aún-más-definitivamente-si-nuevo-16062025">🔗 ¿Este ejemplo es posible mejorarlo aún más? Definitivamente Si! <em>(Nuevo: 16/06/2025)</em></h2>
+<h2 id="-refactor-del-ejemplo-simple-a-una-arquitectura-limpia-nuevo-16062025">🔁 Refactor: del ejemplo simple a una arquitectura limpia <em>(Nuevo: 16/06/2025)</em></h2>
 
-<p>Este ejemplo podemos mejorar de la siguiente forma:</p>
+<p>El ejemplo anterior funciona bien, pero aún mezcla responsabilidades dentro del controlador (como la creación manual de la entidad <code class="language-plaintext highlighter-rouge">Task</code>). A continuación, veremos cómo aplicar una arquitectura más limpia mediante separación de capas, uso de DTOs especializados, mapeadores dedicados y validación declarativa.</p>
 
 <ol>
   <li><code class="language-plaintext highlighter-rouge">TaskCreateDTO.java</code></li>
