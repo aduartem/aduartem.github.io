@@ -47,8 +47,8 @@
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="🚀 Guía práctica para construir APIs RESTful con Spring Boot" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para construir APIs REST de forma rápida y robusta. En esta guía te mostraré cómo manejar rutas, controlar peticiones y respuestas, y estructurar tu aplicación siguiendo buenas prácticas. ¡Comencemos! 💪" />
-<meta property="og:description" content="Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para construir APIs REST de forma rápida y robusta. En esta guía te mostraré cómo manejar rutas, controlar peticiones y respuestas, y estructurar tu aplicación siguiendo buenas prácticas. ¡Comencemos! 💪" />
+<meta name="description" content="Actualización [16/06/2025]: Este artículo ha sido actualizado para incluir una sección avanzada sobre mejores prácticas con DTOs y separación de responsabilidades, junto con una conclusión más detallada sobre los beneficios de esta arquitectura." />
+<meta property="og:description" content="Actualización [16/06/2025]: Este artículo ha sido actualizado para incluir una sección avanzada sobre mejores prácticas con DTOs y separación de responsabilidades, junto con una conclusión más detallada sobre los beneficios de esta arquitectura." />
 <link rel="canonical" href="https://aduartem.github.io/guia-practica-apis-restful-con-spring-boot/" />
 <meta property="og:url" content="https://aduartem.github.io/guia-practica-apis-restful-con-spring-boot/" />
 <meta property="og:site_name" content="aduartem" />
@@ -61,7 +61,7 @@
 <meta name="twitter:image:alt" content="Spring Boot" />
 <meta property="twitter:title" content="🚀 Guía práctica para construir APIs RESTful con Spring Boot" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-06-10T00:00:00+00:00","datePublished":"2025-06-10T00:00:00+00:00","description":"Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para construir APIs REST de forma rápida y robusta. En esta guía te mostraré cómo manejar rutas, controlar peticiones y respuestas, y estructurar tu aplicación siguiendo buenas prácticas. ¡Comencemos! 💪","headline":"🚀 Guía práctica para construir APIs RESTful con Spring Boot","image":{"alt":"Spring Boot","url":"https://aduartem.github.io/assets/images/posts/2025/07f58bb1-cb8e-4869-b0b9-10bca603ebc9.jpg","@type":"imageObject"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://aduartem.github.io/guia-practica-apis-restful-con-spring-boot/"},"url":"https://aduartem.github.io/guia-practica-apis-restful-con-spring-boot/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-06-16T00:00:00+00:00","datePublished":"2025-06-10T00:00:00+00:00","description":"Actualización [16/06/2025]: Este artículo ha sido actualizado para incluir una sección avanzada sobre mejores prácticas con DTOs y separación de responsabilidades, junto con una conclusión más detallada sobre los beneficios de esta arquitectura.","headline":"🚀 Guía práctica para construir APIs RESTful con Spring Boot","image":{"alt":"Spring Boot","url":"https://aduartem.github.io/assets/images/posts/2025/07f58bb1-cb8e-4869-b0b9-10bca603ebc9.jpg","@type":"imageObject"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://aduartem.github.io/guia-practica-apis-restful-con-spring-boot/"},"url":"https://aduartem.github.io/guia-practica-apis-restful-con-spring-boot/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://aduartem.github.io/feed.xml" title="aduartem" /><!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWKVTR3NVS"></script>
@@ -179,7 +179,7 @@
     
     
     <span class="reading-time">
-       12 minutos de lectura  </span>
+       19 minutos de lectura  </span>
   </header>
 
   
@@ -268,7 +268,11 @@
   
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para construir APIs REST de forma rápida y robusta. En esta guía te mostraré cómo manejar rutas, controlar peticiones y respuestas, y estructurar tu aplicación siguiendo buenas prácticas. ¡Comencemos! 💪</p>
+    <blockquote>
+  <p><strong>Actualización [16/06/2025]</strong>: Este artículo ha sido actualizado para incluir una sección avanzada sobre mejores prácticas con DTOs y separación de responsabilidades, junto con una conclusión más detallada sobre los beneficios de esta arquitectura.</p>
+</blockquote>
+
+<p>Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para construir APIs REST de forma rápida y robusta. En esta guía te mostraré cómo manejar rutas, controlar peticiones y respuestas, y estructurar tu aplicación siguiendo buenas prácticas. ¡Comencemos!</p>
 
 <h2 id="-qué-es-spring-boot">🌱 ¿Qué es <strong>Spring Boot</strong>?</h2>
 
@@ -286,7 +290,7 @@
 
 <p>Las <strong>anotaciones</strong> en Java (y en Spring) son <strong>marcas especiales</strong> que comienzan con <code class="language-plaintext highlighter-rouge">@</code> y se colocan sobre clases, métodos o atributos para darle instrucciones al framework sobre cómo debe comportarse ese elemento.</p>
 
-<p>👉 En el contexto de <strong>Spring</strong>, las anotaciones reemplazan mucha configuración manual (como XML) y hacen el código más limpio y fácil de mantener.</p>
+<p>En el contexto de <strong>Spring</strong>, las anotaciones reemplazan mucha configuración manual (como XML) y hacen el código más limpio y fácil de mantener.</p>
 
 <h2 id="-ejemplos-comunes-de-anotaciones-en-spring-boot">🔧 Ejemplos comunes de anotaciones en Spring Boot</h2>
 
@@ -658,6 +662,206 @@ Estas herramientas facilitan la construcción de endpoints flexibles y adaptados
   <li>✅ <strong>Repository</strong> centraliza el acceso a la base de datos, usando interfaces concisas.</li>
 </ul>
 
+<h2 id="-este-ejemplo-es-posible-mejorarlo-aún-más-definitivamente-si-nuevo-16062025">🔗 ¿Este ejemplo es posible mejorarlo aún más? Definitivamente Si! <em>(Nuevo: 16/06/2025)</em></h2>
+
+<p>Este ejemplo podemos mejorar de la siguiente forma:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">TaskCreateDTO.java</code></li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">jakarta.validation.constraints.NotBlank</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskCreateDTO</span> <span class="o">{</span>
+
+    <span class="nd">@NotBlank</span><span class="o">(</span><span class="n">message</span> <span class="o">=</span> <span class="s">"El título es obligatorio"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">completed</span><span class="o">;</span>
+
+    <span class="c1">// Getters y setters</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">TaskDTO.java</code></li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskDTO</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">completed</span><span class="o">;</span>
+
+    <span class="c1">// Constructor</span>
+    <span class="kd">public</span> <span class="nf">TaskDTO</span><span class="o">(</span><span class="nc">Long</span> <span class="n">id</span><span class="o">,</span> <span class="nc">String</span> <span class="n">title</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">completed</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">title</span> <span class="o">=</span> <span class="n">title</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">completed</span> <span class="o">=</span> <span class="n">completed</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">TaskDTO</span> <span class="nf">fromEntity</span><span class="o">(</span><span class="nc">Task</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">TaskDTO</span><span class="o">(</span><span class="n">task</span><span class="o">.</span><span class="na">getId</span><span class="o">(),</span> <span class="n">task</span><span class="o">.</span><span class="na">getTitle</span><span class="o">(),</span> <span class="n">task</span><span class="o">.</span><span class="na">isCompleted</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Getters y setters (si usas Lombok puedes evitarlos)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">TaskMapper.java</code></li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
+
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskMapper</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="nc">Task</span> <span class="nf">toEntity</span><span class="o">(</span><span class="nc">TaskCreateDTO</span> <span class="n">dto</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Task</span> <span class="n">task</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Task</span><span class="o">();</span>
+        <span class="n">task</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="n">dto</span><span class="o">.</span><span class="na">getTitle</span><span class="o">());</span>
+        <span class="n">task</span><span class="o">.</span><span class="na">setCompleted</span><span class="o">(</span><span class="n">dto</span><span class="o">.</span><span class="na">isCompleted</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">task</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">TaskDTO</span> <span class="nf">toDto</span><span class="o">(</span><span class="nc">Task</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">TaskDTO</span><span class="o">(</span><span class="n">task</span><span class="o">.</span><span class="na">getId</span><span class="o">(),</span> <span class="n">task</span><span class="o">.</span><span class="na">getTitle</span><span class="o">(),</span> <span class="n">task</span><span class="o">.</span><span class="na">isCompleted</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">TaskService.java</code></li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.stereotype.Service</span><span class="o">;</span>
+
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskService</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">TaskRepository</span> <span class="n">taskRepository</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">TaskMapper</span> <span class="n">taskMapper</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">TaskService</span><span class="o">(</span><span class="nc">TaskRepository</span> <span class="n">taskRepository</span><span class="o">,</span> <span class="nc">TaskMapper</span> <span class="n">taskMapper</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">taskRepository</span> <span class="o">=</span> <span class="n">taskRepository</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">taskMapper</span> <span class="o">=</span> <span class="n">taskMapper</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">TaskDTO</span> <span class="nf">saveTask</span><span class="o">(</span><span class="nc">TaskCreateDTO</span> <span class="n">dto</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Task</span> <span class="n">task</span> <span class="o">=</span> <span class="n">taskMapper</span><span class="o">.</span><span class="na">toEntity</span><span class="o">(</span><span class="n">dto</span><span class="o">);</span>
+        <span class="nc">Task</span> <span class="n">saved</span> <span class="o">=</span> <span class="n">taskRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">task</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">taskMapper</span><span class="o">.</span><span class="na">toDto</span><span class="o">(</span><span class="n">saved</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">TaskController.java</code> (refactorizado)</li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.http.HttpStatus</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.http.ResponseEntity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">jakarta.validation.Valid</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api/tasks"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TaskController</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">TaskService</span> <span class="n">taskService</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">TaskController</span><span class="o">(</span><span class="nc">TaskService</span> <span class="n">taskService</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">taskService</span> <span class="o">=</span> <span class="n">taskService</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@PostMapping</span>
+    <span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">TaskDTO</span><span class="o">&gt;</span> <span class="nf">createTask</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nd">@Valid</span> <span class="nc">TaskCreateDTO</span> <span class="n">taskDto</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">TaskDTO</span> <span class="n">saved</span> <span class="o">=</span> <span class="n">taskService</span><span class="o">.</span><span class="na">saveTask</span><span class="o">(</span><span class="n">taskDto</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">saved</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">CREATED</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">ControllerAdvice</code> para manejar errores de validación (opcional pero recomendado)</li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.http.HttpStatus</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.http.ResponseEntity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.MethodArgumentNotValidException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.ExceptionHandler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestControllerAdvice</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
+
+<span class="nd">@RestControllerAdvice</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GlobalExceptionHandler</span> <span class="o">{</span>
+
+    <span class="nd">@ExceptionHandler</span><span class="o">(</span><span class="nc">MethodArgumentNotValidException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;&gt;</span> <span class="nf">handleValidationErrors</span><span class="o">(</span><span class="nc">MethodArgumentNotValidException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="n">ex</span><span class="o">.</span><span class="na">getBindingResult</span><span class="o">().</span><span class="na">getFieldErrors</span><span class="o">().</span><span class="na">forEach</span><span class="o">(</span><span class="n">error</span> <span class="o">-&gt;</span>
+            <span class="n">errors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">error</span><span class="o">.</span><span class="na">getField</span><span class="o">(),</span> <span class="n">error</span><span class="o">.</span><span class="na">getDefaultMessage</span><span class="o">())</span>
+        <span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">ResponseEntity</span><span class="o">&lt;&gt;(</span><span class="n">errors</span><span class="o">,</span> <span class="nc">HttpStatus</span><span class="o">.</span><span class="na">BAD_REQUEST</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="beneficios-del-cambio">Beneficios del cambio</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mejora</th>
+      <th>Justificación</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Separación de responsabilidades</td>
+      <td>El controlador solo orquesta, no construye entidades.</td>
+    </tr>
+    <tr>
+      <td>Validación declarativa</td>
+      <td>El DTO tiene validaciones con <code class="language-plaintext highlighter-rouge">@NotBlank</code>.</td>
+    </tr>
+    <tr>
+      <td>Mapper dedicado</td>
+      <td>Se estandariza la transformación entre DTOs y entidades.</td>
+    </tr>
+    <tr>
+      <td>Más testable</td>
+      <td>Cada clase tiene una única responsabilidad, facilitando los tests unitarios.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="por-qué-usar-taskdto-y-taskcreatedto">¿Por qué usar TaskDTO y TaskCreateDTO?</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Clase</th>
+      <th>Uso</th>
+      <th>Contenido típico</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TaskCreateDTO</code></td>
+      <td><strong>Entrada (request)</strong> para crear tareas</td>
+      <td>Solo campos que el cliente puede enviar (ej: <code class="language-plaintext highlighter-rouge">title</code>, <code class="language-plaintext highlighter-rouge">completed</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TaskDTO</code></td>
+      <td><strong>Salida (response)</strong> para mostrar tareas</td>
+      <td>Campos calculados o internos: <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">createdAt</code>, <code class="language-plaintext highlighter-rouge">updatedAt</code>, etc.</td>
+    </tr>
+  </tbody>
+</table>
+
 <h2 id="-despliegue-con-docker-">📦 Despliegue con Docker 🐳</h2>
 
 <p>Ejemplo de Dockerfile para construir tú imagen:</p>
@@ -689,9 +893,52 @@ Estas herramientas facilitan la construcción de endpoints flexibles y adaptados
 
 <h2 id="-conclusión">🧠 Conclusión</h2>
 
-<p>Spring Boot es una herramienta poderosa para desarrollar APIs REST modernas y bien estructuradas. Gracias a su conjunto de anotaciones como <code class="language-plaintext highlighter-rouge">@GetMapping</code>, <code class="language-plaintext highlighter-rouge">@PostMapping</code>, <code class="language-plaintext highlighter-rouge">@PutMapping</code>, <code class="language-plaintext highlighter-rouge">@DeleteMapping</code> y <code class="language-plaintext highlighter-rouge">@PatchMapping</code>, puedes construir endpoints eficientes de manera declarativa y clara 🧩. Al combinarlo con una arquitectura por capas, patrones como DTO y prácticas como el despliegue con Docker, obtienes una solución completa y lista para producción 🚀.</p>
+<p>Spring Boot es una herramienta poderosa para desarrollar APIs REST modernas y bien estructuradas. Gracias a su conjunto de anotaciones como <code class="language-plaintext highlighter-rouge">@GetMapping</code>, <code class="language-plaintext highlighter-rouge">@PostMapping</code>, <code class="language-plaintext highlighter-rouge">@PutMapping</code>, <code class="language-plaintext highlighter-rouge">@DeleteMapping</code> y <code class="language-plaintext highlighter-rouge">@PatchMapping</code>, puedes construir endpoints eficientes de manera declarativa y clara 🧩. Al combinarlo con una arquitectura por capas, patrones como DTO y prácticas como el despliegue con Docker, obtienes una solución completa y lista para producción 🚀. Los principales beneficios de los temas abordados en esta guía son:</p>
 
-<p>¿Estás listo para construir tu próxima API con Spring Boot? ¡Manos a la obra! 💻🔥</p>
+<h3 id="-1-separación-de-responsabilidades-srp">🔧 1. Separación de responsabilidades (SRP)</h3>
+<ul>
+  <li>El controlador (TaskController) ya no construye entidades, solo orquesta el flujo.</li>
+  <li>La lógica de negocio y persistencia se delega al TaskService.</li>
+  <li>La transformación entre DTOs y entidades queda encapsulada en TaskMapper.</li>
+</ul>
+
+<p><strong><em>Beneficio</em></strong>: más limpio, más testable y cada clase hace solo lo que le corresponde.</p>
+
+<h3 id="-2-uso-de-dtos">📦 2. Uso de DTOs</h3>
+<ul>
+  <li>Se utilizaron TaskCreateDTO para entradas (POST) y TaskDTO para salidas (responses).</li>
+  <li>Esto protege la entidad interna (Task) de exposiciones innecesarias y errores de seguridad.</li>
+</ul>
+
+<p><strong><em>Beneficio</em></strong>: puedes controlar qué campos expone o recibe la API, manteniendo coherencia y evitando sobreexposición de datos.</p>
+
+<h3 id="-3-validación-declarativa">🧹 3. Validación declarativa</h3>
+<ul>
+  <li>Uso de anotaciones como @NotBlank, @Valid, y @ControllerAdvice para manejar errores de forma centralizada.</li>
+</ul>
+
+<p><strong><em>Beneficio</em></strong>: validaciones limpias, automáticas, y respuestas uniformes ante errores de entrada.</p>
+
+<h3 id="-4-inversión-de-dependencias-y-testabilidad">🧰 4. Inversión de dependencias y testabilidad</h3>
+<ul>
+  <li>TaskService y TaskMapper son fácilmente testeables y mockeables.</li>
+  <li>El controlador es delgado y desacoplado, ideal para pruebas con MockMVC o RestAssured.</li>
+</ul>
+
+<p><strong><em>Beneficio</em></strong>: código listo para escalar y con bajo acoplamiento, ideal para equipos grandes o proyectos profesionales.</p>
+
+<h3 id="️-vale-la-pena-todo-este-esfuerzo">⚖️ ¿Vale la pena todo este esfuerzo?</h3>
+<p>Sí, si tu proyecto:</p>
+<ul>
+  <li>Tiene múltiples endpoints y va a escalar.</li>
+  <li>Involucra equipos de desarrollo.</li>
+  <li>Necesita testeo automatizado.</li>
+  <li>Requiere exponer solo ciertos campos y proteger la lógica de negocio.</li>
+</ul>
+
+<p>En un proyecto simple o prototipo, puedes reducir el overhead, pero en un entorno profesional, esta arquitectura <strong>es altamente recomendable</strong>.</p>
+
+<p><strong>Nota:</strong> Próximamente publicaré una serie de post donde profundizaré más sobre los temas abordados acá.</p>
 
 <h2 id="-recursos-web-oficiales-para-profundizar">🌐 Recursos web oficiales para profundizar</h2>
 
@@ -701,6 +948,13 @@ Estas herramientas facilitan la construcción de endpoints flexibles y adaptados
   <li><a href="https://spring.io/guides/gs/spring-boot">Construyendo una aplicación con Spring Boot</a></li>
   <li><a href="https://spring.io/guides/gs/rest-service">Construyendo servicios web RESTful</a></li>
   <li><a href="https://spring.io/guides">Guías</a></li>
+</ul>
+
+<h2 id="historial-de-actualizaciones">Historial de actualizaciones</h2>
+
+<ul>
+  <li><strong>16/06/2025</strong>: Añadida sección sobre implementación avanzada con DTOs, mappers, y validación. Ampliada la conclusión para destacar los beneficios de esta arquitectura.</li>
+  <li><strong>10/06/2025</strong>: Publicación original</li>
 </ul>
 
   </div><a class="u-url" href="/guia-practica-apis-restful-con-spring-boot/" hidden></a>
