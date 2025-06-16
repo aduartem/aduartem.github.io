@@ -2,6 +2,7 @@
 layout: post
 title: "🚀 Guía práctica para construir APIs RESTful con Spring Boot"
 date: 2025-06-10
+last_modified_at: 2025-06-16
 categories:
 - java
 - spring-boot
@@ -14,8 +15,10 @@ image:
   alt: "Spring Boot"
 ---
 
+> **Actualización [16/06/2025]**: Este artículo ha sido actualizado para incluir una sección avanzada sobre mejores prácticas con DTOs y separación de responsabilidades, junto con una conclusión más detallada sobre los beneficios de esta arquitectura.
 
-Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para construir APIs REST de forma rápida y robusta. En esta guía te mostraré cómo manejar rutas, controlar peticiones y respuestas, y estructurar tu aplicación siguiendo buenas prácticas. ¡Comencemos! 💪
+
+Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para construir APIs REST de forma rápida y robusta. En esta guía te mostraré cómo manejar rutas, controlar peticiones y respuestas, y estructurar tu aplicación siguiendo buenas prácticas. ¡Comencemos!
 
 ## 🌱 ¿Qué es **Spring Boot**?
 
@@ -31,7 +34,7 @@ Es una extensión **opinada** de Spring que:
 
 Las **anotaciones** en Java (y en Spring) son **marcas especiales** que comienzan con `@` y se colocan sobre clases, métodos o atributos para darle instrucciones al framework sobre cómo debe comportarse ese elemento.
 
-👉 En el contexto de **Spring**, las anotaciones reemplazan mucha configuración manual (como XML) y hacen el código más limpio y fácil de mantener.
+En el contexto de **Spring**, las anotaciones reemplazan mucha configuración manual (como XML) y hacen el código más limpio y fácil de mantener.
 
 
 ## 🔧 Ejemplos comunes de anotaciones en Spring Boot
@@ -338,6 +341,166 @@ public class TaskController {
 - ✅ **Repository** centraliza el acceso a la base de datos, usando interfaces concisas.
 
 
+## 🔗 ¿Este ejemplo es posible mejorarlo aún más? Definitivamente Si! *(Nuevo: 16/06/2025)*
+
+Este ejemplo podemos mejorar de la siguiente forma:
+
+1. ```TaskCreateDTO.java```
+
+```java
+import jakarta.validation.constraints.NotBlank;
+
+public class TaskCreateDTO {
+
+    @NotBlank(message = "El título es obligatorio")
+    private String title;
+
+    private boolean completed;
+
+    // Getters y setters
+}
+```
+
+2. ```TaskDTO.java```
+
+```java
+public class TaskDTO {
+
+    private Long id;
+    private String title;
+    private boolean completed;
+
+    // Constructor
+    public TaskDTO(Long id, String title, boolean completed) {
+        this.id = id;
+        this.title = title;
+        this.completed = completed;
+    }
+
+    public static TaskDTO fromEntity(Task task) {
+        return new TaskDTO(task.getId(), task.getTitle(), task.isCompleted());
+    }
+
+    // Getters y setters (si usas Lombok puedes evitarlos)
+}
+```
+
+3. ```TaskMapper.java```
+
+```java
+import org.springframework.stereotype.Component;
+
+@Component
+public class TaskMapper {
+
+    public Task toEntity(TaskCreateDTO dto) {
+        Task task = new Task();
+        task.setTitle(dto.getTitle());
+        task.setCompleted(dto.isCompleted());
+        return task;
+    }
+
+    public TaskDTO toDto(Task task) {
+        return new TaskDTO(task.getId(), task.getTitle(), task.isCompleted());
+    }
+}
+```
+
+4. ```TaskService.java```
+
+```java
+import org.springframework.stereotype.Service;
+
+@Service
+public class TaskService {
+
+    private final TaskRepository taskRepository;
+    private final TaskMapper taskMapper;
+
+    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper) {
+        this.taskRepository = taskRepository;
+        this.taskMapper = taskMapper;
+    }
+
+    public TaskDTO saveTask(TaskCreateDTO dto) {
+        Task task = taskMapper.toEntity(dto);
+        Task saved = taskRepository.save(task);
+        return taskMapper.toDto(saved);
+    }
+}
+```
+
+5. ```TaskController.java``` (refactorizado)
+
+```java
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/api/tasks")
+public class TaskController {
+
+    private final TaskService taskService;
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
+    @PostMapping
+    public ResponseEntity<TaskDTO> createTask(@RequestBody @Valid TaskCreateDTO taskDto) {
+        TaskDTO saved = taskService.saveTask(taskDto);
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+    }
+}
+```
+
+6. ```ControllerAdvice``` para manejar errores de validación (opcional pero recomendado)
+
+```java
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+            errors.put(error.getField(), error.getDefaultMessage())
+        );
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+}
+```
+
+
+### Beneficios del cambio
+
+| Mejora                          | Justificación                                                                |
+| ------------------------------- | ---------------------------------------------------------------------------- |
+| Separación de responsabilidades | El controlador solo orquesta, no construye entidades.                        |
+| Validación declarativa          | El DTO tiene validaciones con `@NotBlank`.                                   |
+| Mapper dedicado                 | Se estandariza la transformación entre DTOs y entidades.                     |
+| Más testable                    | Cada clase tiene una única responsabilidad, facilitando los tests unitarios. |
+
+
+### ¿Por qué usar TaskDTO y TaskCreateDTO?
+
+| Clase           | Uso                                       | Contenido típico                                                   |
+| --------------- | ----------------------------------------- | ------------------------------------------------------------------ |
+| `TaskCreateDTO` | **Entrada (request)** para crear tareas   | Solo campos que el cliente puede enviar (ej: `title`, `completed`) |
+| `TaskDTO`       | **Salida (response)** para mostrar tareas | Campos calculados o internos: `id`, `createdAt`, `updatedAt`, etc. |
+
+
 ## 📦 Despliegue con Docker 🐳
 
 Ejemplo de Dockerfile para construir tú imagen:
@@ -371,9 +534,43 @@ services:
 
 ## 🧠 Conclusión
 
-Spring Boot es una herramienta poderosa para desarrollar APIs REST modernas y bien estructuradas. Gracias a su conjunto de anotaciones como `@GetMapping`, `@PostMapping`, `@PutMapping`, `@DeleteMapping` y `@PatchMapping`, puedes construir endpoints eficientes de manera declarativa y clara 🧩. Al combinarlo con una arquitectura por capas, patrones como DTO y prácticas como el despliegue con Docker, obtienes una solución completa y lista para producción 🚀.
+Spring Boot es una herramienta poderosa para desarrollar APIs REST modernas y bien estructuradas. Gracias a su conjunto de anotaciones como `@GetMapping`, `@PostMapping`, `@PutMapping`, `@DeleteMapping` y `@PatchMapping`, puedes construir endpoints eficientes de manera declarativa y clara 🧩. Al combinarlo con una arquitectura por capas, patrones como DTO y prácticas como el despliegue con Docker, obtienes una solución completa y lista para producción 🚀. Los principales beneficios de los temas abordados en esta guía son:
 
-¿Estás listo para construir tu próxima API con Spring Boot? ¡Manos a la obra! 💻🔥
+### 🔧 1. Separación de responsabilidades (SRP)
+- El controlador (TaskController) ya no construye entidades, solo orquesta el flujo.
+- La lógica de negocio y persistencia se delega al TaskService.
+- La transformación entre DTOs y entidades queda encapsulada en TaskMapper.
+
+***Beneficio***: más limpio, más testable y cada clase hace solo lo que le corresponde.
+
+### 📦 2. Uso de DTOs
+- Se utilizaron TaskCreateDTO para entradas (POST) y TaskDTO para salidas (responses).
+- Esto protege la entidad interna (Task) de exposiciones innecesarias y errores de seguridad.
+
+***Beneficio***: puedes controlar qué campos expone o recibe la API, manteniendo coherencia y evitando sobreexposición de datos.
+
+### 🧹 3. Validación declarativa
+- Uso de anotaciones como @NotBlank, @Valid, y @ControllerAdvice para manejar errores de forma centralizada.
+
+***Beneficio***: validaciones limpias, automáticas, y respuestas uniformes ante errores de entrada.
+
+### 🧰 4. Inversión de dependencias y testabilidad
+- TaskService y TaskMapper son fácilmente testeables y mockeables.
+- El controlador es delgado y desacoplado, ideal para pruebas con MockMVC o RestAssured.
+
+***Beneficio***: código listo para escalar y con bajo acoplamiento, ideal para equipos grandes o proyectos profesionales.
+
+### ⚖️ ¿Vale la pena todo este esfuerzo?
+Sí, si tu proyecto:
+- Tiene múltiples endpoints y va a escalar.
+- Involucra equipos de desarrollo.
+- Necesita testeo automatizado.
+- Requiere exponer solo ciertos campos y proteger la lógica de negocio.
+
+En un proyecto simple o prototipo, puedes reducir el overhead, pero en un entorno profesional, esta arquitectura **es altamente recomendable**.
+
+
+**Nota:** Próximamente publicaré una serie de post donde profundizaré más sobre los temas abordados acá.
 
 
 ## 🌐 Recursos web oficiales para profundizar
@@ -383,3 +580,9 @@ Spring Boot es una herramienta poderosa para desarrollar APIs REST modernas y bi
 - [Construyendo una aplicación con Spring Boot](https://spring.io/guides/gs/spring-boot)
 - [Construyendo servicios web RESTful](https://spring.io/guides/gs/rest-service)
 - [Guías](https://spring.io/guides)
+
+
+## Historial de actualizaciones
+
+- **16/06/2025**: Añadida sección sobre implementación avanzada con DTOs, mappers, y validación. Ampliada la conclusión para destacar los beneficios de esta arquitectura.
+- **10/06/2025**: Publicación original
