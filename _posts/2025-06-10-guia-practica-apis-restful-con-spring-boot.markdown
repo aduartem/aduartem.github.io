@@ -15,7 +15,9 @@ image:
   alt: "Spring Boot"
 ---
 
-> **Actualización [16/06/2025]**: Este artículo ha sido actualizado para incluir una sección avanzada sobre mejores prácticas con DTOs y separación de responsabilidades, junto con una conclusión más detallada sobre los beneficios de esta arquitectura.
+> **Actualización [17/06/2025]**: Este artículo ha sido actualizado para incluir una sección de primeros pasos.
+
+> **Actualización [16/06/2025]**: Este artículo ha sido actualizado para una sección avanzada sobre mejores prácticas con DTOs y separación de responsabilidades, junto con una conclusión más detallada sobre los beneficios de esta arquitectura.
 
 
 Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para construir APIs REST de forma rápida y robusta. En esta guía te mostraré cómo manejar rutas, controlar peticiones y respuestas, y estructurar tu aplicación siguiendo buenas prácticas. ¡Comencemos!
@@ -29,6 +31,87 @@ Es una extensión **opinada** de Spring que:
   * Incorpora un servidor embebido (Tomcat, Jetty...) para ejecutar aplicaciones como jar ejecutables
   * Ofrece **autoconfiguración** que detecta lo que tienes en el classpath y activa automáticamente lo pertinente
   * Trae características "lista para producción": Actuator (métricas, health checks), configuración externa, logging integrado
+
+## 🚶Primeros pasos para crear la aplicación *(Nuevo: 17/06/2025)*
+
+Primero que todo vamos a ir a *Spring Initializr*. Lo podemos buscar en Google o ir directamente a través de la barra de direcciones e ingresar [https://start.spring.io/](https://start.spring.io/)
+
+Nos va a aparecer una página como esta:
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-001.png)
+
+En esta guía seleccionaremos las opciones que aparecen en la imagen y debemos completar los datos del formulario Project Metadata, pueden reemplazar los datos de ejemplo por los que quieran:
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-002.png)
+
+
+Luego vamos a agregar las dependencias:
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-003.png)
+
+Vamos a agregar la dependencia Spring Web:
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-004.png)
+
+Luego agregamos Lombok:
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-005.png)
+
+Nuestras dependencias agregadas quedarán listadas de la siguiente forma:
+
+![Primeros Pasose](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-006.png)
+
+Finalmente generamos el proyecto haciendo click en el botón "Generate".
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-007.png)
+
+Ese botón nos descargará el proyecto comprimido en un .zip
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-008.png)
+
+Abrimos la carpeta que contiene el archivo y la movemos a nuestra carpeta de workspace para a continuación extraer la carpeta.
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-009.png)
+
+En esta guía utilizaremos **NetBeans**, pero podemos usar otros IDEs como Eclipse con Spring Tools (STS), IntelliJ IDEA o editores de texto cómo Visual Studio Code que también tiene extensiones muy útiles como [Spring Boot Extension Pack.](https://marketplace.visualstudio.com/items?itemName=vmware.vscode-boot-dev-pack)
+
+
+Abrimos NetBeans, click en "File" y luego "Open Project..."
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-010.png)
+
+Aparecerá una ventana, buscamos el archivo, lo seleccionamos y hacemos click en "Open Project".
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-011.png)
+
+Podemos ver que tenemos una clase llamada FirstApiApplication que tiene un método llamado main. Esta es nuestra clase principal.
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-012.png)
+
+Vamos a dar la instrucción para que NetBeans sepa que esta es la clase principal. Para esto en el proyecto hacemos click derecho, click en "Properties":
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-013.png)
+
+Click en "Run" y luego en "Browse..."
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-014.png)
+
+Aparecerá una ventana "Browse Main Classes", seleccionamos la clase, click en "Select Main Class" y click en el botón "OK".
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-015.png)
+
+Con esto ya tenemos configurado el proyecto y podemos iniciar el servidor web (Apache Tomcat). Para esto vamos a hacer click en el botón de play.
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-016.png)
+
+Al hacer click veremos que aparecerá una terminal en la parte inferior del IDE y veremos el log de cómo comienza a iniciar el servidor web. Cuando termine de iniciar el servidor web veremos el mensaje "Tomcat started on port 8080 (http) with context path '/'". Esto nos indica que el servidor inició en el puerto 8080.
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-017.png)
+
+Ya podemos ir al navegador e ingresar en la barra de direcciones http://localhost:8080. Veremos un error, pero esto es completamente normal ya que sólo hemos creado el proyecto base para trabajar, aún no hemos programado ningún endpoint.
+
+![Primeros Pasos](/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-018.png)
+
 
 ## 🏷️ ¿Qué son las anotaciones en Spring?
 
@@ -585,5 +668,6 @@ En un proyecto simple o prototipo, puedes reducir el overhead, pero en un entorn
 
 ## Historial de actualizaciones
 
+- **17/06/2025**: Añadida sección sobre primeros pasos para crear la aplicación.
 - **16/06/2025**: Añadida sección sobre implementación avanzada con DTOs, mappers, y validación. Ampliada la conclusión para destacar los beneficios de esta arquitectura.
-- **10/06/2025**: Publicación original
+- **10/06/2025**: Publicación original.
