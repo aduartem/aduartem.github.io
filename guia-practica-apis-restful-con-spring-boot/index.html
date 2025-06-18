@@ -47,8 +47,8 @@
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="🚀 Guía práctica para construir APIs RESTful con Spring Boot" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Actualización [16/06/2025]: Este artículo ha sido actualizado para incluir una sección avanzada sobre mejores prácticas con DTOs y separación de responsabilidades, junto con una conclusión más detallada sobre los beneficios de esta arquitectura." />
-<meta property="og:description" content="Actualización [16/06/2025]: Este artículo ha sido actualizado para incluir una sección avanzada sobre mejores prácticas con DTOs y separación de responsabilidades, junto con una conclusión más detallada sobre los beneficios de esta arquitectura." />
+<meta name="description" content="Actualización [17/06/2025]: Este artículo ha sido actualizado para incluir una sección de primeros pasos." />
+<meta property="og:description" content="Actualización [17/06/2025]: Este artículo ha sido actualizado para incluir una sección de primeros pasos." />
 <link rel="canonical" href="https://aduartem.github.io/guia-practica-apis-restful-con-spring-boot/" />
 <meta property="og:url" content="https://aduartem.github.io/guia-practica-apis-restful-con-spring-boot/" />
 <meta property="og:site_name" content="aduartem" />
@@ -61,7 +61,7 @@
 <meta name="twitter:image:alt" content="Spring Boot" />
 <meta property="twitter:title" content="🚀 Guía práctica para construir APIs RESTful con Spring Boot" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-06-16T00:00:00+00:00","datePublished":"2025-06-10T00:00:00+00:00","description":"Actualización [16/06/2025]: Este artículo ha sido actualizado para incluir una sección avanzada sobre mejores prácticas con DTOs y separación de responsabilidades, junto con una conclusión más detallada sobre los beneficios de esta arquitectura.","headline":"🚀 Guía práctica para construir APIs RESTful con Spring Boot","image":{"alt":"Spring Boot","url":"https://aduartem.github.io/assets/images/posts/2025/07f58bb1-cb8e-4869-b0b9-10bca603ebc9.jpg","@type":"imageObject"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://aduartem.github.io/guia-practica-apis-restful-con-spring-boot/"},"url":"https://aduartem.github.io/guia-practica-apis-restful-con-spring-boot/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-06-16T00:00:00+00:00","datePublished":"2025-06-10T00:00:00+00:00","description":"Actualización [17/06/2025]: Este artículo ha sido actualizado para incluir una sección de primeros pasos.","headline":"🚀 Guía práctica para construir APIs RESTful con Spring Boot","image":{"alt":"Spring Boot","url":"https://aduartem.github.io/assets/images/posts/2025/07f58bb1-cb8e-4869-b0b9-10bca603ebc9.jpg","@type":"imageObject"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://aduartem.github.io/guia-practica-apis-restful-con-spring-boot/"},"url":"https://aduartem.github.io/guia-practica-apis-restful-con-spring-boot/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://aduartem.github.io/feed.xml" title="aduartem" /><!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWKVTR3NVS"></script>
@@ -179,7 +179,7 @@
     
     
     <span class="reading-time">
-       19 minutos de lectura  </span>
+       22 minutos de lectura  </span>
   </header>
 
   
@@ -269,7 +269,11 @@
 
   <div class="post-content e-content" itemprop="articleBody">
     <blockquote>
-  <p><strong>Actualización [16/06/2025]</strong>: Este artículo ha sido actualizado para incluir una sección avanzada sobre mejores prácticas con DTOs y separación de responsabilidades, junto con una conclusión más detallada sobre los beneficios de esta arquitectura.</p>
+  <p><strong>Actualización [17/06/2025]</strong>: Este artículo ha sido actualizado para incluir una sección de primeros pasos.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Actualización [16/06/2025]</strong>: Este artículo ha sido actualizado para una sección avanzada sobre mejores prácticas con DTOs y separación de responsabilidades, junto con una conclusión más detallada sobre los beneficios de esta arquitectura.</p>
 </blockquote>
 
 <p>Spring Boot se ha convertido en uno de los frameworks más populares para desarrollar aplicaciones Java modernas. Su enfoque centrado en la simplicidad y la configuración mínima lo hace ideal para construir APIs REST de forma rápida y robusta. En esta guía te mostraré cómo manejar rutas, controlar peticiones y respuestas, y estructurar tu aplicación siguiendo buenas prácticas. ¡Comencemos!</p>
@@ -285,6 +289,84 @@
   <li>Ofrece <strong>autoconfiguración</strong> que detecta lo que tienes en el classpath y activa automáticamente lo pertinente</li>
   <li>Trae características “lista para producción”: Actuator (métricas, health checks), configuración externa, logging integrado</li>
 </ul>
+
+<h2 id="primeros-pasos-para-crear-la-aplicación-nuevo-17062025">🚶Primeros pasos para crear la aplicación <em>(Nuevo: 17/06/2025)</em></h2>
+
+<p>Primero que todo vamos a ir a <em>Spring Initializr</em>. Lo podemos buscar en Google o ir directamente a través de la barra de direcciones e ingresar <a href="https://start.spring.io/">https://start.spring.io/</a></p>
+
+<p>Nos va a aparecer una página como esta:</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-001.png" alt="Primeros Pasos" /></p>
+
+<p>En esta guía seleccionaremos las opciones que aparecen en la imagen y debemos completar los datos del formulario Project Metadata, pueden reemplazar los datos de ejemplo por los que quieran:</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-002.png" alt="Primeros Pasos" /></p>
+
+<p>Luego vamos a agregar las dependencias:</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-003.png" alt="Primeros Pasos" /></p>
+
+<p>Vamos a agregar la dependencia Spring Web:</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-004.png" alt="Primeros Pasos" /></p>
+
+<p>Luego agregamos Lombok:</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-005.png" alt="Primeros Pasos" /></p>
+
+<p>Nuestras dependencias agregadas quedarán listadas de la siguiente forma:</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-006.png" alt="Primeros Pasose" /></p>
+
+<p>Finalmente generamos el proyecto haciendo click en el botón “Generate”.</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-007.png" alt="Primeros Pasos" /></p>
+
+<p>Ese botón nos descargará el proyecto comprimido en un .zip</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-008.png" alt="Primeros Pasos" /></p>
+
+<p>Abrimos la carpeta que contiene el archivo y la movemos a nuestra carpeta de workspace para a continuación extraer la carpeta.</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-009.png" alt="Primeros Pasos" /></p>
+
+<p>En esta guía utilizaremos <strong>NetBeans</strong>, pero podemos usar otros IDEs como Eclipse con Spring Tools (STS), IntelliJ IDEA o editores de texto cómo Visual Studio Code que también tiene extensiones muy útiles como <a href="https://marketplace.visualstudio.com/items?itemName=vmware.vscode-boot-dev-pack">Spring Boot Extension Pack.</a></p>
+
+<p>Abrimos NetBeans, click en “File” y luego “Open Project…”</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-010.png" alt="Primeros Pasos" /></p>
+
+<p>Aparecerá una ventana, buscamos el archivo, lo seleccionamos y hacemos click en “Open Project”.</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-011.png" alt="Primeros Pasos" /></p>
+
+<p>Podemos ver que tenemos una clase llamada FirstApiApplication que tiene un método llamado main. Esta es nuestra clase principal.</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-012.png" alt="Primeros Pasos" /></p>
+
+<p>Vamos a dar la instrucción para que NetBeans sepa que esta es la clase principal. Para esto en el proyecto hacemos click derecho, click en “Properties”:</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-013.png" alt="Primeros Pasos" /></p>
+
+<p>Click en “Run” y luego en “Browse…”</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-014.png" alt="Primeros Pasos" /></p>
+
+<p>Aparecerá una ventana “Browse Main Classes”, seleccionamos la clase, click en “Select Main Class” y click en el botón “OK”.</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-015.png" alt="Primeros Pasos" /></p>
+
+<p>Con esto ya tenemos configurado el proyecto y podemos iniciar el servidor web (Apache Tomcat). Para esto vamos a hacer click en el botón de play.</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-016.png" alt="Primeros Pasos" /></p>
+
+<p>Al hacer click veremos que aparecerá una terminal en la parte inferior del IDE y veremos el log de cómo comienza a iniciar el servidor web. Cuando termine de iniciar el servidor web veremos el mensaje “Tomcat started on port 8080 (http) with context path ‘/’”. Esto nos indica que el servidor inició en el puerto 8080.</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-017.png" alt="Primeros Pasos" /></p>
+
+<p>Ya podemos ir al navegador e ingresar en la barra de direcciones http://localhost:8080. Veremos un error, pero esto es completamente normal ya que sólo hemos creado el proyecto base para trabajar, aún no hemos programado ningún endpoint.</p>
+
+<p><img src="/assets/images/posts/2025/guia-practica-apis-restful-con-spring-boot/first-steps-018.png" alt="Primeros Pasos" /></p>
 
 <h2 id="️-qué-son-las-anotaciones-en-spring">🏷️ ¿Qué son las anotaciones en Spring?</h2>
 
@@ -953,8 +1035,9 @@ Estas herramientas facilitan la construcción de endpoints flexibles y adaptados
 <h2 id="historial-de-actualizaciones">Historial de actualizaciones</h2>
 
 <ul>
+  <li><strong>17/06/2025</strong>: Añadida sección sobre primeros pasos para crear la aplicación.</li>
   <li><strong>16/06/2025</strong>: Añadida sección sobre implementación avanzada con DTOs, mappers, y validación. Ampliada la conclusión para destacar los beneficios de esta arquitectura.</li>
-  <li><strong>10/06/2025</strong>: Publicación original</li>
+  <li><strong>10/06/2025</strong>: Publicación original.</li>
 </ul>
 
   </div><a class="u-url" href="/guia-practica-apis-restful-con-spring-boot/" hidden></a>
